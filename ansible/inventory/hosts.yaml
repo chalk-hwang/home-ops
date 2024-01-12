@@ -1,0 +1,8 @@
+---
+kubernetes:
+  children:
+    master:
+      hosts:
+        metal-0:
+          ansible_user: root
+          ansible_host: 10.0.7.110
