@@ -7,7 +7,7 @@ spec:
   hosts:
     - role: controller+worker
       ssh:
-        address: 10.0.7.110
+        address: 10.0.7.10
         user: root
       installFlags:
         - --disable-components=metrics-server
@@ -29,8 +29,8 @@ spec:
             bind-address: "0.0.0.0"
         api:
           sans:
-            - 10.0.7.110
-            - metal-0.chalk.home
+            - 10.0.7.10
+            - metal-0.server.chalk.home
             - metal-0
         extensions:
           helm:
@@ -62,7 +62,7 @@ spec:
                   ipam:
                     mode: kubernetes
                   ipv4NativeRoutingCIDR: "10.101.0.0/16"
-                  k8sServiceHost: "10.0.7.110"
+                  k8sServiceHost: "10.0.7.10"
                   k8sServicePort: 6443
                   kubeProxyReplacement: true
                   kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256

@@ -2,7 +2,7 @@
 timezone: "Asia/Seoul"
 github_username: "chalk-hwang"
 coredns_addr: "10.102.0.10"
-kubeapi_addr: "10.0.7.110"
+kubeapi_addr: "10.0.7.10"
 cluster_cidr: "10.101.0.0/16"
 service_cidr: "10.102.0.0/16"
 node_cidr: "10.0.6.0/23"

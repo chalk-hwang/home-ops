@@ -61,7 +61,7 @@ data:
     kubeControllerManager:
       enabled: true
       endpoints: &endpoints
-        - 10.0.7.110
+        - 10.0.7.10
       serviceMonitor:
         metricRelabelings:
           # Remove duplicate labels provided by k3s
