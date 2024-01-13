@@ -31,12 +31,12 @@ spec:
     ingress:
       enabled: true
       className: internal
-            annotations:
+      annotations:
         gethomepage.dev/enabled: "true"
         gethomepage.dev/group: Home
         gethomepage.dev/name: Weave-gitops
         gethomepage.dev/icon: flux-cd.png
-            hosts:
+        hosts:
         - host: &host "gitops.${SECRET_DOMAIN}"
           paths:
             - path: /

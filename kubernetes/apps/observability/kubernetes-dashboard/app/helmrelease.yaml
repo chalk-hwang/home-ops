@@ -31,12 +31,12 @@ spec:
     ingress:
       enabled: true
       className: internal
-                annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/icon: kubernetes-dashboard.png
-          gethomepage.dev/name: Kubernetes Dashboard
-          gethomepage.dev/group: Observability
-              hosts:
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/icon: kubernetes-dashboard.png
+        gethomepage.dev/name: Kubernetes Dashboard
+        gethomepage.dev/group: Observability
+        hosts:
         - &host "kubernetes.${SECRET_DOMAIN}"
       tls:
         - hosts:

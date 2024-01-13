@@ -24,10 +24,5 @@
         "vs-kubernetes.knownKubeconfigs": [
           "./kubeconfig"
       ]
-    },
-    "linter.linters": {
-      "yamllint": {
-        "enabled": false
-      }
     }
 }

@@ -46,6 +46,10 @@ spec:
                 values: |2
                   autoDirectNodeRoutes: true
                   bpf:
+                  tolerations:
+                    - key: "node-role.kubernetes.io/master"
+                      operator: "Exists"
+                      effect: "NoSchedule"
                     masquerade: true
                   bgp:
                     enabled: false

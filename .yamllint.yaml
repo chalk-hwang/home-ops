@@ -1,0 +1,12 @@
+ignore: |
+  templates/
+  mkdocs.yml
+
+extends: default
+
+rules:
+  document-start: disable
+  line-length: disable
+  indentation:
+    spaces: consistent
+    indent-sequences: whatever
