@@ -24,5 +24,10 @@
         "vs-kubernetes.knownKubeconfigs": [
           "./kubeconfig"
       ]
-    }
+    },
+    "yaml.format.enable": false,
+    "[yaml]": {
+      "editor.defaultFormatter": null
+    },
+    "prettier.bracketSpacing": false
 }
