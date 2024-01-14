@@ -6,9 +6,9 @@ metadata:
 spec:
   hosts:
     - role: single
-      ssh:
+      openSSH:
         address: 10.0.7.10
-        user: root
+        user: chalk
       installFlags:
         - --disable-components=metrics-server
   k0s:
