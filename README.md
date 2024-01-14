@@ -76,13 +76,13 @@ If you are new to Flux and GitOps in general it is important to understand that 
 
     ```sh
     su -
-    apt update
-    apt install -y sudo
-    usermod -aG sudo ${username}
+    dnf update
+    dnf install -y sudo
+    usermod -aG wheel ${username}
     echo "${username} ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/${username}
     exit
-    newgrp sudo
-    sudo apt update
+    newgrp wheel
+    sudo dnf update
     ```
 
 4. [Post install] Add SSH keys (or use `ssh-copy-id` on the client that is connecting)
@@ -117,7 +117,7 @@ If you are new to Flux and GitOps in general it is important to understand that 
 
 4. Connect SSD/NVMe drive to the Raspberry Pi 4 and power it on.
 
-5. [Post install] SSH into the device with the `root` user and then create a normal user account with `adduser ${username}`
+5. [Post install] SSH into the device with the `root` user and then create a normal user account with `adduser chalk`
 
 6. [Post install] Follow steps 3 and 4 from [Debian for AMD64](#debian-for-amd64).
 

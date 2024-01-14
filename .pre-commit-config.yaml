@@ -7,6 +7,10 @@ repos:
   - id: check-merge-conflict
   - id: check-shebang-scripts-are-executable
   - id: detect-private-key
+    exclude: |
+            (?x)^(
+                README.md
+            )$
   - id: end-of-file-fixer
   - id: mixed-line-ending
   - id: trailing-whitespace

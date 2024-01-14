@@ -13,9 +13,6 @@ spec:
         user: {{ item.username }}
       installFlags:
         - --disable-components=metrics-server
-        {% if item.role | default('') == 'controller+worker' %}
-        - --no-taints
-        {% endif %}
     {% endfor %}
     {% if bootstrap_nodes.worker | default([]) | length > 0 %}
     {% for item in bootstrap_nodes.worker %}

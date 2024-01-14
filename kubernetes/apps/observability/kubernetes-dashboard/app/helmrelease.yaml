@@ -36,7 +36,7 @@ spec:
         gethomepage.dev/icon: kubernetes-dashboard.png
         gethomepage.dev/name: Kubernetes Dashboard
         gethomepage.dev/group: Observability
-        hosts:
+      hosts:
         - &host "kubernetes.${SECRET_DOMAIN}"
       tls:
         - hosts:

@@ -10,3 +10,7 @@ rules:
   indentation:
     spaces: consistent
     indent-sequences: whatever
+  comments-indentation:
+    level: warning
+  braces:
+    max-spaces-inside: 1
