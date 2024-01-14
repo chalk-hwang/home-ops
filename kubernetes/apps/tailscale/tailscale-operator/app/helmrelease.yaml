@@ -22,6 +22,12 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  valuesFrom:
+  - secretKeyRef:
+      name: oauth-secrets
   values:
+    oauth:
+      clientId: "{{ .Values.clientId }}"
+      clientSecret: "{{ .Values.clientSecret }}"
     podAnnotations:
-      secret.reloader.stakater.com/reload: operator-oauth
+      secret.reloader.stakater.com/reload: oauth-secrets
