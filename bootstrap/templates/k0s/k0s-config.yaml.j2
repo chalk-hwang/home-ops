@@ -8,7 +8,7 @@ spec:
   hosts:
     {% for item in bootstrap_nodes.master %}
     - role: {{ item.role | default('controller+worker') }}
-      ssh:
+      openSSH:
         address: {{ item.address }}
         user: {{ item.username }}
       installFlags:
@@ -17,7 +17,7 @@ spec:
     {% if bootstrap_nodes.worker | default([]) | length > 0 %}
     {% for item in bootstrap_nodes.worker %}
     - role: worker
-      ssh:
+      openSSH:
         address: {{ item.address }}
         user: {{ item.username }}
     {% endfor %}
