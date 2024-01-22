@@ -3,6 +3,6 @@ kubernetes:
   children:
     master:
       hosts:
-        metal-0:
-          ansible_user: chalk
-          ansible_host: 10.0.7.10
+        "metal-0":
+          ansible_user: "chalk"
+          ansible_host: "10.0.7.10"

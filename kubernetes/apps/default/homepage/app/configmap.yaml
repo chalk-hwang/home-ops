@@ -37,7 +37,10 @@ data:
             description: Cloudflared Tunnel
             widget:
               type: cloudflared
-              accountid: {{ HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID }}              tunnelid: {{ HOMEPAGE_VAR_CLOUDFLARED_TUNNELID }}              key: {{ HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN }}  settings.yaml: |
+              accountid: "{{HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID}}"
+              tunnelid: "{{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}"
+              key: "{{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}"
+  settings.yaml: |
     title: Dashboard
     theme: dark
     color: slate
@@ -60,7 +63,7 @@ data:
         expanded: true
         memory: true
     - search:
-        provider: [duckduckgo]
+        provider: ["duckduckgo"]
         focus: false
         target: _blank
     - greeting:

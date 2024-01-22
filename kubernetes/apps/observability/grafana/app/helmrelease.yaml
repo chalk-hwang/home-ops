@@ -8,12 +8,11 @@ spec:
   chart:
     spec:
       chart: grafana
-      version: 7.0.19
+      version: 7.2.4
       sourceRef:
         kind: HelmRepository
         name: grafana
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
@@ -166,8 +165,8 @@ spec:
         gethomepage.dev/group: Observability
         gethomepage.dev/widget.type: grafana
         gethomepage.dev/widget.url: http://grafana.observability
-        gethomepage.dev/widget.username: '{{`{{ HOMEPAGE_VAR_GRAFANA_USERNAME }}`}}'
-        gethomepage.dev/widget.password: '{{`{{ HOMEPAGE_VAR_GRAFANA_PASSWORD }}`}}'
+        gethomepage.dev/widget.username: "{{`{{HOMEPAGE_VAR_GRAFANA_USERNAME}}`}}"
+        gethomepage.dev/widget.password: "{{`{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}`}}"
       hosts:
         - &host "grafana.${SECRET_DOMAIN}"
       tls:

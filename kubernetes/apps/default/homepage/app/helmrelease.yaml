@@ -8,13 +8,12 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.4.0
+      version: 2.5.0
       interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -34,7 +33,7 @@ spec:
           main:
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v0.8.4
+              tag: v0.8.6
             env:
               TZ: "${TIMEZONE}"
             envFrom:
@@ -43,9 +42,9 @@ spec:
             resources:
               requests:
                 cpu: 15m
-                memory: 100M
-              limits:
                 memory: 250M
+              limits:
+                memory: 1G
     service:
       main:
         ports:

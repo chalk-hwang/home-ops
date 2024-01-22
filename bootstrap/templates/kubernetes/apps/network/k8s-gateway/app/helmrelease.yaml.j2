@@ -8,12 +8,11 @@ spec:
   chart:
     spec:
       chart: k8s-gateway
-      version: 2.1.0
+      version: 2.3.0
       sourceRef:
         kind: HelmRepository
         name: k8s-gateway
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
@@ -31,5 +30,5 @@ spec:
       type: LoadBalancer
       port: 53
       annotations:
-        io.cilium/lb-ipam-ips: "{{ bootstrap_k8s_gateway_addr }}"
+        io.cilium/lb-ipam-ips: "#{ bootstrap_k8s_gateway_addr }#"
       externalTrafficPolicy: Cluster
