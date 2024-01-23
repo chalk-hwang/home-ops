@@ -6,8 +6,8 @@ metadata:
   namespace: flux-system
 data:
   TIMEZONE: "Asia/Seoul"
-  COREDNS_ADDR: "10.12.0.10"
-  KUBE_API_ADDR: "10.0.7.251"
+  COREDNS_ADDR: "10.102.0.10"
+  KUBE_API_ADDR: "10.0.7.2"
   CLUSTER_CIDR: "10.101.0.0/16"
-  SERVICE_CIDR: "10.12.0.0/16"
+  SERVICE_CIDR: "10.102.0.0/16"
   NODE_CIDR: "10.0.7.0/24"
