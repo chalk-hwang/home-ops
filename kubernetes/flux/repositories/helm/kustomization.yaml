@@ -25,3 +25,5 @@ resources:
   - ./stakater.yaml
   - ./weave-gitops.yaml
   - ./xenitab.yaml
+  - ./external-secrets.yaml
+  - ./1password.yaml
