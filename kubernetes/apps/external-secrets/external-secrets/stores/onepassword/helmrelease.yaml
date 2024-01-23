@@ -24,6 +24,11 @@ spec:
     keepHistory: false
   values:
     connect:
+      credentials:
+        valueFrom:
+          secretKeyRef:
+            name: op-credentials
+            key: 1password-credentials.json
       api:
         httpPort: 80
         httpsPort: 443
