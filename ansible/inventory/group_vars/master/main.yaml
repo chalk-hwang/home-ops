@@ -8,7 +8,7 @@ k3s_server:
     - "10.0.7.2"
   docker: false
   flannel-backend: "none" # quote
-  disable: ["flannel", "local-storage", "metrics-server", "servicelb", "traefik"]
+  disable: ["local-storage", "servicelb", "metrics-server", "traefik"]
   disable-network-policy: true
   disable-cloud-controller: true
   disable-kube-proxy: true
@@ -27,3 +27,5 @@ k3s_server:
   kubelet-arg:
     - "image-gc-high-threshold=55"
     - "image-gc-low-threshold=50"
+
+

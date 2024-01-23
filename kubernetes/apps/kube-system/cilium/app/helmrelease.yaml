@@ -71,13 +71,13 @@ spec:
             gethomepage.dev/name: Cilium
             gethomepage.dev/icon: cilium.png
           hosts:
-            - "hubble.${SECRET_DOMAIN}"
+            - "hubble.chalk-playground.space"
           tls:
             - hosts:
-                - "hubble.${SECRET_DOMAIN}"
+                - "hubble.chalk-playground.space"
     ipam:
       mode: kubernetes
-    ipv4NativeRoutingCIDR: "${CLUSTER_CIDR}"
+    ipv4NativeRoutingCIDR: "10.101.0.0/16"
     k8sServiceHost: 127.0.0.1
     k8sServicePort: 6444
     kubeProxyReplacement: true

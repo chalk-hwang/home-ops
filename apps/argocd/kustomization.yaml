@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  # - https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared
+helmCharts:
+  - name: argo-cd
+    repo: https://argoproj.github.io/argo-helm
+    releaseName: argocd
+    namespace: argocd
+    includeCRDs: true
+    valuesInline:
+      configs:
+        params:
+          server.insecure: true
+        cm:
+          accounts.image-updater: apiKey
+          kustomize.buildOptions: --enable-helm
+          application.resourceTrackingMethod: annotation+label
+          url: https://argo.chalk-playground.space
+          statusbadge.enabled: "true"
+          statusbadge.url: "https://argo.chalk-playground.space/"
+          exec.enabled: "true"
+          # https://argo-cd.readthedocs.io/en/stable/operator-manual/reconcile/#system-level-configuration
+          resource.ignoreResourceUpdatesEnabled: "true"

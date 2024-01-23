@@ -1,0 +1,3 @@
+server:
+  config:
+    url: argocd.chalk-playground.space

@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"argocd","Source":"registry.terraform.io/aigisuk/argocd/kubernetes","Version":"0.2.7","Dir":".terraform/modules/argocd"},{"Key":"traefik","Source":"registry.terraform.io/aigisuk/traefik/kubernetes","Version":"0.2.1","Dir":".terraform/modules/traefik"}]}
