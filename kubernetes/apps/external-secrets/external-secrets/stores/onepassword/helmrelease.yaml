@@ -24,15 +24,17 @@ spec:
     keepHistory: false
   values:
     connect:
+      api:
+        httpPort: 80
+        httpsPort: 443
       ingress:
         enabled: true
+        ingressClassName: internal
         annotations:
           kubernetes.io/ingress.class: internal
         hosts:
           - host: &host "onepassword-connect.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
+            paths: []
         tls:
           - hosts:
               - *host
