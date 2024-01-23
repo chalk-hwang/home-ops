@@ -38,8 +38,8 @@ resources:
   - app/repo-role.yaml
   - app/repo-rb.yaml
 
-  - https://github.com/gruberdev/homelab/apps/networking/tailscale
-  - https://github.com/gruberdev/homelab/apps/networking/cloudflared
+  - https://github.com/chalk-hwang/home-ops/apps/networking/tailscale
+  - https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared
   - https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.3/manifests/install.yaml
   - app/styles-cm.yaml
 

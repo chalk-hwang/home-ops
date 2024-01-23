@@ -1,6 +1,21 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  # ArgoCD Projects
+  - base/projects/core.yaml
+  - base/projects/cluster.yaml
+  - base/projects/monitoring.yaml
+  - base/projects/networking.yaml
+  - base/projects/apps.yaml
+
+  # Core apps
+  - base/core/argocd.yaml
+  # - base/core/data.yaml
+  # - base/core/nvidia.yaml
+  # - base/core/nvidia-extra.yaml
+  # - base/core/networking.yaml
+  # - base/core/services.yaml
+  # - base/core/utilities.yaml
   # - https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared
 helmCharts:
   - name: argo-cd
@@ -9,7 +24,26 @@ helmCharts:
     namespace: argocd
     includeCRDs: true
     valuesInline:
+      repoServer:
+        serviceAccount:
+          # -- Repo server service account name
+          name: "argocd-repo-server" # "argocd-repo-server
+        rbac:
+          - apiGroups:
+              - ""
+            resources:
+              - configmaps
+              - secrets
+            verbs:
+              - get
+              - watch
+              - list
+
       configs:
+        styles: |
+          .nav-bar {
+            background: linear-gradient(to bottom, #999, #777, #333, #222, #111);
+          }
         params:
           server.insecure: true
         cm:
@@ -22,3 +56,53 @@ helmCharts:
           exec.enabled: "true"
           # https://argo-cd.readthedocs.io/en/stable/operator-manual/reconcile/#system-level-configuration
           resource.ignoreResourceUpdatesEnabled: "true"
+        rbac:
+          policy.default: role:admin'
+          policy.csv: |
+            p, role:image-updater, applications, get, */*, allow
+            p, role:image-updater, applications, update, */*, allow
+            g, image-updater, role:image-updater
+            p, role:admin, exec, create, */*, allow
+            g, ext, role:extension
+            p, role:extension, applications, get, default/httpbin-app, allow
+            p, role:extension, extensions, invoke, httpbin, allow
+            p, role:action-runner, applications, action/argoproj.io/Rollout/abort, *, allow
+            p, role:action-runner, applications, action/argoproj.io/Rollout/promote-full, *, allow
+            p, role:action-runner, applications, action/argoproj.io/Rollout/retry, *, allow
+            p, role:action-runner, applications, action/argoproj.io/Rollout/resume, *, allow
+            p, role:action-runner, applications, action/argoproj.io/Rollout/restart, *, allow
+            p, role:action-runner, applications, action/argoproj.io/AnalysisRun/terminate, *, allow
+            p, role:action-runner, applications, action/apps/DaemonSet/restart, *, allow
+            p, role:action-runner, applications, action/apps/StatefulSet/restart, *, allow
+            p, role:action-runner, applications, action/apps/Deployment/pause, *, allow
+            p, role:action-runner, applications, action/apps/Deployment/resume, *, allow
+            p, role:action-runner, applications, action/apps/Deployment/restart, *, allow
+            p, role:action-runner, applications, action/argoproj.io/WorkflowTemplate/create-workflow, *, allow
+            p, role:action-runner, applications, action/argoproj.io/CronWorkflow/create-workflow, *, allow
+            p, role:action-runner, applications, action/batch/CronJob/create-job, *, allow
+      server:
+        initContainers:
+          - name: extension-metrics
+            image: quay.io/argoprojlabs/argocd-extension-installer:v0.0.1
+            env:
+              - name: EXTENSION_URL
+                value: https://github.com/argoproj-labs/argocd-extension-metrics/releases/download/v1.0.0/extension.tar.gz
+              - name: EXTENSION_CHECKSUM_URL
+                value: https://github.com/argoproj-labs/argocd-extension-metrics/releases/download/v1.0.0/extension_checksums.txt
+            volumeMounts:
+              - name: extensions
+                mountPath: /tmp/extensions/
+            securityContext:
+              runAsUser: 1000
+              allowPrivilegeEscalation: false
+        volumeMounts:
+          - name: styles
+            mountPath: /shared/app/argocd/styles
+          - name: extensions
+            mountPath: /tmp/extensions/
+        volumes:
+          - configMap:
+              name: argocd-styles-cm
+            name: styles
+          - name: extensions
+            emptyDir: {}
