@@ -48,7 +48,7 @@
           delegate_to: "{{ groups['master'][0] }}"
 
         - name: Update
-          ansible.builtin.apt:
+          ansible.builtin.dnf:
             upgrade: dist
             update_cache: true
 
