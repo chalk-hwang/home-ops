@@ -23,4 +23,16 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    
+    connect:
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: internal
+        hosts:
+          - host: &host "onepassword-connect.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
