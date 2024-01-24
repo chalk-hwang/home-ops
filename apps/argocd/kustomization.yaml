@@ -20,8 +20,9 @@ resources:
   # - base/core/nvidia-extra.yaml
   # - base/core/networking.yaml
   # - base/core/services.yaml
-  # - base/core/utilities.yaml
-  # - https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared
+  - base/core/utilities.yaml
+
+  - https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared
 helmCharts:
   - name: argo-cd
     repo: https://argoproj.github.io/argo-helm
