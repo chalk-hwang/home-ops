@@ -6,7 +6,6 @@ resources:
 # - ./external-dns
   - cert-manager.yaml
   - ./ingress-nginx
-  - cloudflared.yaml
 # - nginx-ingress.yaml
 # - tailscale-operator.yaml
 # - tailscale.yaml
