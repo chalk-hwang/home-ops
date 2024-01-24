@@ -40,7 +40,7 @@ spec:
     sources: ["crd", "ingress"]
     txtPrefix: k8s.
     txtOwnerId: default
-    domainFilters: ["${SECRET_DOMAIN}"]
+    domainFilters: ["chalk-playground.space"]
     serviceMonitor:
       enabled: true
     podAnnotations:

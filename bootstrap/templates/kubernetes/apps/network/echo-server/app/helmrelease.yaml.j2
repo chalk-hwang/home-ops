@@ -69,7 +69,7 @@ spec:
         enabled: true
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "external.chalk-playground.space"
           #% if addon_homepage.enabled %#
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Network
@@ -77,7 +77,7 @@ spec:
           gethomepage.dev/icon: mdi-video-input-antenna
           #% endif %#
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.chalk-playground.space"
             paths:
               - path: /
                 service:

@@ -4,11 +4,11 @@ kind: Ingress
 metadata:
   name: flux-webhook
   annotations:
-    external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+    external-dns.alpha.kubernetes.io/target: "external.chalk-playground.space"
 spec:
   ingressClassName: external
   rules:
-    - host: &host "flux-webhook.${SECRET_DOMAIN}"
+    - host: &host "flux-webhook.chalk-playground.space"
       http:
         paths:
           - path: /hook/

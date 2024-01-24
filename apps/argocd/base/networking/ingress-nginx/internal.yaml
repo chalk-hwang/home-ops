@@ -1,15 +1,18 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: certmanager-clusterissuer
+  name: ingress-nginx-internal
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: networking
   source:
     repoURL: 'https://github.com/chalk-hwang/home-ops.git'
-    path: apps/networking/certmanager
+    path: apps/networking/ingress-nginx/base
     targetRevision: main
   destination:
-    namespace: cert-manager
+    namespace: networking
     name: in-cluster
   syncPolicy:
     automated:
@@ -17,15 +20,15 @@ spec:
       selfHeal: true
       allowEmpty: true
     syncOptions:
-    - Validate=true
-    - CreateNamespace=false
-    - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
-    - Replace=true
+      - Validate=false
+      - CreateNamespace=false
+      - PrunePropagationPolicy=foreground
+      - ApplyOutOfSyncOnly=false
+      - Prune=true
+      - RespectIgnoreDifferences=true
+      - ServerSideApply=true
     retry:
-      limit: 5
+      limit: 10
       backoff:
         duration: 20s
         factor: 2

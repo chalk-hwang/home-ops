@@ -119,13 +119,13 @@ spec:
       selfHeal: true
       allowEmpty: false
     syncOptions:
-    - Validate=false
-    - CreateNamespace=false
-    - PrunePropagationPolicy=foreground
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
-    - RespectIgnoreDifferences=true
-    - ServerSideApply=true
+      - Validate=false
+      - CreateNamespace=false
+      - PrunePropagationPolicy=foreground
+      - ApplyOutOfSyncOnly=false
+      - Prune=true
+      - RespectIgnoreDifferences=true
+      - ServerSideApply=true
     retry:
       limit: 5
       backoff:

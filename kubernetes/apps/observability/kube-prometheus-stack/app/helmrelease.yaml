@@ -118,10 +118,10 @@ spec:
           gethomepage.dev/widget.type: prometheus
         pathType: Prefix
         hosts:
-          - "prometheus.${SECRET_DOMAIN}"
+          - "prometheus.chalk-playground.space"
         tls:
           - hosts:
-              - "prometheus.${SECRET_DOMAIN}"
+              - "prometheus.chalk-playground.space"
       prometheusSpec:
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false

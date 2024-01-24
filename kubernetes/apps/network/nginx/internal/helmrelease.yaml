@@ -29,7 +29,7 @@ spec:
       replicaCount: 1
       service:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "internal.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/hostname: "internal.chalk-playground.space"
           io.cilium/lb-ipam-ips: "10.0.7.5"
         externalTrafficPolicy: Cluster
       ingressClassResource:
@@ -68,7 +68,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
+        default-ssl-certificate: "network/chalk-playground-space-production-tls"
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname

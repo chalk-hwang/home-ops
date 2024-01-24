@@ -1,0 +1,29 @@
+---
+# This ConfigMap is just a way to define the cloudflared config.yaml file in k8s.
+# It's useful to define it in k8s, rather than as a stand-alone .yaml file, because
+# this lets you use various k8s templating solutions (e.g. Helm charts) to
+# parameterize your config, instead of just using string literals.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflared
+data:
+  config.yaml: |
+    # Name of the tunnel you want to run
+    tunnel: home-ops-tunnel
+    credentials-file: /etc/cloudflared/creds/credentials.json
+    # Serves the metrics server under /metrics and the readiness server under /ready
+    metrics: 0.0.0.0:2000
+    no-autoupdate: true
+    originRequest:
+      http2Origin: true
+    ingress:
+      - hostname: chalk-playground.space
+        service: https://nginx-external-controller.network.svc.cluster.local:443
+        originRequest:
+          originServerName: external.chalk-playground.space
+      - hostname: chalk-playground.space
+        service: https://nginx-external-controller.network.svc.cluster.local:443
+        originRequest:
+          originServerName: external.chalk-playground.space
+      - service: http_status:404

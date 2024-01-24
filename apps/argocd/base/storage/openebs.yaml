@@ -1,0 +1,40 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openebs
+spec:
+  project: cluster
+  source:
+    repoURL: 'https://openebs.github.io/charts'
+    targetRevision: 3.10.0
+    chart: openebs
+    helm:
+      releaseName: openebs
+      value: |
+        localprovisioner:
+          hostpathClass:
+            enabled: true
+            name: openebs-hostpath
+            isDefaultClass: false
+            basePath: "/var/openebs/local"
+  destination:
+    name: 'in-cluster'
+    namespace: storage
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+      allowEmpty: true
+    syncOptions:
+      - Validate=false
+      - PrunePropagationPolicy=foreground
+      - PruneLast=false
+      - ApplyOutOfSyncOnly=true
+      - Prune=false
+    retry:
+      limit: 1
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m

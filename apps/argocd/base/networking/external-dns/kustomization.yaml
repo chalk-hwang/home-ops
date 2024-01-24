@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
 # - nextdns.yaml
-- cloudflare.yaml
+  - cloudflare.yaml
 
 namespace: argocd
 

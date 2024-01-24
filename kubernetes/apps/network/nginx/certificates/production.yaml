@@ -2,13 +2,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${SECRET_DOMAIN/./-}-production"
+  name: "chalk-playground-space-production"
 spec:
-  secretName: "${SECRET_DOMAIN/./-}-production-tls"
+  secretName: "chalk-playground-space-production-tls"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: "${SECRET_DOMAIN}"
+  commonName: "chalk-playground.space"
   dnsNames:
-    - "${SECRET_DOMAIN}"
-    - "*.${SECRET_DOMAIN}"
+    - "chalk-playground.space"
+    - "*.chalk-playground.space"
