@@ -6,7 +6,7 @@ spec:
   project: networking
   source:
     repoURL: 'https://github.com/chalk-hwang/home-ops.git'
-    path: apps/networking/cert-manager/issuers
+    path: apps/networking/cert-manager-issuers
     targetRevision: main
   destination:
     namespace: cert-manager
