@@ -9,7 +9,7 @@ spec:
   project: networking
   source:
     repoURL: 'https://github.com/chalk-hwang/home-ops.git'
-    path: apps/networking/ingress-nginx/base
+    path: apps/networking/ingress-nginx/internal
     targetRevision: main
   destination:
     namespace: networking

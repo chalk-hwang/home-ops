@@ -8,8 +8,8 @@ metadata:
 spec:
   project: networking
   source:
-    repoURL: https://github.com/chalk-hwang/home-ops.git
-    path: apps/networking/ingress-nginx/overlays/external
+    repoURL: 'https://github.com/chalk-hwang/home-ops.git'
+    path: apps/networking/ingress-nginx/external
     targetRevision: main
   destination:
     namespace: networking
