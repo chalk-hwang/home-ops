@@ -11,4 +11,4 @@ resources:
 namespace: argocd
 
 commonLabels:
-  app.kubernetes.io/category: networking
+  app.kubernetes.io/category: utilities
