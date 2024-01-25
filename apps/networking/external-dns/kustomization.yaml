@@ -1,0 +1,36 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./external-secret.yaml
+  - ./helmrelease.yaml
+  - ./rbac.yaml
+
+helmCharts:
+  - name: external-dns
+    releaseName: external-dns-cloudflare
+    namespace: networking
+    includeCRDs: false
+    version: 1.14.2
+    repo: https://kubernetes-sigs.github.io/external-dns
+    valuesInline:
+      fullnameOverride: external-dns
+      provider: external-dns-cloudflare
+      envFrom:
+        - secretRef:
+            name: external-dns-cloudflare-secret
+      extraArgs:
+        - --ingress-class=external
+        - --cloudflare-proxied
+        - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
+        - --crd-source-kind=DNSEndpoint
+      policy: sync
+      sources: ["crd", "ingress"]
+      txtPrefix: k8s.
+      txtOwnerId: default
+      domainFilters: ["chalk-playground.space"]
+      serviceMonitor:
+        enabled: true
+      podAnnotations:
+        secret.reloader.stakater.com/reload: external-dns-cloudflare-secret

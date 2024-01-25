@@ -7,7 +7,6 @@ spec:
   project: cluster
   source:
     repoURL: 'https://openebs.github.io/charts'
-    targetRevision: 3.10.0
     chart: openebs
     helm:
       releaseName: openebs
