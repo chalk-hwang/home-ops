@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
 # - ./external-dns
   - external-secrets.yaml
+  - external-secrets-stores.yaml
   - onepassword-connect.yaml
 
 namespace: argocd
