@@ -5,9 +5,10 @@ kind: Kustomization
 resources:
   - external-dns.yaml
   - cert-manager.yaml
-  - cert-manager-issuers.yaml
   - ./ingress-nginx
   - k8s-gateway.yaml
+  - cert-manager-issuers.yaml
+  - kube-vip.yaml
 # - nginx-ingress.yaml
 # - tailscale-operator.yaml
 # - tailscale.yaml
