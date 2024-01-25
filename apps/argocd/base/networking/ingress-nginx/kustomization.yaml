@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
 # - nextdns.yamlapps/argocd/base/networking/external-dns/kustomization.yaml
+  - certificate.yaml
   - external.yaml
   - internal.yaml
 namespace: argocd
