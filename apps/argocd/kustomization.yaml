@@ -25,8 +25,12 @@ resources:
   - base/repo-role.yaml
   - base/repo-rb.yaml
 
+
+
   # - https://github.com/gruberdev/homelab/apps/networking/tailscale
   - https://github.com/gruberdev/homelab/apps/networking/cloudflared
+
+  - base/cloudflared-dnsendpoint.yaml
   - https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.3/manifests/install.yaml
   - base/styles-cm.yaml
 

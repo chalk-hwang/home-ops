@@ -11,4 +11,14 @@ data:
     ingress:
     - hostname: argo.chalk-playground.space
       service: http://argocd-server:80
+    - hostname: chalk-playground.space
+      service: https://nginx-external-controller.network.svc.cluster.local:443
+      originRequest:
+        http2Origin: true
+        originServerName: external.chalk-playground.space
+    - hostname: "*.chalk-playground.space"
+      service: https://nginx-external-controller.network.svc.cluster.local:443
+      originRequest:
+        http2Origin: true
+        originServerName: external.chalk-playground.space
     - service: http_status:404

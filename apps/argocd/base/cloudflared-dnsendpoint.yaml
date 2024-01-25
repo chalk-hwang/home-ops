@@ -9,3 +9,7 @@ spec:
     - dnsName: external.chalk-playground.space
       recordType: CNAME
       targets: ["28724a69-8809-4fe7-8615-0f1fe4fcd66b.cfargotunnel.com"]
+    - dnsName: argo.chalk-playground.space
+      recordType: CNAME
+      targets: ["28724a69-8809-4fe7-8615-0f1fe4fcd66b.cfargotunnel.com"]
+

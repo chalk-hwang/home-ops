@@ -6,11 +6,12 @@ metadata:
 spec:
   project: cluster
   source:
-    repoURL: 'https://openebs.github.io/charts'
+    repoURL: https://openebs.github.io/charts
     chart: openebs
+    targetRevision: 3.10.0
     helm:
       releaseName: openebs
-      value: |
+      valuesObject:
         localprovisioner:
           hostpathClass:
             enabled: true
