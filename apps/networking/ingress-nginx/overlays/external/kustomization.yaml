@@ -6,8 +6,7 @@ metadata:
   namespace: networking
 
 resources:
-  - ../../../base/networking/ingress-nginx
-
+  - ../../base
 patches:
   - target:
       group: kustomize.config.k8s.io
