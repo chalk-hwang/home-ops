@@ -24,3 +24,4 @@ Brewfile.lock.json
 .idea
 # wiki
 wiki
+.env
