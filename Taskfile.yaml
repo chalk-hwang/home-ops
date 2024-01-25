@@ -31,6 +31,10 @@ includes:
   talos: .taskfiles/Talos/Taskfile.yaml
   sops: .taskfiles/Sops/Taskfile.yaml
   workstation: .taskfiles/Workstation/Taskfile.yaml
+  argocd: .taskfiles/ArgoCD/Taskfile.yaml
+  secrets: .taskfiles/Secrets/Taskfile.yaml
+
+dotenv: [.env]
 
 tasks:
 

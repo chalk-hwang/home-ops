@@ -15,7 +15,7 @@ spec:
         values: |
           nameOverride: "external-dns-cloudflare"
           domainFilters:
-            - gruber.dev.br
+            - chalk-playground.space
           clusterDomain: cluster.local
           combineFQDNAnnotation: false
           containerPorts:
