@@ -7,7 +7,7 @@ metadata:
   labels:
     app.kubernetes.io/category: storage
 spec:
-  project: core
+  project: default
   source:
     repoURL: 'https://github.com/chalk-hwang/home-ops.git'
     path: apps/argocd/base/storage

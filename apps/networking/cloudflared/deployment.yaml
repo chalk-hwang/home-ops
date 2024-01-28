@@ -10,7 +10,6 @@ spec:
       pod: cloudflared
   template:
     metadata:
-      creationTimestamp: null
       labels:
         pod: cloudflared
     spec:
@@ -63,7 +62,6 @@ spec:
           # --from-file=credentials.json=/Users/yourusername/.cloudflared/<tunnel ID>.json
           # ```
           secretName: home-tunnel
-          namespace: argocd
       # Create a config.yaml file from the ConfigMap below.
       - name: config
         configMap:

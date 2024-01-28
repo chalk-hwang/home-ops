@@ -25,3 +25,4 @@ spec:
         prometheus: enabled
     syncOptions:
     - ApplyOutOfSyncOnly=false
+    - CreateNamespace=true
