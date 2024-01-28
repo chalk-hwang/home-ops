@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: utilities
+  namespace: argocd
+  labels:
+    app.kubernetes.io/category: utilities
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/chalk-hwang/home-ops.git'
+    path: argocd/base/utilities
+    targetRevision: main
+  destination:
+    namespace: utilities
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ApplyOutOfSyncOnly=false

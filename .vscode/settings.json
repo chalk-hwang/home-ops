@@ -17,8 +17,8 @@
     "yaml.schemas": {
         "ansible": "./ansible/*.yaml",
         "Kubernetes": "./kubernetes/*.yaml",
-        "https://json.schemastore.org/yamllint.json": "file:///Users/ChalkHwang/Workspaces/home-ops/apps/argocd/base/storage/openebs.yaml",
-        "kubernetes://schema/argoproj.io/v1alpha1@appproject": "file:///Users/ChalkHwang/Workspaces/home-ops/apps/argocd/base/projects/cluster.yaml"
+        "https://json.schemastore.org/yamllint.json": "file:///Users/ChalkHwang/Workspaces/home-ops/argocd/base/storage/openebs.yaml",
+        "kubernetes://schema/argoproj.io/v1alpha1@appproject": "file:///Users/ChalkHwang/Workspaces/home-ops/argocd/base/projects/cluster.yaml"
     },
     "vs-kubernetes": {
         "vs-kubernetes.kubeconfig": "./kubeconfig",

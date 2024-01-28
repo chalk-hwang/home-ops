@@ -1,4 +1,4 @@
-fullnameOverride: internal
+fullnameOverride: internal-nginx
 controller:
   replicaCount: 1
   service:

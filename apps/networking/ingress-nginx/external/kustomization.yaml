@@ -3,14 +3,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
-  name: external-ingress-nginx
+  name: internal-nginx
 
 helmCharts:
   - name: ingress-nginx
-    releaseName: external
-    namespace: networking
+    releaseName: internal
+    namespace: ingress-nginx
     includeCRDs: true
     version: 4.9.0
     repo: https://kubernetes.github.io/ingress-nginx
     valuesFile: values.yaml
-    

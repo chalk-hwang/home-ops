@@ -1,4 +1,4 @@
-fullnameOverride: external
+fullnameOverride: external-nginx
 controller:
   replicaCount: 1
   service:
