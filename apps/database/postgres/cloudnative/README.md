@@ -32,6 +32,6 @@ kubectl apply -k github.com/gruberdev/homelab/apps/data/postgres/cloudnative
 ```
 
 [github-uri]: https://github.com/chalk-hwang/home-ops
-[argo-uri]: https://github.com/chalk-hwang/home-ops/tree/main/apps/argocd
+[argo-uri]: https://github.com/chalk-hwang/home-ops/tree/main/argocd
 [example-uri]: https://github.com/chalk-hwang/home-ops/blob/main/apps/services/n8n/base/db.yaml
 [docs-uri]: https://postgres-operator.readthedocs.io/en/latest/

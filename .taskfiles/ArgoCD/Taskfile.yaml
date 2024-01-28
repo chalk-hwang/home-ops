@@ -78,7 +78,7 @@ tasks:
 
   install:
     desc: Installs ArgoCD resources manually on the local cluster
-    dir: apps/argocd
+    dir: argocd
     preconditions:
     - sh: 'which kustomize'
       msg: 'kustomize {{.PATH_ERROR}}'
@@ -102,7 +102,7 @@ tasks:
     preconditions:
     - sh: 'which docker'
       msg: 'docker {{.PATH_ERROR}}'
-    dir: apps/argocd
+    dir: argocd
     cmds:
     - |
       docker build -t docker.io/grubertech/argocd-sidecar:latest \
@@ -112,7 +112,7 @@ tasks:
     ignore_error: true
 
   push:sidecar:
-    dir: apps/argocd
+    dir: argocd
     preconditions:
     - sh: 'which docker'
       msg: 'docker {{.PATH_ERROR}}'
@@ -124,7 +124,7 @@ tasks:
     ignore_error: true
 
   rm:
-    dir: apps/argocd
+    dir: argocd
     preconditions:
     - sh: 'which kustomize'
       msg: 'kustomize {{.PATH_ERROR}}'

@@ -8,6 +8,7 @@ resources:
 
 # Core apps
 - base/core/argocd.yaml
+- base/core/cert-manager.yaml
 - base/core/networking.yaml
 - base/core/storage.yaml
 - base/core/utilities.yaml
