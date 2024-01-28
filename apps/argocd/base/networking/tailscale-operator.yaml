@@ -23,7 +23,7 @@ spec:
         https://tailscale.com/kb/1236/kubernetes-operator/
   syncPolicy:
     automated:
-      prune: true
+      prune: false
       selfHeal: true
       allowEmpty: false
     managedNamespaceMetadata:
@@ -32,7 +32,7 @@ spec:
     syncOptions:
     - Validate=false
     - CreateNamespace=true
-    - PrunePropagationPolicy=foreground
+
     retry:
       limit: 5
       backoff:

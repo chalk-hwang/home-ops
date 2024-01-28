@@ -3,28 +3,18 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - base/crds
-  # ArgoCD Projects
-  - base/projects/core.yaml
-  - base/projects/cluster.yaml
-  - base/projects/monitoring.yaml
-  - base/projects/networking.yaml
-  - base/projects/apps.yaml
+- base/crds
+- base/projects.yaml
 
-  # Core apps
-  - base/core/argocd.yaml
-  - base/core/networking.yaml
-  - base/core/storage.yaml
-  # - base/core/data.yaml
-  # - base/core/nvidia.yaml
-  # - base/core/nvidia-extra.yaml
-  # - base/core/networking.yaml
-  # - base/core/services.yaml
-  - base/core/utilities.yaml
+# Core apps
+- base/core/argocd.yaml
+- base/core/networking.yaml
+- base/core/storage.yaml
+- base/core/utilities.yaml
 
-  # ArgoCD
-  - base/repo-role.yaml
-  - base/repo-rb.yaml
+# ArgoCD
+- base/repo-role.yaml
+- base/repo-rb.yaml
 
 
 
@@ -37,8 +27,8 @@ resources:
 
 namespace: argocd
 images:
-  - name: quay.io/argoproj/argocd
-    newTag: v2.9.3
+- name: quay.io/argoproj/argocd
+  newTag: v2.9.3
 patches:
   - patch: |-
       - op: replace
@@ -76,7 +66,7 @@ patches:
   - patch: |-
       - op: replace
         path: "/spec/template/spec/volumes/0/secret/secretName"
-        value: "argo-tunnel"
+        value: "home-tunnel"
     target:
       kind: Deployment
       name: cloudflared

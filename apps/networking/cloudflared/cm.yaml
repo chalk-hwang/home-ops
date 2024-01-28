@@ -10,7 +10,7 @@ metadata:
 data:
   config.yaml: |
     # Name of the tunnel you want to run
-    tunnel: home-ops-tunnel
+    tunnel: home-tunnel
     credentials-file: /etc/cloudflared/creds/credentials.json
     # Serves the metrics server under /metrics and the readiness server under /ready
     metrics: 0.0.0.0:2000
@@ -18,12 +18,12 @@ data:
     originRequest:
       http2Origin: true
     ingress:
-      - hostname: chalk-playground.space
-        service: https://nginx-external-controller.network.svc.cluster.local:443
+      - hostname: chalk-ho.me
+        service: https://nginx-external-controller.network.svc.cluster.at.chalk.ho.me:443
         originRequest:
-          originServerName: external.chalk-playground.space
-      - hostname: chalk-playground.space
-        service: https://nginx-external-controller.network.svc.cluster.local:443
+          originServerName: external.chalk-ho.me
+      - hostname: chalk-ho.me
+        service: https://nginx-external-controller.network.svc.cluster.at.chalk.ho.me:443
         originRequest:
-          originServerName: external.chalk-playground.space
+          originServerName: external.chalk-ho.me
       - service: http_status:404

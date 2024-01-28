@@ -46,10 +46,10 @@ hubble:
         gethomepage.dev/name: Cilium
         gethomepage.dev/icon: cilium.png
       hosts:
-        - "hubble.chalk-playground.space"
+        - "hubble.chalk-ho.me"
       tls:
         - hosts:
-            - "hubble.chalk-playground.space"
+            - "hubble.chalk-ho.me"
 ipam:
   mode: kubernetes
 ipv4NativeRoutingCIDR: "10.101.0.0/16"

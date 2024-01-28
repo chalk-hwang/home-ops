@@ -6,4 +6,4 @@ resources:
   - deployment.yaml
 images:
   - name: cloudflare/cloudflared
-    newTag: 2024.1.0
+    newTag: 2014.1.4

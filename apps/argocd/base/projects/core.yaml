@@ -3,21 +3,24 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: core
+  namespace: argocd
 spec:
-  description: Core Project
-  sourceRepos:
-  - '*'
+  description: Locked down to only be used by ArgoCD
+  orphanedResources:
+    warn: false
+
+  # sourceRepos:
+  # - '*'
+
   destinations:
-  - namespace: kube-system
-    server: https://kubernetes.default.svc
-  - namespace: argocd
-    server: https://kubernetes.default.svc
-  - namespace: koordinator-system
-    server: https://kubernetes.default.svc
-  - namespace: cert-manager
-    server: https://kubernetes.default.svc
+  - namespace: argocd  # should be the ArgoCD installation namespace
+    # server: https://kubernetes.default.svc
+    name: in-cluster
+
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
-  orphanedResources:
-    warn: false
+
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'

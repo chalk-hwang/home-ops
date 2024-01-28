@@ -50,7 +50,6 @@
         - name: Update
           ansible.builtin.dnf:
             upgrade: dist
-            update_cache: true
 
         - name: Check if reboot is required
           ansible.builtin.stat:

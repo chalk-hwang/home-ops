@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: argocd-repo-server
   annotations:
-    link.argocd.argoproj.io/external-link: https://argo.chalk-playground.space
+    link.argocd.argoproj.io/external-link: https://argo.chalk-ho.me
   labels:
     app.kubernetes.io/name: argocd-repo-server
     app.kubernetes.io/part-of: argocd

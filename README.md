@@ -551,7 +551,7 @@ Below is a general guide on trying to debug an issue with an resource or applica
 
 5. If a resource exists try to describe it to see what problems it might have.
 
-    ```sh
+   c ```sh
     kubectl -n <namespace> describe <resource> <name>
     ```
 

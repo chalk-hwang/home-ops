@@ -8,7 +8,7 @@ connect:
     annotations:
       kubernetes.io/ingress.class: internal
     hosts:
-      - host: &host "onepassword-connect.chalk-playground.space"
+      - host: &host "onepassword-connect.chalk-ho.me"
         paths: []
     tls:
       - hosts:

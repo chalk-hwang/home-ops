@@ -9,9 +9,9 @@ data:
   accounts.image-updater: apiKey
   kustomize.buildOptions: --enable-helm
   application.resourceTrackingMethod: annotation+label
-  url: https://argo.chalk-playground.space
+  url: https://argo.chalk-ho.me
   statusbadge.enabled: "true"
-  statusbadge.url: "https://argo.chalk-playground.space/"
+  statusbadge.url: "https://argo.chalk-ho.me/"
   exec.enabled: "true"
   # https://argo-cd.readthedocs.io/en/stable/operator-manual/reconcile/#system-level-configuration
   resource.ignoreResourceUpdatesEnabled: "true"

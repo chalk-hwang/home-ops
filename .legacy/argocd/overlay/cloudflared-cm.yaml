@@ -9,16 +9,16 @@ data:
     metrics: 0.0.0.0:2000
     no-autoupdate: true
     ingress:
-    - hostname: argo.chalk-playground.space
+    - hostname: argo.chalk-ho.me
       service: http://argocd-server:80
-    - hostname: chalk-playground.space
-      service: https://nginx-external-controller.network.svc.cluster.local:443
+    - hostname: chalk-ho.me
+      service: https://nginx-external-controller.network.svc.cluster.at.chalk.ho.me:443
       originRequest:
         http2Origin: true
-        originServerName: external.chalk-playground.space
-    - hostname: "*.chalk-playground.space"
-      service: https://nginx-external-controller.network.svc.cluster.local:443
+        originServerName: external.chalk-ho.me
+    - hostname: "*.chalk-ho.me"
+      service: https://nginx-external-controller.network.svc.cluster.at.chalk.ho.me:443
       originRequest:
         http2Origin: true
-        originServerName: external.chalk-playground.space
+        originServerName: external.chalk-ho.me
     - service: http_status:404

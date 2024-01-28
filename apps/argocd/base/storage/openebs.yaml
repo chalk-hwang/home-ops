@@ -4,7 +4,7 @@ kind: Application
 metadata:
   name: openebs
 spec:
-  project: cluster
+  project: storage
   source:
     repoURL: https://openebs.github.io/charts
     chart: openebs
@@ -24,17 +24,6 @@ spec:
   syncPolicy:
     automated:
       prune: false
-      selfHeal: false
-      allowEmpty: true
+      selfHeal: true
     syncOptions:
-      - Validate=false
-      - PrunePropagationPolicy=foreground
-      - PruneLast=false
-      - ApplyOutOfSyncOnly=true
-      - Prune=false
-    retry:
-      limit: 1
-      backoff:
-        duration: 20s
-        factor: 2
-        maxDuration: 15m
+    - ApplyOutOfSyncOnly=false

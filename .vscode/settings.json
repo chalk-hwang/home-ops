@@ -25,5 +25,10 @@
         "vs-kubernetes.knownKubeconfigs": [
           "./kubeconfig"
       ]
+    },
+    "linter.linters": {
+      "yaml": {
+        "enabled": true
+      }
     }
 }

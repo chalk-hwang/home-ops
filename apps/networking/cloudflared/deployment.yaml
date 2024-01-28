@@ -4,18 +4,19 @@ kind: Deployment
 metadata:
   name: cloudflared
 spec:
+  replicas: 2
   selector:
     matchLabels:
-      app: cloudflared
-  replicas: 2 # You could also consider elastic scaling for this deployment
+      pod: cloudflared
   template:
     metadata:
+      creationTimestamp: null
       labels:
-        app: cloudflared
+        pod: cloudflared
     spec:
       containers:
         - name: cloudflared
-          image: cloudflare/cloudflared:2024.1.0
+          image: cloudflare/cloudflared:2024.1.4
           args:
             - tunnel
             # Points cloudflared to the config file, which configures what
@@ -23,6 +24,8 @@ spec:
             # below.
             - --config
             - /etc/cloudflared/config/config.yaml
+            - --metrics
+            - 0.0.0.0:2000
             - run
           livenessProbe:
             httpGet:
@@ -59,7 +62,8 @@ spec:
                 # kubectl create secret generic tunnel-credentials \
                 # --from-file=credentials.json=/Users/yourusername/.cloudflared/<tunnel ID>.json
                 # ```
-                secretName: tunnel-credentials
+                secretName: home-tunnel
+                namespace: argocd
             # Create a config.yaml file from the ConfigMap below.
             - name: config
               configMap:

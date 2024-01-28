@@ -84,7 +84,7 @@ spec:
             type: prometheus
             uid: prometheus
             access: proxy
-            url: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
+            url: http://kube-prometheus-stack-prometheus.observability.svc.cluster.at.chalk.ho.me:9090
             jsonData:
               prometheusType: Prometheus
             isDefault: true

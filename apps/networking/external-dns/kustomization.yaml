@@ -1,8 +1,16 @@
 ---
-# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
 resources:
-  - ./external-secret.yaml
-  - ./app.yaml
-  - ./rbac.yaml
+  - namespace.yaml
+  - externalsecret.yaml
+
+helmCharts:
+  - name: external-dns
+    repo: https://charts.bitnami.com/bitnami
+    version: 6.31.2
+    releaseName: external-dns
+    namespace: external-dns
+    includeCRDs: true
+    valuesFile: values.yaml

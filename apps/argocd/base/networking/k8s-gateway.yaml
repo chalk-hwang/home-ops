@@ -12,10 +12,10 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=false
-      - PrunePropagationPolicy=foreground
+
 
     automated:
-      prune: true
+      prune: false
       selfHeal: true
 
   source:
@@ -27,13 +27,13 @@ spec:
     helm:
       valuesObject:
         fullnameOverride: k8s-gateway
-        domain: "chalk-playground.space"
+        domain: "chalk-ho.me"
         ttl: 1
         service:
           type: LoadBalancer
           port: 53
           annotations:
-            io.cilium/lb-ipam-ips: "10.0.7.3"
+            io.cilium/lb-ipam-ips: "10.0.7.201"
           externalTrafficPolicy: Cluster
 
 

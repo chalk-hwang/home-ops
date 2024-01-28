@@ -51,8 +51,6 @@
               - socat
               - unzip
               - util-linux
-
-
     - name: User Configuration
       block:
         - name: User Configuration | SSH keys

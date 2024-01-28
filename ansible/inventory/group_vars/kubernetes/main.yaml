@@ -6,10 +6,17 @@ k3s_install_hard_links: true
 k3s_become: true
 k3s_etcd_datastore: true
 k3s_use_unsupported_config: true
-k3s_registration_address: "10.0.7.2"
+k3s_registration_address: "10.0.7.200"
 # /var/lib/rancher/k3s/server/manifests
-k3s_server_manifests_urls: []
+k3s_server_manifests_urls:
+- url: https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.crds.yaml
+  filename: cert-manager-crds.yaml
+- url: https://raw.githubusercontent.com/external-secrets/external-secrets/v0.9.11/deploy/crds/bundle.yaml
+  filename: external-secrets-crds.yaml
 k3s_server_manifests_templates:
-  - custom-cilium-helmchart.yaml
-  - kube-vip-ds.yaml
-  - kube-vip-rbac.yaml
+- dns-endpoint-crd.yaml
+- prometheus-operator-crds-helmchart.yaml
+- cilium-helmchart.yaml
+- cilium-l2.yaml
+- kube-vip-ds.yaml
+- kube-vip-rbac.yaml

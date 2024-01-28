@@ -6,10 +6,10 @@ metadata:
   name: cloudflared
 spec:
   endpoints:
-    - dnsName: external.chalk-playground.space
+    - dnsName: external.chalk-ho.me
       recordType: CNAME
-      targets: ["28724a69-8809-4fe7-8615-0f1fe4fcd66b.cfargotunnel.com"]
-    - dnsName: argo.chalk-playground.space
+      targets: ["34cc125d-8161-4369-bd44-e00a7a643b61.cfargotunnel.com"]
+    - dnsName: argo.chalk-ho.me
       recordType: CNAME
-      targets: ["28724a69-8809-4fe7-8615-0f1fe4fcd66b.cfargotunnel.com"]
+      targets: ["34cc125d-8161-4369-bd44-e00a7a643b61.cfargotunnel.com"]
 
