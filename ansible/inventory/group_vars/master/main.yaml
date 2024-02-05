@@ -3,13 +3,13 @@
 # https://github.com/PyratLabs/ansible-role-k3s
 k3s_control_node: true
 k3s_server:
-  selinux: true
+  # selinux: true
   node-ip: "{{ ansible_host }}"
   tls-san:
     - "10.0.7.200"
   docker: false
   flannel-backend: "none" # quote
-  disable: ["local-storage", "servicelb", "metrics-server", "traefik"]
+  disable: ["local-storage", "servicelb", "metrics-server", "traefik", "flannel"]
   disable-network-policy: true
   disable-cloud-controller: true
   disable-kube-proxy: true

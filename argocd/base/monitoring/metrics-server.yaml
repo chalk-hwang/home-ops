@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metrics-server
+spec:
+  project: monitoring
+  source:
+    repoURL: 'https://github.com/chalk-hwang/home-ops.git'
+    path: apps/monitoring/metrics-server
+    targetRevision: main
+  destination:
+    namespace: kube-system
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+    - ApplyOutOfSyncOnly=false
