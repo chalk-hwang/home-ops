@@ -2,10 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   # Monitoring
-  - base/kuma.yaml
+  # - base/kuma.yaml
 
   # Home Assistant
-  - base/home/
+  - base/hass/
 
   # Networking
   # - base/adguard.yaml
@@ -21,9 +21,9 @@ resources:
   # - base/ganymede.yaml
 
   # Services
-  - base/n8n.yaml
-  - base/gitea.yaml
-  - base/links.yaml
+  # - base/n8n.yaml
+  # - base/gitea.yaml
+  # - base/links.yaml
   # - base/wger.yaml
   # - base/grocy.yaml
   # - base/archivebox.yaml
@@ -40,7 +40,7 @@ resources:
   # - base/turbopilot.yaml
 
   #  Postgres Storage
-  - base/postgres/ha.yaml
+  - base/postgres/home-assistant.yaml
   # - base/postgres/n8n.yaml
   # - base/postgres/wallabag.yaml
   # - base/postgres/ganymede.yaml
@@ -62,7 +62,7 @@ resources:
   # - base/postgres/synapse.yaml
 
   # Snapshot class
-  - base/snapshot/iscsi.yaml
+  # - base/snapshot/iscsi.yaml
 
 
 
