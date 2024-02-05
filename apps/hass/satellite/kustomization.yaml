@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - ./base
 
-namespace: home-assistant
+namespace: hass
 
 patches:
   - patch: |-
@@ -13,4 +13,4 @@ patches:
           kubernetes.io/arch: amd64
     target:
       kind: Deployment
-      name: whisper
+      name: satellite

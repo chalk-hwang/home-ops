@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: home
+  name: home-assistant
   namespace: argocd
   labels:
-    app.kubernetes.io/category: home
+    app.kubernetes.io/category: home-assistant
 spec:
   project: apps
   source:
@@ -12,7 +12,7 @@ spec:
     path: argocd/base/home-assistant
     targetRevision: main
   destination:
-    namespace: home-assistant
+    namespace: hass
     name: in-cluster
   syncPolicy:
     automated:

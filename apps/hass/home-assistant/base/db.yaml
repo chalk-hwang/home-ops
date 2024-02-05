@@ -2,7 +2,7 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: home-assistant-database
-  namespace: home-assistant
+  namespace: hass
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:16.0
   instances: 1
@@ -29,7 +29,7 @@ spec:
       database: home-assistant
       owner: home-assistant
   storage:
-    storageClass: local-hostpath
+    storageClass: openebs-hostpath
     size: 40Gi
   monitoring:
     enablePodMonitor: true

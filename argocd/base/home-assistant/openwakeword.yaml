@@ -11,7 +11,7 @@ spec:
     path: apps/home-assistant/openwakeword
     targetRevision: main
   destination:
-    namespace: home-assistant
+    namespace: hass
     name: in-cluster
   syncPolicy:
     automated:

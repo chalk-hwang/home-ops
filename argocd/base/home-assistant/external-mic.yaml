@@ -14,7 +14,7 @@ spec:
       commonLabels:
         app.kubernetes.io/category: home
   destination:
-    namespace: home-assistant
+    namespace: hass
     name: in-cluster
   syncPolicy:
     automated:

@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: homeassistant
+  name: home-assistant
 spec:
   project: apps
   source:
@@ -9,7 +9,7 @@ spec:
     path: apps/home-assistant/core
     targetRevision: main
   destination:
-    namespace: home-assistant
+    namespace: hass
     name: in-cluster
   syncPolicy:
     automated:

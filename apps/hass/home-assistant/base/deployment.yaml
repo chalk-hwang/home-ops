@@ -48,16 +48,16 @@ spec:
               valueFrom:
                 {
                   secretKeyRef:
-                    { name: database-homeassistant-app, key: username },
+                    { name: database-home-assistant-app, key: username },
                 }
             - name: DB_PASSWORD
               valueFrom:
                 {
                   secretKeyRef:
-                    { name: database-homeassistant-app, key: password },
+                    { name: database-home-assistant-app, key: password },
                 }
             - name: DB_STRING
-              value: "postgresql://${DB_USERNAME}:${DB_PASSWORD}@database-homeassistant-rw.homeassistant.svc.cluster.local:5432/home?client_encoding=utf8&sslmode=require"
+              value: "postgresql://${DB_USERNAME}:${DB_PASSWORD}@database-home-assistant-rw.hass.svc.cluster.local:5432/home?client_encoding=utf8&sslmode=require"
           volumeMounts:
             - name: temp-config
               mountPath: /tmp/git
@@ -123,7 +123,7 @@ spec:
           securityContext:
             privileged: true
           volumeMounts:
-            - name: ha-secrets
+            - name: home-assistant-secrets
               mountPath: /config/secrets.yaml
               subPath: secrets.yaml
             - name: config-volume
@@ -151,12 +151,12 @@ spec:
           secret:
             secretName: known-hosts
             defaultMode: 256
-        - name: ha-secrets
+        - name: home-assistant-secrets
           secret:
-            secretName: ha-secrets
+            secretName: home-assistant-secrets
         - name: config-volume
           persistentVolumeClaim:
-            claimName: ha-storage-new
+            claimName: home-assistant-storage
         # - name: zigbee-00
         #   hostPath:
         #     path: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if00-port0

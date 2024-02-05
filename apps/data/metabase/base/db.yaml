@@ -17,7 +17,7 @@ spec:
     version: "14"
   volume:
     size: 1Gi
-    storageClass: local-hostpath
+    storageClass: openebs-hostpath
   resources:
     requests:
       cpu: 50m

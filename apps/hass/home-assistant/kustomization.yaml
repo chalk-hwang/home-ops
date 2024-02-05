@@ -3,7 +3,7 @@ kind: Kustomization
 bases:
 - ./base
 
-namespace: home-assistant
+namespace: hass
 
 patches:
 - patch: |-
