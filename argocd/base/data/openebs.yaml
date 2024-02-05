@@ -9,7 +9,7 @@ spec:
     path: apps/data/openebs
     targetRevision: main
   destination:
-    namespace: openebs-system
+    namespace: openebs
     name: in-cluster
   syncPolicy:
     automated:
