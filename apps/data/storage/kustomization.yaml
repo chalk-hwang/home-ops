@@ -75,9 +75,9 @@ helmCharts:
     localprovisioner:
       hostpathClass:
         enabled: true
-        name: openebs-hostpath
+        name: local-storage
         isDefaultClass: false
-        basePath: /var/openebs/local
+        basePath: /var/local-storage
 
 
 
