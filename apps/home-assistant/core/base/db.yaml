@@ -1,8 +1,8 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: home-database
-  namespace: homeassistant
+  name: home-assistant-database
+  namespace: home-assistant
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:16.0
   instances: 1
@@ -16,18 +16,20 @@ spec:
       memory: 768Mi
       cpu: 700m
   postgresql:
+    pg_hba:
+      - host all,replication all,replication 0.0.0.0/0 md5
     parameters:
       shared_buffers: 256MB
-      timezone: "America/Sao_Paulo"
-      pg_stat_statements.max: '10000'
+      timezone: "Asia/Seoul"
+      pg_stat_statements.max: "10000"
       pg_stat_statements.track: all
-      auto_explain.log_min_duration: '10s'
+      auto_explain.log_min_duration: "10s"
   bootstrap:
     initdb:
-      database: home
-      owner: home
+      database: home-assistant
+      owner: home-assistant
   storage:
-    storageClass: iscsi
+    storageClass: local-hostpath
     size: 40Gi
   monitoring:
     enablePodMonitor: true
@@ -39,4 +41,4 @@ spec:
               - key: kubernetes.io/hostname
                 operator: In
                 values:
-                  - node-one
+                  - metal-0

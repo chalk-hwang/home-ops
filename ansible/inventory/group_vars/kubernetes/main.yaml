@@ -18,5 +18,5 @@ k3s_server_manifests_templates:
 - prometheus-operator-crds-helmchart.yaml
 - cilium-helmchart.yaml
 - cilium-l2.yaml
-- kube-vip-ds.yaml
+# - kube-vip-ds.yaml
 - kube-vip-rbac.yaml

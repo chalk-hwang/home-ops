@@ -4,7 +4,7 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - stores/onepassword-connect.yaml
+  - onepassword-connect-secret-store.yaml
 
   #- external-secrets-aws-secret-store.yaml
   #- external-secrets-gcp-secret-store.yaml

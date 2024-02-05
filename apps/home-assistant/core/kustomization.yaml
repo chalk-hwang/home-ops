@@ -3,7 +3,7 @@ kind: Kustomization
 bases:
 - ./base
 
-namespace: homeassistant
+namespace: home-assistant
 
 patches:
 - patch: |-
@@ -11,7 +11,7 @@ patches:
       path: "/spec/template/spec/nodeSelector"
       value:
         kubernetes.io/hostname: node-two
-        kubernetes.io/arch: arm64
+        kubernetes.io/arch: amd64
   target:
     kind: Deployment
     name: home-assistant

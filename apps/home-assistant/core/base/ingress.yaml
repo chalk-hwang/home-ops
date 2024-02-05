@@ -10,17 +10,17 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: hass.chalk-ho.me
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: homeassistant
-            port:
-              name: ha
+    - host: hass.chalk-ho.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ha-tailscale
+                port:
+                  name: ha
   tls:
-  - hosts:
-    - hass.chalk-ho.me
-    secretName: ha-tls
+    - hosts:
+        - hass.chalk-ho.me
+      secretName: ha-tls

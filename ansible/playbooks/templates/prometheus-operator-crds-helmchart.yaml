@@ -6,7 +6,7 @@ metadata:
   name: prometheus-operator-crds
   namespace: kube-system
 spec:
-  chart: prometheus-operator-crds
+  chart:  b
   repo: https://prometheus-community.github.io/helm-charts
   version: "9.0.0"
   bootstrap: true

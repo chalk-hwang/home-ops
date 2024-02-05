@@ -1,4 +1,3 @@
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -11,18 +10,32 @@ spec:
   project: core
   source:
     repoURL: 'https://github.com/chalk-hwang/home-ops.git'
-    path: argocd
+    path: apps/argocd
     targetRevision: main
   destination:
     namespace: argocd
     name: in-cluster
   syncPolicy:
     automated:
-      prune: false
+      prune: true
       selfHeal: true
+      allowEmpty: true
     managedNamespaceMetadata:
       labels:
         prometheus: enabled
     syncOptions:
-    - ApplyOutOfSyncOnly=false
+    - Validate=true
     - CreateNamespace=true
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
+  ignoreDifferences:
+    - group: "redis.redis.opstreelabs.in"
+      kind: "Redis"

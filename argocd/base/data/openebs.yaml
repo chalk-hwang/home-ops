@@ -1,0 +1,29 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openebs
+spec:
+  project: storage
+  source:
+    repoURL: https://openebs.github.io/charts
+    chart: openebs
+    targetRevision: 3.10.0
+    helm:
+      releaseName: openebs
+      valuesObject:
+        helper:
+          image: "openebs/linux-utils"
+        localprovisioner:
+          basePath: "/var/openebs/local"
+          image: "openebs/provisioner-localpv"
+  destination:
+    name: 'in-cluster'
+    namespace: openebs
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+    - ApplyOutOfSyncOnly=false
+    - CreateNamespace=true

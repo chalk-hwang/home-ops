@@ -51,6 +51,7 @@
               - socat
               - unzip
               - util-linux
+
     - name: User Configuration
       block:
         - name: User Configuration | SSH keys
@@ -146,14 +147,16 @@
             dest: /etc/profile.d/neofetch.sh
             mode: "0755"
             content: "neofetch --config none"
-        - name: System Configuration | Disable SELinux
-          ansible.builtin.lineinfile:
-            dest: /etc/selinux/config
-            regexp: "^SELINUX="
-            line: "SELINUX=disabled"
-            state: present
           notify:
             - Reboot
+        # - name: System Configuration | Disable SELinux
+        #   ansible.builtin.lineinfile:
+        #     dest: /etc/selinux/config
+        #     regexp: "^SELINUX="
+        #     line: "SELINUX=disabled"
+        #     state: present
+        #   notify:
+        #     - Reboot
         - name: System Configuration | Disable swap
           ansible.posix.mount:
             name: "{% raw %}{{ item }}{% endraw %}"
@@ -191,6 +194,22 @@
             - { key: "fs.inotify.max_queued_events", value: "65536" }
             - { key: "fs.inotify.max_user_watches", value: "524288" }
             - { key: "fs.inotify.max_user_instances", value: "8192" }
+
+    - name: Tailscale
+      block:
+        - name: Tailscale | Install
+          ansible.builtin.include_role:
+            name:  artis3n.tailscale
+            public: true
+          vars:
+            verbose: true
+            tailscale_authkey: "{{ lookup('env', 'TAILSCALE_METAL_OAUTH_CLIENT_SECRET') }}"
+            tailscale_tags:
+              - "metal"
+            tailscale_args: "--ssh --advertise-connector --accept-dns=true --advertise-routes=10.0.7.0/24,10.42.0.0/16,10.43.0.0/16 --accept-routes=true"
+            # Optionally, also include:
+            tailscale_oauth_ephemeral: false
+            tailscale_oauth_preauthorized: true
 
   handlers:
     - name: Reboot
