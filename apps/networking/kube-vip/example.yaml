@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-test
+  name: nginx-test-svc-vip
   annotations:
-    kube-vip.io/vipHost: nginx-test
+    kube-vip.io/vipHost: nginx
 spec:
   ports:
   - name: http

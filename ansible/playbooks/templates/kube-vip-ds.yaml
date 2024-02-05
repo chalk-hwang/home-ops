@@ -33,7 +33,7 @@ spec:
         - name: port
           value: "6443"
         - name: vip_interface
-          value: end0.7
+          value: enp3s0.7
         - name: vip_loglevel
           value: "5"
         - name: vip_cidr
