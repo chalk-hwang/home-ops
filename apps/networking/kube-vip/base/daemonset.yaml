@@ -32,7 +32,7 @@ spec:
         - name: port
           value: "6443"
         - name: vip_interface
-          value: end0
+          value: end0.7
         - name: vip_loglevel
           value: "5"
         - name: vip_cidr
@@ -60,7 +60,7 @@ spec:
         - name: bgp_as
           value: "64500"
         - name: bgp_peeraddress
-          value: "10.0.10.1"
+          value: "10.0.7.1"
         - name: bgp_peerpass
         - name: bgp_peeras
           value: "65001"
