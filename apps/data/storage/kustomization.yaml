@@ -67,6 +67,7 @@ resources:
 
 helmCharts:
 - name: openebs
+  releaseName: production
   namespace: openebs
   version: 3.10.0
   repo: https://openebs.github.io/charts
