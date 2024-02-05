@@ -65,6 +65,20 @@ resources:
   # - base/snapshot/iscsi.yaml
 
 
+helmCharts:
+- name: openebs
+  namespace: openebs
+  version: 3.10.0
+  repo: https://openebs.github.io/charts
+  valuesInline:
+    localprovisioner:
+      hostpathClass:
+        enabled: true
+        name: openebs-hostpath
+        isDefaultClass: false
+        basePath: /var/openebs/local
+
+
 
 commonAnnotations:
   argocd.argoproj.io/sync-options: Delete=false
