@@ -4,7 +4,9 @@ kind: Kustomization
 resources:
   - ./external-dns
   - cert-manager.yaml
-  - ingress-nginx.yaml
+  - nginx-internal.yaml
+  - nginx-external.yaml
+  - nginx-certificates.yaml
   - tailscale-operator.yaml
   # - tailscale.yaml
   - cert-manager-issuer.yaml

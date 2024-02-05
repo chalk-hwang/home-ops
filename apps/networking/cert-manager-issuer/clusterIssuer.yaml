@@ -6,7 +6,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: rpg.gruber@gmail.com
+    email: admin@chalk-ho.me
     privateKeySecretRef:
       name: letsencrypt-production
     solvers:
@@ -14,54 +14,9 @@ spec:
         dnsNames:
         - '*.chalk-ho.me'
         - chalk-ho.me
-        - onchange.chalk-ho.me
-        - ai.chalk-ho.me
-        - hass.chalk-ho.me
-        - monitoring.chalk-ho.me
-        - grafana.chalk-ho.me
-        - jupyter.chalk-ho.me
-        - ha.chalk-ho.me
-        - argo.chalk-ho.me
-        - chat.chalk-ho.me
-        - status.chalk-ho.me
-        - kuma.chalk-ho.me
-        - manga.chalk-ho.me
-        - books.chalk-ho.me
-        - finance.chalk-ho.me
-        - budget.chalk-ho.me
-        - n8n.chalk-ho.me
-        - read.chalk-ho.me
-        - unifi.chalk-ho.me
-        - lab.chalk-ho.me
-        - g.chalk-ho.me
-        - twt.chalk-ho.me
-        - hub.chalk-ho.me
-        - proxy.chalk-ho.me
-        - vods.chalk-ho.me
-        - openai.chalk-ho.me
-        - api.vods.chalk-ho.me
-        - gpt.chalk-ho.me
-        - matrix.chalk-ho.me
-        - argocd.chalk-ho.me
-        - langflow.chalk-ho.me
-        - lanchain.chalk-ho.me
-        - lang.chalk-ho.me
-        - tv.chalk-ho.me
-        - sonarr.chalk-ho.me
-        - prowlarr.chalk-ho.me
-        - downloads.chalk-ho.me
-        - lidarr.chalk-ho.me
-        - music.chalk-ho.me
-        - bazarr.chalk-ho.me
-        - links.chalk-ho.me
-        - git.chalk-ho.me
-        - copilot.chalk-ho.me
-        - gym.chalk-ho.me
-        - dashboard.chalk-ho.me
-        - dash.chalk-ho.me
-        - hajimari.chalk-ho.me
       dns01:
         cloudflare:
+          email: admin@chalk-ho.me
           apiTokenSecretRef:
             name: cert-manager-secret
             key: CLOUDFLARE_API_TOKEN
