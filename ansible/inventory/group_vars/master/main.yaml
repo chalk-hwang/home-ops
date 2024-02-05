@@ -3,6 +3,7 @@
 # https://github.com/PyratLabs/ansible-role-k3s
 k3s_control_node: true
 k3s_server:
+  selinux: true
   node-ip: "{{ ansible_host }}"
   tls-san:
     - "10.0.7.200"

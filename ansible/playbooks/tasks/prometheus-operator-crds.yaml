@@ -22,35 +22,35 @@
           status: true
         wait_timeout: 360
 
-    - name: Prometheus Operator CRDs | Patch the Prometheus Operator CRDs HelmChart to unmanage it
-      when: prometheus_operator_crds_helmchart.resources | count > 0
-      kubernetes.core.k8s_json_patch:
-        kubeconfig: /etc/rancher/k3s/k3s.yaml
-        name: prometheus-operator-crds
-        kind: HelmChart
-        namespace: kube-system
-        patch:
-          - op: add
-            path: /metadata/annotations/helmcharts.helm.cattle.io~1unmanaged
-            value: "true"
+    # - name: Prometheus Operator CRDs | Patch the Prometheus Operator CRDs HelmChart to unmanage it
+    #   when: prometheus_operator_crds_helmchart.resources | count > 0
+    #   kubernetes.core.k8s_json_patch:
+    #     kubeconfig: /etc/rancher/k3s/k3s.yaml
+    #     name: prometheus-operator-crds
+    #     kind: HelmChart
+    #     namespace: kube-system
+    #     patch:
+    #       - op: add
+    #         path: /metadata/annotations/helmcharts.helm.cattle.io~1unmanaged
+    #         value: "true"
 
-    - name: Prometheus Operator CRDs | Delete the Prometheus Operator CRDs HelmChart CR
-      when: prometheus_operator_crds_helmchart.resources | count > 0
-      kubernetes.core.k8s:
-        kubeconfig: /etc/rancher/k3s/k3s.yaml
-        name: prometheus-operator-crds
-        kind: HelmChart
-        namespace: kube-system
-        state: absent
+    # - name: Prometheus Operator CRDs | Delete the Prometheus Operator CRDs HelmChart CR
+    #   when: prometheus_operator_crds_helmchart.resources | count > 0
+    #   kubernetes.core.k8s:
+    #     kubeconfig: /etc/rancher/k3s/k3s.yaml
+    #     name: prometheus-operator-crds
+    #     kind: HelmChart
+    #     namespace: kube-system
+    #     state: absent
 
-    - name: Prometheus Operator CRDs | Force delete the Prometheus Operator CRDs HelmChart
-      when: prometheus_operator_crds_helmchart.resources | count > 0
-      kubernetes.core.k8s:
-        kubeconfig: /etc/rancher/k3s/k3s.yaml
-        name: prometheus-operator-crds
-        kind: HelmChart
-        namespace: kube-system
-        state: patched
-        definition:
-          metadata:
-            finalizers: []
+    # - name: Prometheus Operator CRDs | Force delete the Prometheus Operator CRDs HelmChart
+    #   when: prometheus_operator_crds_helmchart.resources | count > 0
+    #   kubernetes.core.k8s:
+    #     kubeconfig: /etc/rancher/k3s/k3s.yaml
+    #     name: prometheus-operator-crds
+    #     kind: HelmChart
+    #     namespace: kube-system
+    #     state: patched
+    #     definition:
+    #       metadata:
+    #         finalizers: []

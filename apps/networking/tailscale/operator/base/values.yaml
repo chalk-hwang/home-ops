@@ -1,0 +1,15 @@
+installCRDs: "true"
+
+operatorConfig:
+  # ACL tag that operator will be tagged with. Operator must be made owner of
+  # these tags
+  # https://tailscale.com/kb/1236/kubernetes-operator/?q=operator#setting-up-the-kubernetes-operator
+  # Multiple tags are defined as array items and passed to the operator as a comma-separated string
+  defaultTags:
+    - "tag:k8s-op"
+
+# apiServerProxyConfig allows to configure whether the operator should expose
+# Kubernetes API server.
+# https://tailscale.com/kb/1236/kubernetes-operator/#accessing-the-kubernetes-control-plane-using-an-api-server-proxy
+apiServerProxyConfig:
+  mode: "true" # "true", "false", "noauth"
