@@ -1,12 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: home-assistant
+  name: hass
+  namespace: argocd
+  labels:
+    app.kubernetes.io/category: hass
 spec:
   project: apps
   source:
     repoURL: "https://github.com/chalk-hwang/home-ops.git"
-    path: apps/home-assistant/core
+    path: argocd/base/hass
     targetRevision: main
   destination:
     namespace: hass
@@ -15,16 +18,19 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
+      allowEmpty: false
+    managedNamespaceMetadata:
+      labels:
+        prometheus: enabled
     syncOptions:
       - Validate=false
-      - CreateNamespace=false
-      - PrunePropagationPolicy=foreground
-      - ApplyOutOfSyncOnly=false
-      - Prune=true
+      - CreateNamespace=true
       - ServerSideApply=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - ApplyOutOfSyncOnly=false
     retry:
-      limit: 5
+      limit: 10
       backoff:
         duration: 20s
         factor: 2
