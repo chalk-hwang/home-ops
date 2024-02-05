@@ -10,8 +10,8 @@ patches:
     - op: add
       path: "/spec/template/spec/nodeSelector"
       value:
-        kubernetes.io/hostname: node-two
-        kubernetes.io/arch: amd64
+        kubernetes.io/hostname: metal-0
+        kubernetes.io/arch: arm64
   target:
     kind: Deployment
     name: home-assistant

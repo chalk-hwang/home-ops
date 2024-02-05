@@ -139,7 +139,7 @@ tasks:
     - kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
     ignore_error: true
 
-  password:token:
+  passworargtoken:
     preconditions:
     - sh: 'which argocd'
       msg: 'argocd {{.PATH_ERROR}}'
