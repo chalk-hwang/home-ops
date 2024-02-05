@@ -63,7 +63,7 @@ spec:
           value: "10.0.7.1"
         - name: bgp_peerpass
         - name: bgp_peeras
-          value: "65001"
+          value: "64501"
         - name: bgp_peers
           value: "10.0.7.10:64500::false"
         - name: address
