@@ -16,6 +16,15 @@
         - name: Locale | Set timezone
           community.general.timezone:
             name: "Asia/Seoul"
+        - name: Locale | Set locale
+          ansible.builtin.lineinfile:
+            path: /etc/locale.conf
+            line: "LANG=en_US.UTF-8"
+            owner: root
+            group: root
+            mode: '0644'
+            create: yes
+
 
     - name: Packages
       block:
@@ -137,7 +146,7 @@
             dest: /etc/resolv.conf
             content: |
               search .
-              nameserver 10.0.5.254
+              nameserver 1.1.1.1
 
     - name: System Configuration
       notify: Reboot
@@ -149,14 +158,14 @@
             content: "neofetch --config none"
           notify:
             - Reboot
-        # - name: System Configuration | Disable SELinux
-        #   ansible.builtin.lineinfile:
-        #     dest: /etc/selinux/config
-        #     regexp: "^SELINUX="
-        #     line: "SELINUX=disabled"
-        #     state: present
-        #   notify:
-        #     - Reboot
+        - name: System Configuration | Disable SELinux
+          ansible.builtin.lineinfile:
+            dest: /etc/selinux/config
+            regexp: "^SELINUX="
+            line: "SELINUX=disabled"
+            state: present
+          notify:
+            - Reboot
         - name: System Configuration | Disable swap
           ansible.posix.mount:
             name: "{% raw %}{{ item }}{% endraw %}"
@@ -178,6 +187,7 @@
             - nbd
             - overlay
             - rbd
+            - zfs
           register: modules_status
         - name: System Configuration | Reload Kernel modules  # noqa: no-changed-when no-handler
           when: modules_status.changed
@@ -206,7 +216,7 @@
             tailscale_authkey: "{{ lookup('env', 'TAILSCALE_METAL_OAUTH_CLIENT_SECRET') }}"
             tailscale_tags:
               - "metal"
-            tailscale_args: "--ssh --advertise-connector --accept-dns=true --advertise-routes=10.0.7.0/24,10.42.0.0/16,10.43.0.0/16 --accept-routes=true"
+            tailscale_args: "--ssh --advertise-connector --advertise-routes=10.0.7.0/24,10.42.0.0/16,10.43.0.0/16 --accept-routes=true"
             # Optionally, also include:
             tailscale_oauth_ephemeral: false
             tailscale_oauth_preauthorized: true

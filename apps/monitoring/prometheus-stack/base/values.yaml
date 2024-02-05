@@ -101,7 +101,7 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: openebs-hostpath
+          storageClassName: local-device
           resources:
             requests:
               storage: 10Gi

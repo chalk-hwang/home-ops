@@ -146,6 +146,6 @@ ingress:
         - *host
 persistence:
   enabled: true
-  storageClassName: openebs-hostpath
+  storageClassName: local-device
 testFramework:
   enabled: false
