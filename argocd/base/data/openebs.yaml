@@ -4,7 +4,7 @@ kind: Application
 metadata:
   name: openebs
 spec:
-  project: storage
+  project: cluster
   source:
     repoURL: https://openebs.github.io/charts
     chart: openebs
@@ -16,7 +16,6 @@ spec:
           image: "openebs/linux-utils"
         localprovisioner:
           basePath: "/var/openebs/local"
-          image: "openebs/provisioner-localpv"
   destination:
     name: 'in-cluster'
     namespace: openebs

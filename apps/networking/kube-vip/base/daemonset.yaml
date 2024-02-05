@@ -60,7 +60,7 @@ spec:
         - name: bgp_as
           value: "64500"
         - name: bgp_peeraddress
-          value: "10.0.10.254"
+          value: "10.0.10.1"
         - name: bgp_peerpass
         - name: bgp_peeras
           value: "65001"
