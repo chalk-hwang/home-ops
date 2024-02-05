@@ -17,10 +17,10 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: ha-tailscale
+                name: home-assistant-svc-tailscale
                 port:
                   name: ha
   tls:
     - hosts:
         - hass.chalk-ho.me
-      secretName: ha-tls
+      secretName: home-assistant-tls

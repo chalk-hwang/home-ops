@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: home-assistant-gitsync-cm
+data:
+  GITSYNC_REPO: "https://github.com/chalk-hwang/home-assistant-config"
+  GITSYNC_ONE_TIME: "true"
+  GITSYNC_BRANCH: "main"
+  GITSYNC_SSH: "true"
+  GITSYNC_PERIOD: "60s"
+  GITSYNC_WAIT: "60"
+  GITSYNC_MAX_FAILURES: "5"
+  GITSYNC_PERMISSIONS: "0777"
+  GITSYNC_LINK: "homeassistant"
+  GITSYNC_DEPTH: "1"
+  GITSYNC_CREDENTIALS_SECRET: "git-vars"

@@ -57,7 +57,7 @@ spec:
                     { name: database-home-assistant-app, key: password },
                 }
             - name: DB_STRING
-              value: "postgresql://${DB_USERNAME}:${DB_PASSWORD}@database-home-assistant-rw.hass.svc.cluster.local:5432/home?client_encoding=utf8&sslmode=require"
+              value: "postgresql://${DB_USERNAME}:${DB_PASSWORD}@database-home-assistant-rw.hass.svc.cluster.local:5432/home-assistant?client_encoding=utf8&sslmode=require"
           volumeMounts:
             - name: temp-config
               mountPath: /tmp/git
@@ -67,9 +67,9 @@ spec:
               mountPath: /etc/git-secret/known_hosts
           envFrom:
             - configMapRef:
-                name: git-ha-cm
+                name: home-assistant-git-sync-cm
             - secretRef:
-                name: git-vars
+                name: home-assistant-git-sync-secrets
                 optional: true
       containers:
         - env:
@@ -145,7 +145,8 @@ spec:
       volumes:
         - name: ssh-key
           secret:
-            secretName: ssh-key
+            secretName: home-assistant-gitsync-secrets
+            key: ssh_key
             defaultMode: 256
         - name: known-hosts
           secret:

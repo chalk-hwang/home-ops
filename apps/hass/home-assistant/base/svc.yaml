@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     app: home-assistant
-  name: home-assistant
+  name: home-assistant-svc
 spec:
   ports:
     - name: ha
@@ -17,7 +17,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: home-assistant-vip
+  name: home-assistant-svc-vip
   labels:
     app: home-assistant
   annotations:
@@ -37,7 +37,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ha-tailscale
+  name: home-assistant-svc-tailscale
   labels:
     app: home-assistant
   annotations:
