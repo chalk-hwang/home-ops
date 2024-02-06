@@ -146,6 +146,6 @@ ingress:
         - *host
 persistence:
   enabled: true
-  storageClassName: local-device
+  storageClassName: local-hostpath
 testFramework:
   enabled: false

@@ -29,7 +29,7 @@ spec:
       database: home-assistant
       owner: home-assistant
   storage:
-    storageClass: local-device
+    storageClass: local-hostpath
     size: 40Gi
   monitoring:
     enablePodMonitor: true

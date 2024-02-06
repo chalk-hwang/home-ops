@@ -101,7 +101,7 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: local-device
+          storageClassName: local-hostpath
           resources:
             requests:
               storage: 10Gi

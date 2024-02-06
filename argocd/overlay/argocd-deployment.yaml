@@ -38,7 +38,7 @@ spec:
                 type: argocd-extensions
             spec:
               accessModes: [ "ReadWriteOnce" ]
-              storageClassName: local-device
+              storageClassName: local-hostpath
               resources:
                 requests:
                   storage: 5Gi
