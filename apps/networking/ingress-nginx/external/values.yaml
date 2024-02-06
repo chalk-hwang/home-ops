@@ -21,9 +21,9 @@ controller:
         argocd.argoproj.io/sync-wave: "-1"
     objectSelector:
       matchExpressions:
-      - key: ingress-class
-        operator: In
-        values: ["external"]
+        - key: ingress-class
+          operator: In
+          values: ["external"]
   config:
     client-body-buffer-size: 100M
     client-body-timeout: 120
@@ -48,14 +48,14 @@ controller:
   extraArgs:
     default-ssl-certificate: "networking/chalk-ho-me-tls"
   topologySpreadConstraints:
-  - maxSkew: 1
-    topologyKey: kubernetes.io/hostname
-    whenUnsatisfiable: DoNotSchedule
-    labelSelector:
-      matchLabels:
-        app.kubernetes.io/name: ingress-nginx
-        app.kubernetes.io/instance: external
-        app.kubernetes.io/component: controller
+    - maxSkew: 1
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: DoNotSchedule
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/name: ingress-nginx
+          app.kubernetes.io/instance: nginx-external
+          app.kubernetes.io/component: controller
   resources:
     requests:
       cpu: 10m
