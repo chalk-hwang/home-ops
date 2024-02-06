@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: tailscale-operator
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: networking
   source:
@@ -25,8 +25,9 @@ spec:
       labels:
         prometheus: enabled
     syncOptions:
-    - Prune=true
-    - ServerSideApply=true
+      - CreateNamespace=true
+      - Prune=true
+      - ServerSideApply=true
     retry:
       limit: 3
       backoff:
@@ -34,12 +35,12 @@ spec:
         factor: 2
         maxDuration: 15m
   info:
-  - name: "Github Repository:"
-    value: >-
-      https://github.com/tailscale/tailscale
-  - name: "Github feature issue:"
-    value: >-
-      https://github.com/tailscale/tailscale/issues/502
-  - name: "Documentation:"
-    value: >-
-      https://tailscale.com/kb/1236/kubernetes-operator/
+    - name: "Github Repository:"
+      value: >-
+        https://github.com/tailscale/tailscale
+    - name: "Github feature issue:"
+      value: >-
+        https://github.com/tailscale/tailscale/issues/502
+    - name: "Documentation:"
+      value: >-
+        https://tailscale.com/kb/1236/kubernetes-operator/
