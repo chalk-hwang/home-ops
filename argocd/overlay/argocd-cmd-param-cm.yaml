@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cmd-param-cm
+  labels:
+    app.kubernetes.io/name: argocd-cmd-param-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  server.enable.proxy.extension: "true"

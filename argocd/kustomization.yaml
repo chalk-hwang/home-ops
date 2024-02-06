@@ -30,7 +30,7 @@ resources:
 - https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared
 
 # - base/cloudflared-dnsendpoint.yaml
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.3/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.6/manifests/install.yaml
 - base/styles-cm.yaml
 
 namespace: argocd

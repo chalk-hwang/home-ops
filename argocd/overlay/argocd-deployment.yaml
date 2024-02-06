@@ -14,31 +14,16 @@ spec:
           - name: EXTENSION_CHECKSUM_URL
             value: https://github.com/argoproj-labs/argocd-extension-metrics/releases/download/v1.0.0/extension_checksums.txt
           volumeMounts:
-            - name: argocd-extensions
+            - name: extensions
               mountPath: /tmp/extensions/
           securityContext:
             runAsUser: 1000
             allowPrivilegeEscalation: false
       containers:
-      - name: argocd-server
-        volumeMounts:
-        - name:  argocd-styles
-          mountPath: /shared/app/custom
-        - name: argocd-extensions
-          mountPath: /tmp/extensions/
+        - name: argocd-server
+          volumeMounts:
+            - name: extensions
+              mountPath: /tmp/extensions/
       volumes:
-      - configMap:
-          name: argocd-styles-cm
-        name: argocd-styles
-      - name: argocd-extensions
-        ephemeral:
-          volumeClaimTemplate:
-            metadata:
-              labels:
-                type: argocd-extensions
-            spec:
-              accessModes: [ "ReadWriteOnce" ]
-              storageClassName: local-hostpath
-              resources:
-                requests:
-                  storage: 5Gi
+        - name: extensions
+          emptyDir: {}
