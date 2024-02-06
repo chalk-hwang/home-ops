@@ -4,9 +4,9 @@ kind: Kustomization
 resources:
   - external-dns
   - ingress-nginx
-  - certificates.yaml
   - tailscale-operator.yaml
   - cert-manager
+  - certificates.yaml
   - kube-vip.yaml
 # - unifi-controller.yaml
 

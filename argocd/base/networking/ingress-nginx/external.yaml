@@ -7,8 +7,8 @@ metadata:
 spec:
   project: networking
   source:
-    repoURL: 'https://github.com/chalk-hwang/home-ops.git'
-    path: apps/networking/nginx/external
+    repoURL: "https://github.com/chalk-hwang/home-ops.git"
+    path: apps/networking/ingress-nginx/external
     targetRevision: main
   destination:
     namespace: networking
@@ -19,13 +19,13 @@ spec:
       selfHeal: true
       allowEmpty: true
     syncOptions:
-    - Validate=false
-    - CreateNamespace=false
-    - PrunePropagationPolicy=foreground
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
-    - RespectIgnoreDifferences=true
-    - ServerSideApply=true
+      - Validate=false
+      - CreateNamespace=false
+      - PrunePropagationPolicy=foreground
+      - ApplyOutOfSyncOnly=false
+      - Prune=true
+      - RespectIgnoreDifferences=true
+      - ServerSideApply=true
     retry:
       limit: 10
       backoff:

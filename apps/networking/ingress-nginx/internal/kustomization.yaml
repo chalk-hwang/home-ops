@@ -5,10 +5,10 @@ metadata:
   name: nginx-internal
 
 helmCharts:
-- name: ingress-nginx
-  releaseName: nginx-internal
-  namespace: networking
-  includeCRDs: true
-  version: 4.9.0
-  repo: https://kubernetes.github.io/ingress-nginx
-  valuesFile: values.yaml
+  - name: ingress-nginx
+    releaseName: nginx-internal
+    namespace: networking
+    includeCRDs: true
+    version: 4.9.0
+    repo: https://kubernetes.github.io/ingress-nginx
+    valuesFile: values.yaml
