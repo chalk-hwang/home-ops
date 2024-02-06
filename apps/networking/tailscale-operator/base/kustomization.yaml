@@ -2,10 +2,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  - namespace.yaml
   - externalsecret.yaml
 
 helmCharts:
   - name: tailscale-operator
+    namespace: tailscale
     repo: https://pkgs.tailscale.com/helmcharts
     #version: 21.0.0
     version: 1.58.2
