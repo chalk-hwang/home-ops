@@ -78,7 +78,7 @@ helmCharts:
         cpu: 150m
         memory: 128Mi
     nodeSelector:
-      kubernetes.io/arch: amd64
+      kubernetes.io/arch: arm64
     tolerations: []
     affinity: {}
     monitoring:

@@ -58,7 +58,7 @@ If you are marching forward, now is a good time to choose whether you will deplo
 
 ### Talos
 
-1. Download the latest stable release of Talos from thier GitHub repo. You will want to grab either `metal-amd64.iso` or `metal-rpi_generic-arm64.raw.xz` depending on your system.
+1. Download the latest stable release of Talos from thier GitHub repo. You will want to grab either `metal-arm64.iso` or `metal-rpi_generic-arm64.raw.xz` depending on your system.
 
 2. Take note of the OS drive serial numbers you will need them later on.
 
@@ -66,9 +66,9 @@ If you are marching forward, now is a good time to choose whether you will deplo
 
 4. Continue on to 🚀 [**Getting Started**](#-getting-started)
 
-### k3s or k0s (AMD64)
+### k3s or k0s (arm64)
 
-1. Download the latest stable release of Debian from [here](https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd), then follow [this guide](https://www.linuxtechi.com/how-to-install-debian-12-step-by-step) to get it installed. Deviations from the guide:
+1. Download the latest stable release of Debian from [here](https://cdimage.debian.org/debian-cd/current/arm64/iso-dvd), then follow [this guide](https://www.linuxtechi.com/how-to-install-debian-12-step-by-step) to get it installed. Deviations from the guide:
 
     ```txt
     Choose "Guided - use entire disk"
@@ -133,7 +133,7 @@ If you are marching forward, now is a good time to choose whether you will deplo
 
 5. [Post install] SSH into the device with the `root` user and then create a normal user account with `adduser ${username}`
 
-6. [Post install] Follow steps 3 and 4 from [k3s or k0s (AMD64)](##k3s-or-k0s-amd64).
+6. [Post install] Follow steps 3 and 4 from [k3s or k0s (arm64)](##k3s-or-k0s-arm64).
 
 7. [Post install] Install `python3` which is needed by Ansible.
 

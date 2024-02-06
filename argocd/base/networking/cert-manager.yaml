@@ -31,7 +31,7 @@ spec:
             repository: quay.io/jetstack/cert-manager-cainjector
             tag: v1.12.4
           nodeSelector:
-            kubernetes.io/arch: amd64
+            kubernetes.io/arch: arm64
             kubernetes.io/os: linux
           replicaCount: 1
           resources:
@@ -70,7 +70,7 @@ spec:
         installCRDs: true
         maxConcurrentChallenges: 60
         nodeSelector:
-          kubernetes.io/arch: amd64
+          kubernetes.io/arch: arm64
           kubernetes.io/os: linux
         prometheus:
           enabled: true
