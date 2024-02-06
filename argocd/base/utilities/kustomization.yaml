@@ -1,10 +1,13 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+- reflector.yaml
+- reloader.yaml
 - onepassword-connect.yaml
 - external-secrets.yaml
+- descheduler.yaml
+- kured.yaml
 
 namespace: argocd
 

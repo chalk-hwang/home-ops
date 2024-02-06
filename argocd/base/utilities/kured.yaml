@@ -1,26 +1,29 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: grafana-renderer
+  name: kured
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  project: monitoring
+  project: cluster
   source:
     repoURL: 'https://github.com/chalk-hwang/home-ops.git'
-    path: apps/monitoring/grafana
+    path: apps/utilities/kured
     targetRevision: main
   destination:
-    namespace: monitoring
+    namespace: kube-system
     name: in-cluster
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
+      allowEmpty: false
     syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - ApplyOutOfSyncOnly=false
     - Prune=true
-    - ServerSideApply=true
     retry:
       limit: 5
       backoff:
