@@ -12,10 +12,10 @@ metadata:
     kube-vip.io/vipHost: onepassword-connect
 spec:
   ports:
-    - name: http-sync
+    - name: connect-sync
       port: 8081
-    - name: http
-      port: 80
+    - name: connect-api
+      port: 8080
   selector:
     app: onepassword-connect
   type: LoadBalancer
