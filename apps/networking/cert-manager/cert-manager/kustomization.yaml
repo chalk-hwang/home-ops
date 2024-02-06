@@ -4,8 +4,9 @@ metadata:
   name: cert-manager
 
 helmCharts:
-- name: cert-manager
-  version: v1.5.3
-  repo: https://charts.jetstack.io
-  namespace: cert-manager
-  valuesFile: values.yaml
+  - name: cert-manager
+    version: v1.5.3
+    repo: https://charts.jetstack.io
+    namespace: cert-manager
+    releaseName: cert-manager
+    valuesFile: values.yaml

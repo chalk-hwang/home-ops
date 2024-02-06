@@ -213,7 +213,7 @@
             public: true
           vars:
             verbose: true
-            tailscale_authkey: "{{ lookup('env', 'TAILSCALE_METAL_OAUTH_CLIENT_SECRET') }}"
+            tailscale_authkey: "{{ lookup('env', 'TAILSCALE_OAUTH2_CLIENT_SECRET_METAL') }}"
             tailscale_tags:
               - "metal"
             tailscale_args: "--ssh --advertise-connector --advertise-routes=10.0.7.0/24,10.42.0.0/16,10.43.0.0/16 --accept-routes=true"

@@ -33,11 +33,15 @@ includes:
   workstation: .taskfiles/Workstation/Taskfile.yaml
   argocd: .taskfiles/ArgoCD/Taskfile.yaml
   secrets: .taskfiles/Secrets/Taskfile.yaml
+  tailscale:
+    aliases:
+      - ts
+    taskfile: .taskfiles/Tailscale/Taskfile.yaml
 
-dotenv: [.env]
+dotenv:
+  - .env
 
 tasks:
-
   default: task -l
 
   init:
@@ -71,11 +75,26 @@ tasks:
     internal: true
     cmd: ./.venv/bin/makejinja
     preconditions:
-      - { msg: "Missing virtual environment", sh: "test -d {{.ROOT_DIR}}/.venv" }
-      - { msg: "Missing Makejinja config file", sh: "test -f {{.MAKEJINJA_CONFIG_FILE}}" }
-      - { msg: "Missing Makejinja plugin file", sh: "test -f {{.BOOTSTRAP_DIR}}/scripts/plugin.py" }
-      - { msg: "Missing bootstrap addons file", sh: "test -f {{.BOOTSTRAP_ADDONS_FILE}}" }
-      - { msg: "Missing bootstrap config file", sh: "test -f {{.BOOTSTRAP_CONFIG_FILE}}" }
+      - {
+          msg: "Missing virtual environment",
+          sh: "test -d {{.ROOT_DIR}}/.venv",
+        }
+      - {
+          msg: "Missing Makejinja config file",
+          sh: "test -f {{.MAKEJINJA_CONFIG_FILE}}",
+        }
+      - {
+          msg: "Missing Makejinja plugin file",
+          sh: "test -f {{.BOOTSTRAP_DIR}}/scripts/plugin.py",
+        }
+      - {
+          msg: "Missing bootstrap addons file",
+          sh: "test -f {{.BOOTSTRAP_ADDONS_FILE}}",
+        }
+      - {
+          msg: "Missing bootstrap config file",
+          sh: "test -f {{.BOOTSTRAP_CONFIG_FILE}}",
+        }
 
   .validate:
     internal: true

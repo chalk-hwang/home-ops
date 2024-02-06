@@ -1,3 +1,4 @@
+fullnameOverride: cert-manager
 installCRDs: false
 startupapicheck:
   enabled: false
@@ -10,7 +11,7 @@ cainjector:
     allowPrivilegeEscalation: false
     capabilities:
       drop:
-      - ALL
+        - ALL
   enabled: true
   image:
     pullPolicy: IfNotPresent
@@ -38,7 +39,7 @@ containerSecurityContext:
   allowPrivilegeEscalation: false
   capabilities:
     drop:
-    - ALL
+      - ALL
 global:
   leaderElection:
     namespace: kube-system
@@ -87,7 +88,7 @@ webhook:
     allowPrivilegeEscalation: false
     capabilities:
       drop:
-      - ALL
+        - ALL
   hostNetwork: false
   image:
     pullPolicy: IfNotPresent
@@ -101,23 +102,23 @@ webhook:
     timeoutSeconds: 1
   networkPolicy:
     egress:
-    - ports:
-      - port: 80
-        protocol: TCP
-      - port: 443
-        protocol: TCP
-      - port: 53
-        protocol: TCP
-      - port: 53
-        protocol: UDP
-      to:
-      - ipBlock:
-          cidr: 0.0.0.0/0
+      - ports:
+          - port: 80
+            protocol: TCP
+          - port: 443
+            protocol: TCP
+          - port: 53
+            protocol: TCP
+          - port: 53
+            protocol: UDP
+        to:
+          - ipBlock:
+              cidr: 0.0.0.0/0
     enabled: false
     ingress:
-    - from:
-      - ipBlock:
-          cidr: 0.0.0.0/0
+      - from:
+          - ipBlock:
+              cidr: 0.0.0.0/0
   nodeSelector:
     kubernetes.io/os: linux
   readinessProbe:

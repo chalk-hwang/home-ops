@@ -1,0 +1,27 @@
+connect:
+  # Denotes whether the 1Password Connect server will be deployed
+  create: true
+
+  # The number of replicas to run the 1Password Connect deployment
+  replicas: 1
+
+  # The name of 1Password Connect Application
+  applicationName: onepassword-connect
+
+  # The name of 1Password Connect Host
+  host: onepassword-connect
+
+  api:
+    httpPort: 80
+    httpsPort: 443
+
+  ingress:
+    enabled: true
+  # ingressClassName: internal
+
+  # hosts:
+  #   - host: &host op-connect.chalk-ho.me
+  #     paths: []
+  # tls:
+  #   - hosts:
+  #       - *host

@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app.kubernetes.io/instance: onepassword-connect
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: connect
+    helm.sh/chart: connect-1.14.0
+  name: connect
+  namespace: external-secrets
+spec:
+  ingressClassName: tailscale
+  rules:
+    - http:
+        paths:
+          - backend:
+              service:
+                name: onepassword-connect
+                port:
+                  number: http
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - onepassword-connect
