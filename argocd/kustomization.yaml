@@ -22,6 +22,11 @@ resources:
 - base/core/services.yaml
 - base/core/utilities.yaml
 
+  # Monitoring
+- base/monitoring/metrics-server.yaml
+- base/monitoring/kube-prometheus.yaml
+- base/monitoring/grafana.yaml
+
 # ArgoCD
 - base/repo-role.yaml
 - base/repo-rb.yaml
