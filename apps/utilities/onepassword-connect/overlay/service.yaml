@@ -9,7 +9,7 @@ metadata:
   name: onepassword-connect
   namespace: external-secrets
   annotations:
-    tailscale.com/hostname: "onepassword-connect"
+    kube-vip.io/vipHost: onepassword-connect
 spec:
   ports:
     - name: http-sync
@@ -19,4 +19,5 @@ spec:
   selector:
     app: onepassword-connect
   type: LoadBalancer
-  loadBalancerClass: tailscale
+  loadBalancerIP: 10.0.7.51
+  loadBalancerClass: kube-vip.io/kube-vip-class

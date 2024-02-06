@@ -14,9 +14,6 @@ connect:
   api:
     httpPort: 80
     httpsPort: 443
-
-  ingress:
-    enabled: true
   # ingressClassName: internal
 
   # hosts:
