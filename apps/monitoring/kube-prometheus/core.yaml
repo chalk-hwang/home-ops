@@ -564,7 +564,7 @@ spec:
                   resources:
                     requests:
                       storage: 100Gi
-                  storageClassName: iscsi
+                  storageClassName: local-hostpath
             walCompression: true
           service:
             externalTrafficPolicy: Cluster

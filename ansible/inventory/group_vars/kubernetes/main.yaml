@@ -27,7 +27,7 @@ k3s_server_manifests_urls:
 k3s_server_manifests_templates:
 - dns-endpoint-crd.yaml
 - prometheus-operator-crds-helmchart.yaml
+- cilium-helmchart.yaml
 - kube-vip-rbac.yaml
 - kube-vip-ds.yaml
-- cilium-helmchart.yaml
 # - cilium-l2.yaml

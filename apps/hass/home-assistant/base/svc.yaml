@@ -6,7 +6,7 @@ metadata:
   name: home-assistant-svc
 spec:
   ports:
-    - name: ha
+    - name: HTTP
       port: 8123
       protocol: TCP
       targetPort: 8123

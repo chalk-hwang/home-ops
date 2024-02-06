@@ -51,9 +51,9 @@
       when: k3s_primary_control_node
       ansible.builtin.include_tasks: tasks/prometheus-operator-crds.yaml
 
-    # - name: Cilium
-    #   when: k3s_primary_control_node
-    #   ansible.builtin.include_tasks: tasks/cilium.yaml
+    - name: Cilium
+      when: k3s_primary_control_node
+      ansible.builtin.include_tasks: tasks/cilium.yaml
 
 
     - name: Cruft
