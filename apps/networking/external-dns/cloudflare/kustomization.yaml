@@ -14,8 +14,7 @@ resources:
 helmCharts:
 - name: external-dns
   repo: https://kubernetes-sigs.github.io/external-dns
-  version: 0.9.11
-  releaseName: external-dns-cloudflare
+  version: 1.14.3
   namespace: networking
   valuesFile: values.yaml
   includeCRDs: false

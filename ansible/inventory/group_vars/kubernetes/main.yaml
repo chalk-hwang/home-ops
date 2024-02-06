@@ -19,7 +19,7 @@ k3s_registries:
     quay.io:
     registry.k8s.io:
 k3s_server_manifests_urls:
-- url: https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.crds.yaml
+- url: https://github.com/cert-manager/cert-manager/releases/download/v1.14.3/cert-manager.crds.yaml
   filename: cert-manager-crds.yaml
 - url: https://raw.githubusercontent.com/external-secrets/external-secrets/v0.9.11/deploy/crds/bundle.yaml
   filename: external-secrets-crds.yaml
