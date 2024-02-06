@@ -1,11 +1,11 @@
 fullnameOverride: nginx-internal
 controller:
-  replicaCount: 1
+  replicaCount: 2
   service:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: "internal.chalk-ho.me"
       argocd.argoproj.io/sync-wave: "1"
-      kube-vip.io/vipHost: internal
+      kube-vip.io/vipHost: nginx-internal
     externalTrafficPolicy: Cluster
     type: LoadBalancer
     loadBalancerIP: "10.0.7.201"
@@ -14,6 +14,8 @@ controller:
       enabled: true
       type: LoadBalancer
       loadBalancerClass: tailscale
+      annotations:
+        tailscale.com/hostname: nginx-internal
   ingressClassResource:
     name: internal
     default: true
@@ -58,7 +60,7 @@ controller:
     labelSelector:
       matchLabels:
         app.kubernetes.io/name: ingress-nginx
-        app.kubernetes.io/instance: internal
+        app.kubernetes.io/instance: nginx-internal
         app.kubernetes.io/component: controller
   resources:
     requests:
