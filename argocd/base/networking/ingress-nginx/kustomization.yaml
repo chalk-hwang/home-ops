@@ -3,10 +3,10 @@ kind: Kustomization
 
 resources:
   # - nextdns.yaml
-  - cert-manager.yaml
-  - issuers.yaml
+  - internal.yaml
+  - external.yaml
 
 namespace: argocd
 
 commonLabels:
-  app.kubernetes.io/project: cert-manager
+  app.kubernetes.io/project: ingress-nginx
