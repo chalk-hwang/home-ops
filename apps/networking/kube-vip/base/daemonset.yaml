@@ -32,7 +32,7 @@ spec:
         - name: port
           value: "6443"
         - name: vip_interface
-          value: enp3s0.7
+          value: end0.7
         - name: vip_loglevel
           value: "5"
         - name: vip_cidr
@@ -67,7 +67,7 @@ spec:
         - name: bgp_peers
           value: "10.0.7.10:64500::false"
         - name: address
-          value: "10.0.7.200"
+          value: "10.0.7.241"
         image: ghcr.io/kube-vip/kube-vip:v0.6.0
         imagePullPolicy: Always
         name: kube-vip

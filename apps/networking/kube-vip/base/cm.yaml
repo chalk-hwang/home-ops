@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: kubevip
 data:
-  range-global: 10.0.7.51-10.0.7.199
+  range-global: 10.0.7.51-10.0.7.240

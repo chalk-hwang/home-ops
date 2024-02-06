@@ -1,6 +1,20 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+metadata:
+  name: kube-prometheus
+
 resources:
-  - base/
-  - core.yaml
+- endpoints.yaml
+- prom-rule.yaml
+- svc-monitor.yaml
+- svc.yaml
+
+helmCharts:
+- name: kube-prometheus-stack
+  repo: https://prometheus-community.github.io/helm-charts
+  version: "56.6.2"
+  releaseName: kube-prometheus
+  valuesFile: values.yaml
+
+
+namespace: monitoring

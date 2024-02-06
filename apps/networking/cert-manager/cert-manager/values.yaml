@@ -1,0 +1,146 @@
+installCRDs: false
+startupapicheck:
+  enabled: false
+acmesolver:
+  image:
+    repository: quay.io/jetstack/cert-manager-acmesolver
+    tag: v1.12.4
+cainjector:
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+      - ALL
+  enabled: true
+  image:
+    pullPolicy: IfNotPresent
+    repository: quay.io/jetstack/cert-manager-cainjector
+    tag: v1.12.4
+  nodeSelector:
+    kubernetes.io/arch: arm64
+    kubernetes.io/os: linux
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 350m
+      memory: 512Mi
+    requests:
+      cpu: 150m
+      memory: 256Mi
+  securityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  serviceAccount:
+    automountServiceAccountToken: true
+    create: true
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+global:
+  leaderElection:
+    namespace: kube-system
+  logLevel: 2
+  podSecurityPolicy:
+    enabled: false
+    useAppArmor: true
+  rbac:
+    aggregateClusterRoles: true
+    create: true
+image:
+  pullPolicy: IfNotPresent
+  repository: quay.io/jetstack/cert-manager-controller
+  tag: v1.12.4
+maxConcurrentChallenges: 60
+nodeSelector:
+  kubernetes.io/arch: arm64
+  kubernetes.io/os: linux
+prometheus:
+  enabled: true
+  servicemonitor:
+    enabled: true
+    honorLabels: false
+    interval: 60s
+    path: /metrics
+    prometheusInstance: default
+    scrapeTimeout: 30s
+    targetPort: 9402
+replicaCount: 1
+resources:
+  limits:
+    cpu: 350m
+    memory: 512Mi
+  requests:
+    cpu: 150m
+    memory: 256Mi
+securityContext:
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
+serviceAccount:
+  automountServiceAccountToken: true
+  create: true
+webhook:
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+      - ALL
+  hostNetwork: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: quay.io/jetstack/cert-manager-webhook
+    tag: v1.12.4
+  livenessProbe:
+    failureThreshold: 3
+    initialDelaySeconds: 35
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+  networkPolicy:
+    egress:
+    - ports:
+      - port: 80
+        protocol: TCP
+      - port: 443
+        protocol: TCP
+      - port: 53
+        protocol: TCP
+      - port: 53
+        protocol: UDP
+      to:
+      - ipBlock:
+          cidr: 0.0.0.0/0
+    enabled: false
+    ingress:
+    - from:
+      - ipBlock:
+          cidr: 0.0.0.0/0
+  nodeSelector:
+    kubernetes.io/os: linux
+  readinessProbe:
+    failureThreshold: 3
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    successThreshold: 1
+    timeoutSeconds: 1
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 350m
+      memory: 512Mi
+    requests:
+      cpu: 150m
+      memory: 256Mi
+  securePort: 10250
+  securityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  serviceAccount:
+    automountServiceAccountToken: true
+    create: true
+  serviceType: ClusterIP
+  timeoutSeconds: 10

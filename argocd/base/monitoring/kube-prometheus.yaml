@@ -5,26 +5,56 @@ metadata:
 spec:
   project: monitoring
   source:
-    repoURL: 'https://github.com/gruberdev/homelab.git'
+    repoURL: 'https://github.com/chalk-hwang/home-ops.git'
     path: apps/monitoring/kube-prometheus
     targetRevision: main
   destination:
-    namespace: argocd
+    namespace: monitoring
     name: in-cluster
+  info:
+  - name: "Github Repository:"
+    value: >-
+      https://github.com/prometheus-operator/kube-prometheus
+  - name: "Chart location:"
+    value: >-
+      https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+  - name: "Official Website:"
+    value: >-
+      https://prometheus-operator.dev/
+  - name: "Documentation:"
+    value: >-
+      https://prometheus-operator.dev/docs/prologue/introduction/
+  - name: "k3s useful documentation:"
+    value: >-
+      https://picluster.ricsanfre.com/docs/prometheus/#k3s-components-monitoring
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: false
+      allowEmpty: true
     syncOptions:
     - Validate=false
     - CreateNamespace=false
+    - ServerSideApply=true
     - PrunePropagationPolicy=foreground
+    - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:
-      limit: 5
+      limit: 15
       backoff:
-        duration: 20s
+        duration: 15s
         factor: 2
-        maxDuration: 15m
+        maxDuration: 20m
+  # See: https://github.com/prometheus-community/helm-charts/issues/1041
+  ignoreDifferences:
+  - group: admissionregistration.k8s.io
+    kind: MutatingWebhookConfiguration
+    name: kube-prometheus-kube-prome-admission
+    jsonPointers:
+    - /webhooks/0/failurePolicy
+  - group: admissionregistration.k8s.io
+    kind: ValidatingWebhookConfiguration
+    name: kube-prometheus-kube-prome-admission
+    jsonPointers:
+    - /webhooks/0/failurePolicy

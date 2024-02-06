@@ -1,34 +1,32 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: external-dns-cloudflare
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
+  name: cert-manager-issuers
 spec:
   project: networking
-  sources:
-  - repoURL: 'https://github.com/chalk-hwang/home-ops.git'
-    path: apps/networking/extenal-dns/cloudflare
+  source:
+    repoURL: 'https://github.com/chalk-hwang/home-ops.git'
+    path: apps/networking/cert-manager/issuers
     targetRevision: main
   destination:
-    namespace: networking
+    namespace: cert-manager
     name: in-cluster
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: false
+      allowEmpty: true
     syncOptions:
-    - Validate=false
+    - Validate=true
     - CreateNamespace=false
     - PrunePropagationPolicy=foreground
+    - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
-    - RespectIgnoreDifferences=true
-    - ServerSideApply=true
+    - Replace=true
     retry:
       limit: 5
       backoff:
-        duration: 60s
+        duration: 20s
         factor: 2
         maxDuration: 15m

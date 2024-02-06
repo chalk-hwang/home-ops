@@ -1,4 +1,3 @@
----
 # https://github.com/PyratLabs/ansible-role-k3s
 # renovate: datasource=github-releases depName=k3s-io/k3s
 k3s_release_version: v1.29.1+k3s1
@@ -6,7 +5,7 @@ k3s_install_hard_links: true
 k3s_become: true
 k3s_etcd_datastore: true
 k3s_use_unsupported_config: true
-k3s_registration_address: "10.0.7.200"
+k3s_registration_address: "10.0.7.241"
 # /var/lib/rancher/k3s/server/manifests
 k3s_registries:
   mirrors:
@@ -24,6 +23,8 @@ k3s_server_manifests_urls:
   filename: cert-manager-crds.yaml
 - url: https://raw.githubusercontent.com/external-secrets/external-secrets/v0.9.11/deploy/crds/bundle.yaml
   filename: external-secrets-crds.yaml
+- url: https://raw.githubusercontent.com/kubernetes-sigs/external-dns/external-dns-helm-chart-1.14.3/docs/contributing/crd-source/crd-manifest.yaml
+  filename: external-dns-crds.yaml
 k3s_server_manifests_templates:
 - dns-endpoint-crd.yaml
 - prometheus-operator-crds-helmchart.yaml

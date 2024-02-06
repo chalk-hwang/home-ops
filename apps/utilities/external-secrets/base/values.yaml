@@ -1,4 +1,3 @@
----
 replicaCount: 1
 
 #image:
@@ -14,9 +13,9 @@ installCRDs: false
 
 crds:
   # -- If true, create CRDs for Cluster External Secret.
-  createClusterExternalSecret: true
+  createClusterExternalSecret: false
   # -- If true, create CRDs for Cluster Secret Store.
-  createClusterSecretStore: true
+  createClusterSecretStore: false
 
 imagePullSecrets: []
 nameOverride: ""

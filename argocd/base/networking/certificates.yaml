@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nginx-certificates
+  name: certificates
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  - resources-finalizer.argocd.argoproj.io
 spec:
   project: networking
   source:
     repoURL: 'https://github.com/chalk-hwang/home-ops.git'
-    path: apps/networking/nginx/certificates
+    path: apps/networking/certificates
     targetRevision: main
   destination:
     namespace: networking

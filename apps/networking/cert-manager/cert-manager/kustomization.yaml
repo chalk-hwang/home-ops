@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+metadata:
+  name: cert-manager
+
+helmCharts:
+- name: cert-manager
+  version: v1.5.3
+  repo: https://charts.jetstack.io
+  namespace: cert-manager
+  valuesFile: values.yaml
