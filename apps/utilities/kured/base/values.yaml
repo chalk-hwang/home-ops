@@ -1,0 +1,32 @@
+fullnameOverride: kured
+
+configuration:
+  metricsHost: "0.0.0.0" # host where metrics will listen
+  metricsPort: 8080 # port number where metrics will listen
+  drainGracePeriod: -1 # time in seconds given to each pod to terminate gracefully, if negative, the default value specified in the pod will be used (default: -1)
+  concurrency: 1 # amount of nodes to concurrently reboot. (default 1)
+
+
+rbac:
+  create: true
+
+serviceAccount:
+  create: true
+  name: kured
+
+
+containerSecurityContext:
+  privileged: true # Give permission to nsenter /proc/1/ns/mnt
+  readOnlyRootFilesystem: true
+#  allowPrivilegeEscalation: true # Needed when using defaultAllowPrivilegedEscalation: false in psp
+
+# Use the following security-context when "configuration.rebootMethod=signal and configuration.useRebootSentinelHostPath=true"
+# containerSecurityContext:
+#   privileged: false
+#   readOnlyRootFilesystem: true
+#   allowPrivilegeEscalation: false
+#   capabilities:
+#     add:
+#     - CAP_KILL
+#     drop:
+#     - '*'

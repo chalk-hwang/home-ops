@@ -24,9 +24,8 @@ k3s_server_manifests_urls:
 - url: https://raw.githubusercontent.com/external-secrets/external-secrets/v0.9.11/deploy/crds/bundle.yaml
   filename: external-secrets-crds.yaml
 - url: https://raw.githubusercontent.com/kubernetes-sigs/external-dns/external-dns-helm-chart-1.14.3/docs/contributing/crd-source/crd-manifest.yaml
-  filename: external-dns-crds.yaml
+  filename: external-dns-crd.yaml
 k3s_server_manifests_templates:
-- dns-endpoint-crd.yaml
 - prometheus-operator-crds-helmchart.yaml
 - cilium-helmchart.yaml
 - kube-vip-rbac.yaml
