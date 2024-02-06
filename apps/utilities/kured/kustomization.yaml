@@ -1,4 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: kured
+  namespace: kube-system
 
-resources:
-- base
+helmCharts:
+- name: kured
+  repo: https://kubereboot.github.io/charts
+  version: 5.4.2
+  releaseName: kured
+  namespace: kube-system
+  valuesFile: values.yaml

@@ -2,15 +2,10 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: squid-proxy
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: proxy.chalk-ho.me
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
-    external-dns.alpha.kubernetes.io/ttl: "120"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
-  ingressClassName: nginx
+  ingressClassName: internal
   rules:
-  - host: proxy.chalk-ho.me
+  - host: &host proxy.chalk-ho.me
     http:
       paths:
       - path: /
@@ -22,5 +17,4 @@ spec:
               name: proxy
   tls:
   - hosts:
-    - proxy.chalk-ho.me
-    secretName: proxy-tls
+    - *host

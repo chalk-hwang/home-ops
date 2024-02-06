@@ -1,0 +1,12 @@
+fullnameOverride: onepassword-connect
+
+ingress:
+  enabled: true
+  ingressClassName: internal
+
+  hosts:
+    - host: &host op-connect.chalk-ho.me
+      paths: []
+  tls:
+    - hosts:
+        - *host
