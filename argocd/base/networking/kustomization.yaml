@@ -3,11 +3,10 @@ kind: Kustomization
 
 resources:
   - external-dns
-  - cert-manager
   - ingress-nginx
   - certificates.yaml
   - tailscale-operator.yaml
-  - cert-manager-issuer.yaml
+  - cert-manager
   - kube-vip.yaml
 # - unifi-controller.yaml
 
