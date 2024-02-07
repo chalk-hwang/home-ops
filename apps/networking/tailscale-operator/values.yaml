@@ -1,4 +1,6 @@
-installCRDs: "true"
+fullnameOverride: tailscale-operator
+
+installCRDs: true
 
 operatorConfig:
   # ACL tag that operator will be tagged with. Operator must be made owner of
