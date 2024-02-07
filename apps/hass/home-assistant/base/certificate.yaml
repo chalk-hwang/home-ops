@@ -5,8 +5,8 @@ metadata:
 spec:
   secretName: home-assistant-tls
   issuerRef:
-    name: letsencrypt-production
+    name: letsencrypt
     kind: ClusterIssuer
   commonName: hass.chalk-ho.me
   dnsNames:
-  - hass.chalk-ho.me
+    - hass.chalk-ho.me

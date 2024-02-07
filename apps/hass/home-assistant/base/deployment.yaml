@@ -67,9 +67,9 @@ spec:
               mountPath: /etc/git-secret/known_hosts
           envFrom:
             - configMapRef:
-                name: home-assistant-git-sync-cm
+                name: home-assistant-gitsync-cm
             - secretRef:
-                name: home-assistant-git-sync-secrets
+                name: home-assistant-gitsync-secrets
                 optional: true
       containers:
         - env:

@@ -1,23 +1,16 @@
-apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata:
-  name: selfsigned-issuer
-spec:
-  selfSigned: {}
----
 apiVersion: v1
 kind: Secret
 metadata:
-  name: postgres-certificate
+  name: postgres-tls
   labels:
     cnpg.io/reload: ""
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: postgres-certificate
+  name: postgres-tls
 spec:
-  secretName: postgres-certificate
+  secretName: postgres-tls
   usages:
     - client auth
   commonName: streaming_replica

@@ -12,7 +12,7 @@
         "./ansible/**/*.sops.yaml": "yaml",
         "./ansible/**/inventory/**/*.yaml": "yaml",
         "./kubernetes/**/*.sops.toml": "plaintext",
-        "**/templates/**/*.yaml": "jinja"
+        "./**/templates/**/*.yaml": "jinja"
     },
     "sops.defaults.ageKeyFile": "age.key",
     "yaml.schemas": {

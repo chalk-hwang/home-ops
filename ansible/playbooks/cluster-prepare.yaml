@@ -185,9 +185,8 @@
             - ip_vs
             - ip_vs_rr
             - nbd
-            - overlay
+            - overla
             - rbd
-            - zfs
           register: modules_status
         - name: System Configuration | Reload Kernel modules  # noqa: no-changed-when no-handler
           when: modules_status.changed
@@ -215,8 +214,8 @@
             verbose: true
             tailscale_authkey: "{{ lookup('env', 'TAILSCALE_OAUTH2_CLIENT_SECRET_METAL') }}"
             tailscale_tags:
-              - "metal"
-            tailscale_args: "--ssh --advertise-connector --advertise-routes=10.0.7.0/24,10.42.0.0/16,10.43.0.0/16 --accept-routes=true"
+              - "k8s-node"
+            tailscale_args: "--ssh --advertise-connector --advertise-routes=10.0.7.0/24,10.42.0.0/16,10.43.0.0/16 --accept-routes=true --accept-dns=true"
             # Optionally, also include:
             tailscale_oauth_ephemeral: false
             tailscale_oauth_preauthorized: true

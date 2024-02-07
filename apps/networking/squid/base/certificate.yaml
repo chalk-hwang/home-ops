@@ -5,8 +5,8 @@ metadata:
 spec:
   secretName: proxy-tls
   issuerRef:
-    name: letsencrypt-production
+    name: letsencrypt
     kind: ClusterIssuer
   commonName: proxy.chalk-ho.me
   dnsNames:
-  - proxy.chalk-ho.me
+    - proxy.chalk-ho.me

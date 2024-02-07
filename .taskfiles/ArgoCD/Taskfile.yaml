@@ -33,8 +33,8 @@ tasks:
       stringData:
         type: git
         url: {{.GIT_URI}}
-        password: $GH_PASS
-        username: $GH_USER
+        password: $GITHUB_PASSWORD
+        username: $GITHUB_USERNAME
       EOF
     ignore_error: true
 
@@ -56,8 +56,8 @@ tasks:
       stringData:
         type: git
         url: https://github.com/chalk-hwang/home-ops.git
-        password: $GH_PASS
-        username: $GH_USER
+        password: $GITHUB_PASSWORD
+        username: $GITHUB_USERNAME
       EOF
     - |
       kubectl apply -f - << EOF
@@ -71,8 +71,8 @@ tasks:
       stringData:
         type: git
         url: https://github.com/chalk-hwang/home-ops-private.git
-        password: $GH_PASS
-        username: $GH_USER
+        password: $GITHUB_PASSWORD
+        username: $GITHUB_USERNAME
       EOF
     ignore_error: true
 
