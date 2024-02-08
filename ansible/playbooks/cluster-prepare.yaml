@@ -206,16 +206,25 @@
 
     - name: Tailscale
       block:
-        - name: Tailscale | Install
+        - name: Tailscale | Reset all configuration
           ansible.builtin.include_role:
             name:  artis3n.tailscale
             public: true
           vars:
-            verbose: true
-            tailscale_authkey: "{{ lookup('env', 'TAILSCALE_OAUTH2_CLIENT_SECRET_METAL') }}"
+            state: absent
+
+
+        - name: Tailscale | Install
+          ansible.builtin.include_role:
+            name: artis3n.tailscale
+            public: true
+          vars:
+            state: latest
+            tailscale_up_skit: false
+            tailscale_authkey: "{{ lookup('env', 'TAILSCALE_K8S_NODE_OAUTH2_CLIENT_SECRET') }}"
             tailscale_tags:
               - "k8s-node"
-            tailscale_args: "--ssh --advertise-connector --advertise-routes=10.0.7.0/24,10.42.0.0/16,10.43.0.0/16 --accept-routes=true --accept-dns=true"
+            tailscale_args: ""
             # Optionally, also include:
             tailscale_oauth_ephemeral: false
             tailscale_oauth_preauthorized: true

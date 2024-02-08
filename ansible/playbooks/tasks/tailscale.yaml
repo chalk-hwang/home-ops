@@ -1,0 +1,30 @@
+---
+- name: Tailscale
+  block:
+  - name: Tailscale | Init credentials variables
+    ansible.builtin.include_tasks: init_tailscale_vars.yml
+     
+  - name: Tailscale | Reset all configuration
+    ansible.builtin.include_role:
+      name:  artis3n.tailscale
+      public: true
+    vars:
+      state: absent
+
+
+
+
+  - name: Tailscale | Install
+    ansible.builtin.include_role:
+      name: artis3n.tailscale
+      public: true
+    vars:
+      state: latest
+      tailscale_up_skit: false
+      tailscale_authkey: "{{ lookup('env', 'TAILSCALE_K8S_NODE_OAUTH2_CLIENT_SECRET') }}"
+      tailscale_tags:
+        - "k8s-node"
+      tailscale_args: ""
+      # Optionally, also include:
+      tailscale_oauth_ephemeral: false
+      tailscale_oauth_preauthorized: true
