@@ -23,7 +23,7 @@ connect:
 
   tls:
     enabled: true
-    secretName: chalk-ho-me-tls
+    secretName: chalk-ho-me-cert
 
   ingress:
     enabled: true

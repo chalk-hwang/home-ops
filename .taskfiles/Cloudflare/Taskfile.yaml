@@ -20,7 +20,7 @@ tasks:
           annotations:
             reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
             reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
-            reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "cert-manager,networking"
+            reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: ""
         stringData:
           API_TOKEN: $(op read "op://Homelab/cloudflare_chalk-ho.me/API_TOKEN")
         EOF

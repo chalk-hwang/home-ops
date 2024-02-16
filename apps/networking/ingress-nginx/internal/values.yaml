@@ -1,5 +1,6 @@
 fullnameOverride: nginx-internal
 controller:
+  enableAnnotationValidations: true
   replicaCount: 2
   service:
     annotations:
@@ -52,7 +53,8 @@ controller:
       namespaceSelector:
         any: true
   extraArgs:
-    default-ssl-certificate: "networking/chalk-ho-me-tls"
+    annotations-prefix: "internal.ingress.kubernetes.io"
+    default-ssl-certificate: "networking/chalk-ho-me-cert"
   topologySpreadConstraints:
   - maxSkew: 1
     topologyKey: kubernetes.io/hostname

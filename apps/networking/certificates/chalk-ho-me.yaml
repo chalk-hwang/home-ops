@@ -3,9 +3,9 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: chalk-ho-me-tls
+  name: chalk-ho-me-cert
 spec:
-  secretName: chalk-ho-me-tls
+  secretName: chalk-ho-me-cert-sercert
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer
