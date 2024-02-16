@@ -34,16 +34,16 @@ resources:
 - base/ingress.yaml
 
 - https://github.com/chalk-hwang/home-ops/apps/networking/external-dns
-# - https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared
+- https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared
 
 # - base/cloudflared-dnsendpoint.yaml
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.5/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.6/manifests/install.yaml
 - base/styles-cm.yaml
 
 namespace: argocd
 images:
 - name: quay.io/argoproj/argocd
-  newTag: v2.9.5
+  newTag: v2.9.6
 patches:
   - patch: |-
       - op: replace
@@ -62,6 +62,29 @@ patches:
     target:
       kind: Deployment
       name: argocd-server
+  # - patch: |-
+  #     - op: add
+  #       path: "/spec/template/spec/nodeSelector"
+  #       value:
+  #         kubernetes.io/hostname: metal-a
+  #         kubernetes.io/arch: arm64
+  #   target:
+  #     kind: Deployment
+  # - patch: |-
+  #     - op: add
+  #       path: "/spec/template/spec/nodeSelector"
+  #       value:
+  #         kubernetes.io/hostname: metal-a
+  #         kubernetes.io/arch: arm64
+  #   target:
+  #     kind: StatefulSet
+  - patch: |-
+      - op: replace
+        path: "/spec/template/spec/volumes/0/secret/secretName"
+        value: "cloudflared-secret"
+    target:
+      kind: Deployment
+      name: cloudflared
   - patch: |-
       - op: add
         path: "/spec/template/spec/containers/0/args/-"
@@ -73,11 +96,10 @@ patches:
   - path: overlay/argocd-deployment.yaml
   - path: overlay/argocd-repo-deployment.yaml
   - path: overlay/argocd-cm.yaml
-  # - path: overlay/cloudflared-cm.yaml
+  - path: overlay/cloudflared-cm.yaml
   - path: overlay/argocd-rbac.yaml
   - path: overlay/argocd-cr.yaml
   - path: overlay/argocd-cmd-params-cm.yaml
-
   - path: overlay/argocd-node-selector.jsonpatch.yaml
     target:
       kind: Deployment

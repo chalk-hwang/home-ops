@@ -36,7 +36,7 @@ tasks:
   tunnel:secret:
     cmds:
     - |
-        kubectl apply -f - << EOF
+        kubectl apply  -n argocd -f - << EOF
         apiVersion: v1
         kind: Secret
         metadata:
@@ -55,69 +55,26 @@ tasks:
 
   tunnel:endpoint:
     cmds:
-      - |
-          kubectl apply -f - << EOF
-          ---
-          apiVersion: externaldns.k8s.io/v1alpha1
-          kind: DNSEndpoint
-          metadata:
-            name: cloudflared
-            namespace: networking
-          spec:
-            endpoints:
-              - dnsName: "external.chalk-ho.me"
-                recordType: CNAME
-                targets: ["{{ .TUNNEL_ID }}.cfargotunnel.com"]
-          EOF
+    - |
+        kubectl apply -n argocd -f - << EOF
+        ---
+        apiVersion: externaldns.k8s.io/v1alpha1
+        kind: DNSEndpoint
+        metadata:
+          name: cloudflared
+        spec:
+          endpoints:
+            - dnsName: "external.chalk-ho.me"
+              recordType: CNAME
+              targets: ["{{ .TUNNEL_ID }}.cfargotunnel.com"]
+        EOF
 
-  tunnel:config:
-    cmds:
-      - |
-          apiVersion: v1
-          kind: ConfigMap
-          metadata:
-            name: cloudflared
-            namespace: networking
-          data:
-            config.yaml: |
-              tunnul: {{ .TUNNEL_ID }}
-              # Name of the tunnel you want to run
-              credentials-file: /etc/cloudflared/creds/credentials.json
-              # Serves the metrics server under /metrics and the readiness server under /ready
-              metrics: 0.0.0.0:2000
-              no-autoupdate: true
-              ingress:
-                - hostname: chalk-ho.me
-                  service: https://nginx-external-controller.networking.svc.cluster.local:443
-                  originRequest:
-                    http2Origin: true
-                    originServerName: external.chalk-ho.me
-                - hostname: "*.chalk-ho.me"
-                  service: https://nginx-external-controller.networking.svc.cluster.local:443
-                  originRequest:
-                    http2Origin: true
-                    originServerName: external.chalk-ho.me
-                - service: http_status:404
+  # tunnel:config:
+  #   cmds:
 
-
-
-  tunnel:
-    dir: apps/networking/cloudflared
-    preconditions:
-      - sh: "which kustomize"
-        msg: "kustomize {{.PATH_ERROR}}"
-      - sh: "which kubectl"
-        msg: "kubectl {{.PATH_ERROR}}"
-    cmds:
-      - kubectl create namespace networking
-      - task: tunnel:config
-      - kustomize build | kubectl apply -f - -n networking
-      - task: tunnel:secret
-      - task: tunnel:endpoint
-      - echo "Patched secret."
-    ignore_error: true
 
   default:
     cmds:
       - task: dns:secret
-      - task: tunnel
+      - task: tunnel:secret
+      - task: tunnel:endpoint
