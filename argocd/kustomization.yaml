@@ -79,13 +79,6 @@ patches:
     target:
       kind: StatefulSet
   - patch: |-
-      - op: replace
-        path: "/spec/template/spec/volumes/0/secret/secretName"
-        value: "cloudflared-secret"
-    target:
-      kind: Deployment
-      name: cloudflared
-  - patch: |-
       - op: add
         path: "/spec/template/spec/containers/0/args/-"
         value: "--insecure"

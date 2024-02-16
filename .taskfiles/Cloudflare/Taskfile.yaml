@@ -1,7 +1,9 @@
 version: "3"
 vars:
   PATH_ERROR: is not installed or correctly configured in PATH.
-  TAILSCALE_VERSION: 1.60
+  TUNNEL_ID:
+    sh: |
+      op read "op://Homelab/cloudflared_homelab-tunnel/cloudflared-credentials.json" | jq -r .TunnelID
 
 silent: true
 
@@ -25,16 +27,6 @@ tasks:
     ignore_error: true
 
   tunnel:secret:
-    vars:
-      TunnelID:
-        sh: |
-          op read "op://Homelab/cloudflared_homelab-tunnel/cloudflared-credentials.json" | jq -r .TunnelID
-      AccountTag:
-        sh: |
-          op read "op://Homelab/cloudflared_homelab-tunnel/cloudflared-credentials.json" | jq -r .AccountTag
-      TunnelSecret:
-        sh: |
-          op read "op://Homelab/cloudflared_homelab-tunnel/cloudflared-credentials.json" | jq -r .TunnelSecret
     cmds:
     - |
         kubectl apply -f - << EOF
@@ -48,15 +40,27 @@ tasks:
             reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
             reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "argocd,cloudflared"
         stringData:
-          TUNNEL_ID: "{{ .TunnelID }}"
-          credentials.json: |
-            {
-              "AccountTag": "{{ .AccountTag }}",
-              "TunnelSecret": "{{ .TunnelSecret }}",
-              "TunnelID": "{{ .TunnelID }}"
-            }
+          TUNNEL_ID: "{{ .TUNNEL_ID }}"
+          credentials.json: "$(op read "op://Homelab/cloudflared_homelab-tunnel/cloudflared-credentials.json" | base64)"
         EOF
     ignore_error: true
+
+  tunnel:endpoint:
+    cmds:
+      - |
+          kubectl apply -f - << EOF
+          ---
+          apiVersion: externaldns.k8s.io/v1alpha1
+          kind: DNSEndpoint
+          metadata:
+            name: cloudflared
+          spec:
+            endpoints:
+              - dnsName: "external.chalk-ho.me"
+                recordType: CNAME
+                targets: ["{{ .TUNNEL_ID }}.cfargotunnel.com"]
+          EOF
+
 
   tunnel:
     dir: apps/networking/cloudflared
@@ -69,5 +73,6 @@ tasks:
       - kubectl create namespace cloudflared
       - kustomize build | kubectl apply -f -
       - task: tunnel:secret
+      - task: tunnel:endpoint
       - echo "Patched secret."
     ignore_error: true
