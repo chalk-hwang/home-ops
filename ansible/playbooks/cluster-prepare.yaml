@@ -70,7 +70,7 @@
             mode: '0644'
 
     - name: Network Configuration
-      notify: Reboot
+      notify: RebootHandler
       block:
         - name: Network Configuration | Set hostname
           ansible.builtin.hostname:
@@ -106,7 +106,7 @@
               nameserver 1.0.0.1
 
     - name: System Configuration
-      notify: Reboot
+      notify: RebootHandler
       block:
         - name: System Configuration | Disable apparmor
           when:
@@ -145,32 +145,8 @@
             - { key: "fs.inotify.max_user_watches", value: "524288" }
             - { key: "fs.inotify.max_user_instances", value: "8192" }
 
-    - name: Tailscale Configuration
-      block:
-      - name: Tailscale Configuration | Init credentials variables
-        ansible.builtin.include_tasks: tasks/init-tailscale-vars.yaml
-
-      - name: Tailscale Configuration | Uninstall if already installed
-        ansible.builtin.include_role:
-          name: artis3n.tailscale
-        vars:
-          state: absent
-
-      - name: Tailscale Configuration | Init credentials variables
-        ansible.builtin.include_tasks: tasks/init-tailscale-vars.yaml
-
-      - name: Tailscale Configuration | Install
-        ansible.builtin.include_role:
-          name: artis3n.tailscale
-
-      # Force these to run before we start uninstalling things
-      - name: Tailscale Configuration | Flush Handlers
-        ansible.builtin.meta: flush_handlers
-
-
-
   handlers:
-    - name: Reboot
+    - name: RebootHandler
       ansible.builtin.reboot:
         msg: Rebooting hosts
         reboot_timeout: 3600

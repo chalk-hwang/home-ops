@@ -73,9 +73,9 @@ spec:
             - name: address
               value: "10.0.7.253"
             - name: egress_podcidr
-              value: "10.69.0.0/16"
+              value: "10.11.0.0/16"
             - name: egress_servicecidr
-              value: "10.96.0.0/16"
+              value: "10.12.0.0/16"
           image: ghcr.io/kube-vip/kube-vip:v0.6.0
           imagePullPolicy: Always
           name: kube-vip

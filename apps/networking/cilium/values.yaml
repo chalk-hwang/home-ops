@@ -1,16 +1,30 @@
-autoDirectNodeRoutes: true
+cluster:
+  name: homelab
+  id: 1
+
 bpf:
   masquerade: true
+
 bgp:
-  enabled: false
-cluster:
-  name: home-kubernetes
-  id: 1
+  enabled: true
+  announce:
+    loadbalancerIP: true
+    podCIDR: true
+
+bgpControlPlane:
+  enabled: true
+
+bandwidthManager:
+  enabled: true
+  bbr: true
+
 containerRuntime:
   integration: containerd
   socketPath: /var/run/k3s/containerd/containerd.sock
+
 endpointRoutes:
   enabled: true
+
 hubble:
   enabled: true
   metrics:
@@ -40,24 +54,33 @@ hubble:
     ingress:
       enabled: true
       className: internal
-      annotations:
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/group: Network
-        gethomepage.dev/name: Cilium
-        gethomepage.dev/icon: cilium.png
       hosts:
         - "hubble.chalk-ho.me"
       tls:
         - hosts:
             - "hubble.chalk-ho.me"
+
+enableRuntimeDeviceDetection: true
+devices: "eth0.7"
+
 ipam:
   mode: kubernetes
+
+routingMode: native
 ipv4NativeRoutingCIDR: "10.11.0.0/16"
+
 k8sServiceHost: 127.0.0.1
 k8sServicePort: 6444
+
 kubeProxyReplacement: true
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+
+loadBalancer:
+  algorithm: maglev
+  mode: dsr
+
 localRedirectPolicy: true
+
 operator:
   replicas: 1
   rollOutPods: true
@@ -69,6 +92,7 @@ operator:
     enabled: true
     annotations:
       grafana_folder: Cilium
+
 prometheus:
   enabled: true
   serviceMonitor:
@@ -78,7 +102,7 @@ dashboards:
   enabled: true
   annotations:
     grafana_folder: Cilium
+
 rollOutCiliumPods: true
-routingMode: native
 securityContext:
   privileged: true

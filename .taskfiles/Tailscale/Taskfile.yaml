@@ -1,61 +1,34 @@
 version: "3"
+
+env:
+  PATH: "{{.ROOT_DIR}}/.venv/bin:$PATH"
+  VIRTUAL_ENV: "{{.ROOT_DIR}}/.venv"
+  ANSIBLE_COLLECTIONS_PATH: "{{.ROOT_DIR}}/.venv/galaxy"
+  ANSIBLE_ROLES_PATH: "{{.ROOT_DIR}}/.venv/galaxy/ansible_roles"
+  ANSIBLE_VARS_ENABLED: "host_group_vars"
+  ANSIBLE_LOCALHOST_WARNING: "False"
+  ANSIBLE_INVENTORY_UNPARSED_WARNING: "False"
+
 vars:
   PATH_ERROR: is not installed or correctly configured in PATH.
   TAILSCALE_VERSION: 1.60
+  ANSIBLE_LINT_FILE: "{{.ANSIBLE_DIR}}/.ansible-lint"
+  ANSIBLE_INVENTORY_FILE: "{{.ANSIBLE_DIR}}/inventory/hosts.yaml"
+  ANSIBLE_REQUIREMENTS_FILE: "{{.ANSIBLE_DIR}}/requirements.yaml"
+  ANSIBLE_PIP_REQUIREMENTS_FILE: "{{.ANSIBLE_DIR}}/requirements.txt"
 
 silent: true
 
 tasks:
-  router:
-    vars:
-      SVC_CIDR:
-        sh: echo "$(echo '{"apiVersion":"v1","kind":"Service","metadata":{"name":"tst"},"spec":{"clusterIP":"1.1.1.1","ports":[{"port":443}]}}' | kubectl apply -f - 2>&1 | sed 's/.*valid IPs is //')"
-      POD_CIDR:
-        sh: echo "$(kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}')"
+  metal:
+    desc: Run an Ansible playbook for tailscale installation on metals
     cmds:
-      - rm apps/networking/router/deployment.yaml
-      - |
-        cat << EOF > apps/networking/router/deployment.yaml
-        apiVersion: v1
-        kind: Deployment
-        metadata:
-          name: subnet-router
-          labels:
-            app: tailscale
-        spec:
-          selector:
-            matchLabels:
-              app: subnet-router
-          replicas: 1
-          template:
-            metadata:
-              labels:
-                app: subnet-router
-          serviceAccountName: "tailscale"
-          containers:
-          - name: tailscale
-            imagePullPolicy: IfNotPresent
-            image: "docker.io/grubertech/tailscale:latest"
-            env:
-          - name: TS_HOSTNAME
-            value: "router"
-            - name: USERSPACE
-              value: "true"
-            - name: AUTH_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: tailscale
-                  key: AUTH_KEY
-                  optional: true
-            - name: ROUTES
-              value: "{{.SVC_CIDR}},{{.POD_CIDR}}"
-            securityContext:
-              runAsUser: 1000
-              runAsGroup: 1000
-        EOF
-    ignore_error: true
+      - task: :ansible:deps
+      - .venv/bin/ansible-playbook --inventory {{.ANSIBLE_INVENTORY_FILE}} {{.ANSIBLE_DIR}}/playbooks/tailscale-installation.yaml
+    preconditions:
+      - { msg: "Missing Ansible inventory file", sh: "test -f {{.ANSIBLE_INVENTORY_FILE}}" }
 
-  secret:
+  operater:secret:
     cmds:
       - |
         kubectl apply -f - << EOF
@@ -74,11 +47,6 @@ tasks:
         EOF
     ignore_error: true
 
-  sidecar:
-    cmds:
-      - task: sidecar:build
-      - task: sidecar:push
-
   operator:
     dir: apps/networking/tailscale/operator
     preconditions:
@@ -89,23 +57,6 @@ tasks:
     cmds:
       - kubectl create namespace tailscale
       - kustomize build | kubectl apply -f -
-      - task: secret
+      - task: operater:secret
       - echo "Patched secret."
-    ignore_error: true
-
-  sidecar:build:
-    dir: apps/networking/tailscale/docker
-    cmds:
-      - |
-        docker build -t docker.io/grubertech/tailscale:latest \
-                     -t docker.io/grubertech/tailscale:v{{.TAILSCALE_VERSION}} \
-                     -t docker.io/grubertech/tailscale-sidecar:v{{.TAILSCALE_VERSION}} .
-    ignore_error: true
-
-  sidecar:push:
-    dir: apps/networking/tailscale/docker
-    cmds:
-      - docker push docker.io/grubertech/tailscale:latest
-      - docker push docker.io/grubertech/tailscale:v{{.TAILSCALE_VERSION}}
-      - docker push docker.io/grubertech/tailscale-sidecar:v{{.TAILSCALE_VERSION}}
     ignore_error: true

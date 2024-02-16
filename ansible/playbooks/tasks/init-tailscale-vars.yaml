@@ -1,8 +1,14 @@
 ---
+- name: Tailscale | Get Secret
+  ansible.builtin.shell: op read "op://Homelab/tailscale_metal-oauth/CLIENT_SECRET"
+  register: tailscale_oauth_secret
+  delegate_to: localhost
+  become: false
+
 - name: Tailscale | Set default variables
   ansible.builtin.set_fact:
-    tailscale_authkey: "{{ lookup('env', 'TAILSCALE_METAL_OAUTH_CLIENT_SECRET') }}"
-    tailscale_args: "--hostname={{ inventory_hostname }} --ssh --advertise-connector --advertise-routes=10.0.7.0/24,10.69.0.0/16,10.96.0.0/16 --accept-routes=true --accept-dns=true"
+    tailscale_authkey: "{{ tailscale_oauth_secret.stdout }}"
+    tailscale_args: "--ssh --advertise-exit-node --accept-routes=false --accept-dns=false"
     tailscale_tags:
     - "metal"
     # Optionally, also include:

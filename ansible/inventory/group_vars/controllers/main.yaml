@@ -1,8 +1,8 @@
 ---
 k3s_control_node: true
 k3s_server:
-  cluster-cidr: "10.69.0.0/16"
-  service-cidr: "10.96.0.0/16"
+  cluster-cidr: "10.11.0.0/16"
+  service-cidr: "10.12.0.0/16"
   disable: ["flannel", "local-storage", "metrics-server", "servicelb", "traefik"]
   disable-cloud-controller: true
   disable-kube-proxy: true
@@ -23,5 +23,5 @@ k3s_server:
   node-ip: "{{ ansible_host }}"
   pause-image: registry.k8s.io/pause:3.9
   secrets-encryption: true
-  tls-san: "10.0.7.253"
+  tls-san: "{{ ansible_host }}"
   write-kubeconfig-mode: "644"

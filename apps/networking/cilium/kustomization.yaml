@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: cilium
+  namespace: kube-system
+
+resources:
+  - https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
+  - bgp-peering-policy.yaml
+  - lb-ip-pool.yaml
+
+helmCharts:
+  - name: cilium
+    version: 1.15.1
+    repo: https://helm.cilium.io/
+    namespace: kube-system
+    releaseName: cilium
+    valuesFile: values.yaml
+    includeCRDs: true

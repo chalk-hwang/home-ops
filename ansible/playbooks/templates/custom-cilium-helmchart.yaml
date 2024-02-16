@@ -16,7 +16,7 @@ spec:
     bpf:
       masquerade: true
     cluster:
-      name: home-kubernetes
+      name: homelab
       id: 1
     containerRuntime:
       integration: containerd
@@ -27,7 +27,11 @@ spec:
       enabled: false
     ipam:
       mode: kubernetes
-    ipv4NativeRoutingCIDR: "10.69.0.0/16"
+    ipv4:
+      enabled: true
+    ipv6:
+      enabled: true
+    ipv4NativeRoutingCIDR: "10.11.0.0/16"
     k8sServiceHost: 127.0.0.1
     k8sServicePort: 6444
     kubeProxyReplacement: true
@@ -36,7 +40,18 @@ spec:
     operator:
       replicas: 1
       rollOutPods: true
+    hubble:
+      tls:
+        auto:
+          enabled: true
+      ui:
+        enabled: true
+      relay:
+        enabled: true
     rollOutCiliumPods: true
     routingMode: native
     securityContext:
       privileged: true
+    bandwidthManager:
+      enabled: true
+      bbr: true

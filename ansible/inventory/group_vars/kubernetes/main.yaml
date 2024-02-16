@@ -2,7 +2,7 @@
 k3s_become: true
 k3s_etcd_datastore: true
 k3s_install_hard_links: true
-k3s_registration_address: "10.0.7.253"
+k3s_registration_address: "10.0.7.10"
 k3s_registries:
   mirrors:
     docker.io:
@@ -16,9 +16,12 @@ k3s_registries:
     registry.k8s.io:
 # renovate: datasource=github-releases depName=k3s-io/k3s
 k3s_release_version: v1.29.1+k3s1
+# k3s_server_manifests_urls:
+#   - url:
+#     filename: prometheus-operator-crd_monitoring.coreos.com_servicemonitors.yaml
 k3s_server_manifests_templates:
   - namespaces.yaml
-  - custom-cilium-helmchart.yaml
-  - kube-vip-ds.yaml
-  - kube-vip-rbac.yaml
+  # - custom-cilium-helmchart.yaml
+  # - kube-vip-ds.yaml
+  # - kube-vip-rbac.yaml
 k3s_use_unsupported_config: true

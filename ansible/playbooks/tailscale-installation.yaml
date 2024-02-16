@@ -1,0 +1,34 @@
+---
+- name: Cluster Tailscale Configuration
+  hosts: kubernetes
+  become: true
+  gather_facts: true
+  any_errors_fatal: true
+  pre_tasks:
+    - name: Pausing for 5 seconds...
+      ansible.builtin.pause:
+        seconds: 5
+    - name: Populate service facts
+      ansible.builtin.service_facts:
+  tasks:
+    - name: Tailscale
+      block:
+      - name: Tailscale | Init credentials variables
+        ansible.builtin.include_tasks: tasks/init-tailscale-vars.yaml
+
+      - name: Tailscale | Uninstall if already installed
+        ansible.builtin.include_role:
+          name: artis3n.tailscale
+        vars:
+          state: absent
+
+      - name: Tailscale | Init credentials variables
+        ansible.builtin.include_tasks: tasks/init-tailscale-vars.yaml
+
+      - name: Tailscale | Install
+        ansible.builtin.include_role:
+          name: artis3n.tailscale
+
+      # Force these to run before we start uninstalling things
+      - name: Tailscale | Flush Handlers
+        ansible.builtin.meta: flush_handlers
