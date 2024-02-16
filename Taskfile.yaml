@@ -37,6 +37,10 @@ includes:
     aliases:
       - ts
     taskfile: .taskfiles/Tailscale/Taskfile.yaml
+  cloudflare:
+    aliases:
+      - cf
+    taskfile: .taskfiles/Cloudflare/Taskfile.yaml
   onepassword:
     aliases:
       - op

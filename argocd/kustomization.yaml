@@ -31,8 +31,10 @@ resources:
 - base/repo-role.yaml
 - base/repo-rb.yaml
 
+- base/ingress.yaml
+
 # - https://github.com/chalk-hwang/home-ops/apps/networking/tailscale
-- https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared
+# - https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared
 
 # - base/cloudflared-dnsendpoint.yaml
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.6/manifests/install.yaml

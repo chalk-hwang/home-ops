@@ -5,7 +5,7 @@ metadata:
 
 resources:
   - clusterissuer.yaml
-  - externalsecret.yaml
+  # - externalsecret.yaml
 
 helmCharts:
   - name: cert-manager

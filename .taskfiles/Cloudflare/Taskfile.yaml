@@ -1,0 +1,73 @@
+version: "3"
+vars:
+  PATH_ERROR: is not installed or correctly configured in PATH.
+  TAILSCALE_VERSION: 1.60
+
+silent: true
+
+tasks:
+  dns:secret:
+    cmds:
+      - |
+        kubectl apply -f - << EOF
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: cloudflare-secret
+          namespace: cert-manager
+          annotations:
+            reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+            reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+            reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "cert-manager,networking"
+        stringData:
+          API_TOKEN: $(op read "op://Homelab/cloudflare_chalk-ho.me/API_TOKEN")
+        EOF
+    ignore_error: true
+
+  tunnel:secret:
+    vars:
+      TunnelID:
+        sh: |
+          op read "op://Homelab/cloudflared_homelab-tunnel/cloudflared-credentials.json" | jq -r .TunnelID
+      AccountTag:
+        sh: |
+          op read "op://Homelab/cloudflared_homelab-tunnel/cloudflared-credentials.json" | jq -r .AccountTag
+      TunnelSecret:
+        sh: |
+          op read "op://Homelab/cloudflared_homelab-tunnel/cloudflared-credentials.json" | jq -r .TunnelSecret
+    cmds:
+    - |
+        kubectl apply -f - << EOF
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: cloudflared-secret
+          namespace: cloudflared
+          annotations:
+            reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+            reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+            reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "argocd,cloudflared"
+        stringData:
+          TUNNEL_ID: "{{ .TunnelID }}"
+          credentials.json: |
+            {
+              "AccountTag": "{{ .AccountTag }}",
+              "TunnelSecret": "{{ .TunnelSecret }}",
+              "TunnelID": "{{ .TunnelID }}"
+            }
+        EOF
+    ignore_error: true
+
+  tunnel:
+    dir: apps/networking/cloudflared
+    preconditions:
+      - sh: "which kustomize"
+        msg: "kustomize {{.PATH_ERROR}}"
+      - sh: "which kubectl"
+        msg: "kubectl {{.PATH_ERROR}}"
+    cmds:
+      - kubectl create namespace cloudflared
+      - kustomize build | kubectl apply -f -
+      - task: tunnel:secret
+      - echo "Patched secret."
+    ignore_error: true

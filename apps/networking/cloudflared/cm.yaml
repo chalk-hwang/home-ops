@@ -2,12 +2,23 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: cloudflared
+  namespace: cloudflared
 data:
   config.yaml: |
-    tunnel: flame-tunnel
+    # Name of the tunnel you want to run
     credentials-file: /etc/cloudflared/creds/credentials.json
+    # Serves the metrics server under /metrics and the readiness server under /ready
+    metrics: 0.0.0.0:2000
     no-autoupdate: true
     ingress:
-    - hostname: flame.chalk-ho.me
-      service: http://flame-svc:5005
-    - service: http_status:404
+      - hostname: chalk-ho.me
+        service: https://nginx-external-controller.networking.svc.cluster.local:443
+        originRequest:
+          http2Origin: true
+          originServerName: external.chalk-ho.me
+      - hostname: "*.chalk-ho.me"
+        service: https://nginx-external-controller.networking.svc.cluster.local:443
+        originRequest:
+          http2Origin: true
+          originServerName: external.chalk-ho.me
+      - service: http_status:404

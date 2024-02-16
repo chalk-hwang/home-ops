@@ -7,15 +7,15 @@ spec:
     server: https://acme-v02.api.letsencrypt.org/directory
     email: admin@chalk-ho.me
     privateKeySecretRef:
-      name: letsencrypt
+      name: chalk-ho-me-secret
     solvers:
       - dns01:
           cloudflare:
             email: admin@chalk-playground.space
 
             apiTokenSecretRef:
-              name: cert-manager-secret
-              key: CLOUDFLARE_API_TOKEN
+              name: cloudflare-secret
+              key: API_TOKEN
         selector:
           dnsZones:
             - chalk-ho.me

@@ -14,15 +14,16 @@ connect:
   host: onepassword-connect
   serviceType: LoadBalancer
   loadBalancerIP: 10.0.7.51
-  httpPort: 80
-  httpsPort: 443
+  api:
+    httpPort: 80
+    httpsPort: 443
 
-  serviceMonitor:
+    serviceMonitor:
+      enabled: true
+
+  tls:
     enabled: true
-
-  # tls:
-  #   enabled: true
-  #   secretName: onepassword-connect-tls
+    secretName: chalk-ho-me-tls
 
   ingress:
     enabled: true
