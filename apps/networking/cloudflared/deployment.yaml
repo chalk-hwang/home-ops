@@ -26,12 +26,6 @@ spec:
           - --metrics
           - 0.0.0.0:2000
           - run
-        env:
-          - name: TUNNEL_ID
-            valueFrom:
-              secretKeyRef:
-                name: cloudflared-secret
-                key: TUNNEL_ID
         livenessProbe:
           httpGet:
             # Cloudflared has a /ready endpoint which returns 200 if and only if

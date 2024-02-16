@@ -181,3 +181,9 @@ tasks:
     cmds:
     - task: login
     - task: refresh
+
+  default:
+    cmds:
+      - task: repo
+      - task: secret
+      - task: install

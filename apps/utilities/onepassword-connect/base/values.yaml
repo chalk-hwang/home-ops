@@ -15,27 +15,13 @@ connect:
   serviceType: LoadBalancer
   serviceAnnotations:
     io.cilium/lb-ipam-ips: "10.10.0.10"
+
   api:
     httpPort: 80
     httpsPort: 443
 
     serviceMonitor:
       enabled: true
-
-  tls:
-    enabled: true
-    secret: chalk-ho-me-cert
-
-  ingress:
-    enabled: true
-    ingressClassName: internal
-    hosts:
-      - host: &host op-connect.chalk-ho.me
-        paths: []
-    tls:
-      - hosts:
-          - *host
-        secretName: chalk-ho-me-cert
 
   # ingressClassName: internal
 

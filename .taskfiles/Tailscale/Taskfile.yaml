@@ -60,3 +60,7 @@ tasks:
       - task: operater:secret
       - echo "Patched secret."
     ignore_error: true
+
+  default:
+    cmds:
+      - task: operator

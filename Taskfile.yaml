@@ -114,6 +114,23 @@ tasks:
     cmds:
       - task: kubernetes:kubeconform
 
+  cilium:
+    dir: apps/networking/cilium
+    ignore_error: true
+    cmds:
+      - kustomize build --enable-helm | kubectl apply -f -
+      - sleep 10
+      - kustomize build --enable-helm | kubectl apply -f -
+
   up:
     cmds:
-      - 
+      # - task: tailscale:metal
+      # - task ansible:run playbook=cluster-installation -y
+      # - task: cilium
+      - task: tailscale:operator
+      - task: cloudflare
+      - task: onepassword
+      - task: secrets:external
+      - task: argocd
+
+

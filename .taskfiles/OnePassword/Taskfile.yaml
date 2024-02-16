@@ -32,7 +32,7 @@ tasks:
       - echo "Patched secret."
     ignore_error: true
 
-  run:
+  default:
     cmds:
       - task: connect
 
