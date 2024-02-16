@@ -1,9 +1,16 @@
 version: "3"
 vars:
   PATH_ERROR: is not installed or correctly configured in PATH.
+  CREDENTIALS_FILE: op read "op://Homelab/cloudflared_homelab-tunnel/cloudflared-credentials.json"
   TUNNEL_ID:
     sh: |
-      op read "op://Homelab/cloudflared_homelab-tunnel/cloudflared-credentials.json" | jq -r .TunnelID
+      {{ .CREDENTIALS_FILE }} | jq -r .TunnelID
+  TUNNEL_SECRET:
+    sh: |
+      {{ .CREDENTIALS_FILE }} | jq -r .TunnelSecret
+  ACCOUNT_TAG:
+    sh: |
+      {{ .CREDENTIALS_FILE }} | jq -r .AccountTag
 
 silent: true
 
@@ -34,14 +41,15 @@ tasks:
         kind: Secret
         metadata:
           name: cloudflared-secret
-          namespace: cloudflared
-          annotations:
-            reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
-            reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
-            reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "argocd,cloudflared"
+          namespace: networking
         stringData:
           TUNNEL_ID: "{{ .TUNNEL_ID }}"
-          credentials.json: "$(op read "op://Homelab/cloudflared_homelab-tunnel/cloudflared-credentials.json" | base64)"
+          credentials.json: |
+            {
+              "AccountTag": "{{ .ACCOUNT_TAG }}",
+              "TunnelSecret": "{{ .TUNNEL_SECRET }}",
+              "TunnelID": "{{ .TUNNEL_ID }}"
+            }
         EOF
     ignore_error: true
 
@@ -70,8 +78,8 @@ tasks:
       - sh: "which kubectl"
         msg: "kubectl {{.PATH_ERROR}}"
     cmds:
-      - kubectl create namespace cloudflared
-      - kustomize build | kubectl apply -f -
+      - kubectl create namespace networking
+      - kustomize build | kubectl apply -f - -n networking
       - task: tunnel:secret
       - task: tunnel:endpoint
       - echo "Patched secret."

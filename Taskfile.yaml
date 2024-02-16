@@ -113,3 +113,7 @@ tasks:
     internal: true
     cmds:
       - task: kubernetes:kubeconform
+
+  up:
+    cmds:
+      - 
