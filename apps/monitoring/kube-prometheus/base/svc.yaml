@@ -6,10 +6,9 @@ metadata:
     app.kubernetes.io/name: kubelet
   namespace: kube-system
 spec:
-  clusterIP: None
   ports:
   - name: https-metrics
     port: 10250
     protocol: TCP
     targetPort: 10250
-  type: ClusterIP
+  type: LoadBalancer

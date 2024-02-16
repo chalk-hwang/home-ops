@@ -5,11 +5,11 @@ metadata:
   namespace: kube-system
 subsets:
 - addresses:
-  - ip: 10.0.0.11
-  - ip: 10.0.0.12
-  - ip: 10.0.0.13
-  - ip: 10.0.0.14
-  - ip: 10.0.0.15
+  - ip: 10.11.0.11
+  - ip: 10.11.0.12
+  - ip: 10.11.0.13
+  - ip: 10.11.0.14
+  - ip: 10.11.0.15
   ports:
   - name: https-metrics
     port: 10250
