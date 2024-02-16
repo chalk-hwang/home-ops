@@ -461,7 +461,7 @@ spec:
           networkPolicy:
             enabled: false
           nodeSelector:
-            kubernetes.io/arch: amd64
+            kubernetes.io/arch: arm64
           prometheusConfigReloader:
             image:
               registry: quay.io
@@ -530,7 +530,7 @@ spec:
             logLevel: info
             minReadySeconds: 0
             nodeSelector:
-              kubernetes.io/arch: amd64
+              kubernetes.io/arch: arm64
             overrideHonorLabels: false
             overrideHonorTimestamps: false
             paused: false
