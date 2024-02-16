@@ -6,7 +6,7 @@ controller:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: "internal.chalk-ho.me"
       argocd.argoproj.io/sync-wave: "1"
-      kube-vip.io/vipHost: nginx-internal
+      io.cilium/lb-ipam-ips: "10.10.0.201"
     externalTrafficPolicy: Cluster
     type: LoadBalancer
     loadBalancerIP: "10.10.0.201"

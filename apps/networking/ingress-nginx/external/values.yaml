@@ -5,8 +5,8 @@ controller:
   service:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: "external.chalk-ho.me"
-      argocd.argoproj.io/sync-wave: "1"
-      kube-vip.io/vipHost: nginx-external
+      argocd.argoproj.io/sync-wave: "-1"
+      io.cilium/lb-ipam-ips: "10.10.0.200"
     externalTrafficPolicy: Cluster
     type: LoadBalancer
     loadBalancerIP: "10.10.0.200"
