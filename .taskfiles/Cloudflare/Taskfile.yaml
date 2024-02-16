@@ -41,7 +41,6 @@ tasks:
         kind: Secret
         metadata:
           name: cloudflared-secret
-          namespace: networking
         stringData:
           TUNNEL_ID: "{{ .TUNNEL_ID }}"
           credentials.json: |

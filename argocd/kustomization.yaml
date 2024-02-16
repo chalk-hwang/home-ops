@@ -31,19 +31,19 @@ resources:
 - base/repo-role.yaml
 - base/repo-rb.yaml
 
-- base/ingress.yaml
+# - base/ingress.yaml
 
-- https://github.com/chalk-hwang/home-ops/apps/networking/external-dns
+# - https://github.com/chalk-hwang/home-ops/apps/networking/external-dns
 - https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared
 
 # - base/cloudflared-dnsendpoint.yaml
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.6/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.5/manifests/install.yaml
 - base/styles-cm.yaml
 
 namespace: argocd
 images:
 - name: quay.io/argoproj/argocd
-  newTag: v2.9.6
+  newTag: v2.9.5
 patches:
   - patch: |-
       - op: replace
@@ -97,8 +97,6 @@ patches:
   - path: overlay/argocd-repo-deployment.yaml
   - path: overlay/argocd-cm.yaml
   - path: overlay/cloudflared-cm.yaml
-  - path: overlay/argocd-rbac.yaml
-  - path: overlay/argocd-cr.yaml
   - path: overlay/argocd-cmd-params-cm.yaml
   - path: overlay/argocd-node-selector.jsonpatch.yaml
     target:
@@ -106,5 +104,7 @@ patches:
   - path: overlay/argocd-node-selector.jsonpatch.yaml
     target:
       kind: StatefulSet
+  - path: overlay/argocd-rbac.yaml
+  - path: overlay/argocd-cr.yaml
 commonAnnotations:
   reloader.stakater.com/auto: "true"
