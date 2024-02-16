@@ -13,9 +13,9 @@ tasks:
           name: op-credentials
           namespace: onepassword
         type: Opaque
-        data:
+        stringData:
           1password-credentials.json: $(op read op://5wwyx337a44qrlam7szf3h22bm/op-connect_homelab/1password-credentials.json | base64)
-          token: $(op read op://5wwyx337a44qrlam7szf3h22bm/op-connect_homelab/ACCESS_TOKEN | base64)
+          token: $(op read op://5wwyx337a44qrlam7szf3h22bm/op-connect_homelab/ACCESS_TOKEN)
         EOF
 
   connect:
@@ -32,7 +32,7 @@ tasks:
       - echo "Patched secret."
     ignore_error: true
 
-  default:
+  run:
     cmds:
       - task: connect
 
