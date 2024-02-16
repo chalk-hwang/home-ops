@@ -8,7 +8,8 @@ patches:
   - patch: |-
       - op: add
         path: "/spec/loadBalancerClass"
-        value: "--insecure"
+        value: "kube-vip.io/kube-vip-class"
     target:
-      kind: Deployment
-      name: argocd-server
+      kind: Service
+      name: onepassword-connect
+      namespace: onepassword
