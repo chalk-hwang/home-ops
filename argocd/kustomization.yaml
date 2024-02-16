@@ -33,7 +33,7 @@ resources:
 
 - base/ingress.yaml
 
-# - https://github.com/chalk-hwang/home-ops/apps/networking/tailscale
+- https://github.com/chalk-hwang/home-ops/apps/networking/external-dns
 # - https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared
 
 # - base/cloudflared-dnsendpoint.yaml
