@@ -48,7 +48,7 @@ tasks:
     ignore_error: true
 
   operator:
-    dir: apps/networking/tailscale/operator
+    dir: apps/networking/tailscale-operator
     preconditions:
       - sh: "which kustomize"
         msg: "kustomize {{.PATH_ERROR}}"
@@ -56,7 +56,7 @@ tasks:
         msg: "kubectl {{.PATH_ERROR}}"
     cmds:
       - kubectl create namespace tailscale
-      - kustomize build | kubectl apply -f -
+      - kustomize build --enable-helm | kubectl apply -f -
       - task: operater:secret
       - echo "Patched secret."
     ignore_error: true

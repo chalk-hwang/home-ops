@@ -13,7 +13,8 @@ connect:
   # The name of 1Password Connect Host
   host: onepassword-connect
   serviceType: LoadBalancer
-  loadBalancerIP: 10.0.7.51
+  serviceAnnotations:
+    io.cilium/lb-ipam-ips: "10.10.0.254"
   api:
     httpPort: 80
     httpsPort: 443
