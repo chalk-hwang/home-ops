@@ -9,8 +9,8 @@ controller:
       kube-vip.io/vipHost: nginx-internal
     externalTrafficPolicy: Cluster
     type: LoadBalancer
-    loadBalancerIP: "10.0.7.201"
-    loadBalancerClass: kube-vip.io/kube-vip-class
+    loadBalancerIP: "10.10.0.201"
+
     internal:
       enabled: true
       type: LoadBalancer

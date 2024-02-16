@@ -4,7 +4,7 @@ metadata:
   name: adguard-exporter
 data:
   adguard_protocol: "http"
-  adguard_hostname: "10.0.7.8"
+  adguard_hostname: "10.10.0.8"
   adguard_port: "3000"
   interval: "60s"
   log_limit: "50000"
@@ -215,21 +215,7 @@ data:
       id: 4
     user_rules: []
     dhcp:
-      enabled: true
-      interface_name: "eth0"
-      dhcpv4:
-        gateway_ip: "10.0.7.1"
-        subnet_mask: "255.255.255.0"
-        range_start: "10.0.7.10"
-        range_end: "10.0.7.150"
-        lease_duration: 86400
-        icmp_timeout_msec: 1000
-        options: []
-      dhcpv6:
-        range_start: ""
-        lease_duration: 86400
-        ra_slaac_only: false
-        ra_allow_slaac: false
+      enabled: false
     clients: []
     log_compress: false
     log_localtime: false

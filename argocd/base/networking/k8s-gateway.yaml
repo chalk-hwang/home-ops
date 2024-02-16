@@ -19,8 +19,8 @@ spec:
         service:
           type: LoadBalancer
           port: 53
-          loadBalancerIP: 10.0.7.254
-          loadBalancerClass: kube-vip.io/kube-vip-class
+          loadBalancerIP: 10.10.0.254
+
           externalTrafficPolicy: Cluster
   destination:
     namespace: networking

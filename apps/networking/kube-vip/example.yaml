@@ -14,7 +14,7 @@ spec:
     app: nginx
   type: LoadBalancer
   loadBalancerIP: "0.0.0.0"
-  loadBalancerClass: kube-vip.io/kube-vip-class
+
 ---
 apiVersion: apps/v1
 kind: Deployment

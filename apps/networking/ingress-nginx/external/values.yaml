@@ -9,8 +9,8 @@ controller:
       kube-vip.io/vipHost: nginx-external
     externalTrafficPolicy: Cluster
     type: LoadBalancer
-    loadBalancerIP: "10.0.7.200"
-    loadBalancerClass: kube-vip.io/kube-vip-class
+    loadBalancerIP: "10.10.0.200"
+
   ingressClassResource:
     name: external
     default: false
