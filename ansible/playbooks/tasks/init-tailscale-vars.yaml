@@ -1,15 +1,10 @@
 ---
-- name: Tailscale | Set OAuth2 client secret variables
+- name: Tailscale | Set default variables
   ansible.builtin.set_fact:
-    tailscale_authKey: "{{ lookup('env', 'K8S_NODE_TAILSCALE_OAUTH2_CLIENT_SECRET') }}"
-
-- name: Tailscale | Set Tailscale variables
-  when: statg
-  ansible.builtin.set_fact:
-    tailscale_args: "--ssh --advertise-connector --advertise-routes=10.0.7.0/24,10.69.0.0/16,10.96.0.0/16 --accept-routes=true --accept-dns=true"
+    tailscale_authkey: "{{ lookup('env', 'TAILSCALE_METAL_OAUTH_CLIENT_SECRET') }}"
+    tailscale_args: "--hostname={{ inventory_hostname }} --ssh --advertise-connector --advertise-routes=10.0.7.0/24,10.69.0.0/16,10.96.0.0/16 --accept-routes=true --accept-dns=true"
     tailscale_tags:
-    - "k8s-node"
+    - "metal"
     # Optionally, also include:
     tailscale_oauth_ephemeral: false
     tailscale_oauth_preauthorized: true
-

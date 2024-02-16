@@ -10,7 +10,7 @@ patches:
     - op: add
       path: "/spec/template/spec/nodeSelector"
       value:
-        kubernetes.io/hostname: k8s-node-one
+        kubernetes.io/hostname: metal-a
         kubernetes.io/arch: arm64
   target:
     kind: Deployment

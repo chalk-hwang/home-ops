@@ -2,14 +2,16 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: kube-vip
+  labels:
+    app.kubernetes.io/name: kube-vip
 spec:
   selector:
     matchLabels:
-      name: kube-vip
+      app.kubernetes.io/name: kube-vip
   template:
     metadata:
       labels:
-        name: kube-vip
+        app.kubernetes.io/name: kube-vip
     spec:
       affinity:
         nodeAffinity:
@@ -34,7 +36,7 @@ spec:
             - name: vip_interface
               value: lo
             - name: vip_routerinterface
-              value: end0.7
+              value: eth0.7
             - name: vip_loglevel
               value: "5"
             - name: vip_cidr
@@ -69,11 +71,11 @@ spec:
             - name: bgp_peers
               value: "10.0.7.10:64500::false"
             - name: address
-              value: "10.0.7.241"
+              value: "10.0.7.253"
             - name: egress_podcidr
-              value: "10.42.0.0/16"
+              value: "10.69.0.0/16"
             - name: egress_servicecidr
-              value: "10.43.0.0/16"
+              value: "10.96.0.0/16"
           image: ghcr.io/kube-vip/kube-vip:v0.6.0
           imagePullPolicy: Always
           name: kube-vip

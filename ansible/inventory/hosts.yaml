@@ -3,6 +3,6 @@ kubernetes:
   children:
     controllers:
       hosts:
-        "k8s-node-one":
+        "metal-a":
           ansible_user: "chalk"
           ansible_host: "10.0.7.10"

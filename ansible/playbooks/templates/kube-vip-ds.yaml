@@ -2,14 +2,17 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: kube-vip
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/name: kube-vip
 spec:
   selector:
     matchLabels:
-      name: kube-vip
+      app.kubernetes.io/name: kube-vip
   template:
     metadata:
       labels:
-        name: kube-vip
+        app.kubernetes.io/name: kube-vip
     spec:
       affinity:
         nodeAffinity:
@@ -34,7 +37,7 @@ spec:
             - name: vip_interface
               value: lo
             - name: vip_routerinterface
-              value: end0.7
+              value: eth0.7
             - name: vip_loglevel
               value: "5"
             - name: vip_cidr

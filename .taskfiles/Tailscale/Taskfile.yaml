@@ -1,7 +1,7 @@
 version: "3"
 vars:
   PATH_ERROR: is not installed or correctly configured in PATH.
-  TAILSCALE_VERSION: 1.34.1-2
+  TAILSCALE_VERSION: 1.60
 
 silent: true
 

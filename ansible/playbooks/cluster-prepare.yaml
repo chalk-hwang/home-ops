@@ -9,107 +9,56 @@
       ansible.builtin.pause:
         seconds: 5
     - name: Populate service facts
-      ansible.builtin.setup:
+      ansible.builtin.service_facts:
   tasks:
     - name: Locale
       block:
         - name: Locale | Set timezone
           community.general.timezone:
             name: "Asia/Seoul"
-        - name: Locale | Set locale
-          ansible.builtin.lineinfile:
-            path: /etc/locale.conf
-            line: "LANG=en_US.UTF-8"
-            owner: root
-            group: root
-            mode: '0644'
-            create: yes
-
-
     - name: Packages
       block:
+        - name: Packages | Debian
+          when: ansible_distribution == "Debian"
+          block:
+            - name: Packages | Debian | Add repo
+              ansible.builtin.apt_repository:
+                repo: "deb http://deb.debian.org/debian {{ ansible_distribution_release | lower }}-backports main"
+                state: present
+                update_cache: true
+                filename: "backports.list"
+            - name: Packages | Debian | Install
+              ansible.builtin.apt:
+                name: "cockpit"
+                default_release: "{{ ansible_distribution_release | lower }}-backports"
+                install_recommends: false
         - name: Packages | Install
-          ansible.builtin.dnf:
-            name:
-              - apt-transport-https
-              - ca-certificates
-              - conntrack
-              - curl
-              - dirmngr
-              - gdisk
-              - gnupg
-              - hdparm
-              - htop
-              - iptables
-              - iputils
-              - ipvsadm
-              - libseccomp
-              - lm_sensors
-              - neofetch
-              - net-tools
-              - nfs-utils
-              - nvme-cli
-              - iscsi-initiator-utils
-              - parted
-              - psmisc
-              - python3
-              - python3-libs
-              - python3-kubernetes
-              - python3-yaml
-              - smartmontools
-              - socat
-              - unzip
-              - util-linux
+          ansible.builtin.apt:
+            name: apt-transport-https,ca-certificates,conntrack,curl,dirmngr,gdisk,gnupg,hdparm,htop,
+              iptables,iputils-ping,ipvsadm,libseccomp2,lm-sensors,neofetch,net-tools,nfs-common,
+              nvme-cli,open-iscsi,parted,psmisc,python3,python3-apt,python3-kubernetes,python3-yaml,
+              smartmontools,socat,software-properties-common,unzip,util-linux,zsh
+            install_recommends: false
 
-    - name: User Configuration
-      block:
-        - name: User Configuration | SSH keys
-          ansible.posix.authorized_key:
-            user: "{{ ansible_user }}"
-            key: "https://github.com/chalk-hwang.keys"
-        - name: User Configuration | Silence login
-          ansible.builtin.file:
-            dest: "{{ '/home/' + ansible_user if ansible_user != 'root' else '/root' }}/.hushlogin"
-            state: touch
-            owner: "{{ ansible_user }}"
-            group: "{{ ansible_user }}"
-            mode: "0644"
-            modification_time: preserve
-            access_time: preserve
 
-    - name: Fish
+    - name: Shell Configuration
+      when:
       block:
-        - name: Fish | Install fish
-          ansible.builtin.dnf:
-            name: fish
-        - name: Fish | Set as default shell
+        - name: Shell Configuration | Set ZSH as default shell
           ansible.builtin.user:
             name: "{{ ansible_user }}"
-            shell: /usr/bin/fish
-        - name: Fish | Create configuration directory
-          ansible.builtin.file:
-            path: "{{ '/home/' + ansible_user if ansible_user != 'root' else '/root' }}/.config/fish/functions"
-            state: directory
-            owner: "{{ ansible_user }}"
-            group: "{{ ansible_user }}"
-            recurse: true
-        - name: Fish | Create neofetch greeting
-          ansible.builtin.copy:
-            dest: "{{ '/home/' + ansible_user if ansible_user != 'root' else '/root' }}/.config/fish/functions/fish_greeting.fish"
-            owner: "{{ ansible_user }}"
-            group: "{{ ansible_user }}"
-            mode: "0755"
-            content: neofetch --config none
-        - name: Fish | Create kubectl shorthand
-          ansible.builtin.copy:
-            dest: "{{ '/home/' + ansible_user if ansible_user != 'root' else '/root' }}/.config/fish/functions/k.fish"
-            owner: "{{ ansible_user }}"
-            group: "{{ ansible_user }}"
-            mode: "0755"
-            content: |
-              function k --wraps=kubectl --description 'kubectl shorthand'
-                  kubectl $argv
-              end
+            shell: /usr/bin/zsh
+        - name: Shell Configuration | Run Starship install script
+          ansible.builtin.command:
+            cmd: "curl -sL https://starship.rs/install.sh | sh"
+            creates: "/usr/local/bin/starship"
+        - name: Shell Configuration | Set Starship as default prompt
+          ansible.builtin.lineinfile:
+            path: "/etc/zsh/zshrc"
+            line: eval "$(starship init zsh)"
+            create: yes
+            mode: '0644'
+
 
     - name: Network Configuration
       notify: Reboot
@@ -121,15 +70,13 @@
           ansible.builtin.copy:
             content: |
               127.0.0.1 localhost
-              127.0.1.1 {{ inventory_hostname }}
-
               # The following lines are desirable for IPv6 capable hosts
               ::1     localhost ip6-localhost ip6-loopback
               ff02::1 ip6-allnodes
               ff02::2 ip6-allrouters
             dest: /etc/hosts
             mode: preserve
-        # https://github.com/onedr0p/flux-cluster-template/discussions/635
+          # https://github.com/onedr0p/cluster-template/discussions/635
         - name: Network Configuration | Remove immutable flag from /etc/resolv.conf
           ansible.builtin.file:
             attributes: -i
@@ -147,48 +94,33 @@
             content: |
               search .
               nameserver 1.1.1.1
+              nameserver 1.0.0.1
 
     - name: System Configuration
       notify: Reboot
       block:
-        - name: System Configuration | Neofetch
-          ansible.builtin.copy:
-            dest: /etc/profile.d/neofetch.sh
-            mode: "0755"
-            content: "neofetch --config none"
-          notify:
-            - Reboot
-        - name: System Configuration | Disable SELinux
-          ansible.builtin.lineinfile:
-            dest: /etc/selinux/config
-            regexp: "^SELINUX="
-            line: "SELINUX=disabled"
-            state: present
-          notify:
-            - Reboot
+        - name: System Configuration | Disable apparmor
+          when:
+            - ansible_distribution == "Ubuntu"
+            - ansible_facts.services['apparmor.service'] is defined
+          ansible.builtin.systemd:
+            name: apparmor
+            state: stopped
+            masked: true
         - name: System Configuration | Disable swap
           ansible.posix.mount:
-            name: "{% raw %}{{ item }}{% endraw %}"
+            name: "{{ item }}"
             fstype: swap
             state: absent
-          loop:
-            - none
-            - swap
+          loop: ["none", "swap"]
         - name: System Configuration | Create Kernel modules
           ansible.builtin.copy:
             dest: "/etc/modules-load.d/{{ item }}.conf"
             mode: "0644"
             content: "{{ item }}"
-          loop:
-            - br_netfilter
-            - ceph
-            - ip_vs
-            - ip_vs_rr
-            - nbd
-            - overla
-            - rbd
+          loop: ["br_netfilter", "ceph", "ip_vs", "ip_vs_rr", "nbd", "overlay", "rbd"]
           register: modules_status
-        - name: System Configuration | Reload Kernel modules  # noqa: no-changed-when no-handler
+        - name: System Configuration | Reload Kernel modules # noqa: no-changed-when no-handler
           when: modules_status.changed
           ansible.builtin.systemd:
             name: systemd-modules-load
@@ -204,33 +136,32 @@
             - { key: "fs.inotify.max_user_watches", value: "524288" }
             - { key: "fs.inotify.max_user_instances", value: "8192" }
 
-    - name: Tailscale
+    - name: Tailscale Configuration
       block:
-        - name: Tailscale | Reset all configuration
-          ansible.builtin.include_role:
-            name:  artis3n.tailscale
-            public: true
-          vars:
-            state: absent
+      - name: Tailscale Configuration | Init credentials variables
+        ansible.builtin.include_tasks: tasks/init-tailscale-vars.yaml
+
+      - name: Tailscale Configuration | Uninstall if already installed
+        ansible.builtin.include_role:
+          name: artis3n.tailscale
+        vars:
+          state: absent
+
+      - name: Tailscale Configuration | Init credentials variables
+        ansible.builtin.include_tasks: tasks/init-tailscale-vars.yaml
+
+      - name: Tailscale Configuration | Install
+        ansible.builtin.include_role:
+          name: artis3n.tailscale
+
+      # Force these to run before we start uninstalling things
+      - name: Tailscale Configuration | Flush Handlers
+        ansible.builtin.meta: flush_handlers
 
 
-        - name: Tailscale | Install
-          ansible.builtin.include_role:
-            name: artis3n.tailscale
-            public: true
-          vars:
-            state: latest
-            tailscale_up_skit: false
-            tailscale_authkey: "{{ lookup('env', 'TAILSCALE_K8S_NODE_OAUTH2_CLIENT_SECRET') }}"
-            tailscale_tags:
-              - "k8s-node"
-            tailscale_args: ""
-            # Optionally, also include:
-            tailscale_oauth_ephemeral: false
-            tailscale_oauth_preauthorized: true
 
   handlers:
     - name: Reboot
       ansible.builtin.reboot:
-        msg: Rebooting nodes
+        msg: Rebooting hosts
         reboot_timeout: 3600

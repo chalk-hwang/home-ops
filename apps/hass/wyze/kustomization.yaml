@@ -9,7 +9,7 @@ patches:
     - op: add
       path: "/spec/template/spec/nodeSelector"
       value:
-        kubernetes.io/hostname: k8s-node-one
+        kubernetes.io/hostname: metal-a
   target:
     kind: Deployment
     name: wyze-bridge

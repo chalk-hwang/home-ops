@@ -25,3 +25,4 @@ Brewfile.lock.json
 # wiki
 wiki
 .env
+*-credentials.json
