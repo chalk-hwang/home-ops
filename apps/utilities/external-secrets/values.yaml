@@ -9,13 +9,13 @@ replicaCount: 1
 #  # By default the distroless image is used.
 #  tag: ""
 
-installCRDs: false
+installCRDs: true
 
 crds:
   # -- If true, create CRDs for Cluster External Secret.
-  createClusterExternalSecret: false
+  createClusterExternalSecret: true
   # -- If true, create CRDs for Cluster Secret Store.
-  createClusterSecretStore: false
+  createClusterSecretStore: true
 
 imagePullSecrets: []
 nameOverride: ""
@@ -23,7 +23,7 @@ fullnameOverride: ""
 
 # -- If true, external-secrets will perform leader election between instances to ensure no more
 # than one instance of external-secrets operates at a time.
-leaderElect: false
+leaderElect: true
 
 serviceAccount:
   # -- Specifies whether a service account should be created.

@@ -6,6 +6,17 @@ vars:
   KUBECONFORM_SCRIPT: "{{.TASKFILE_DIR}}/.taskfiles/Kubernetes/kubeconform.sh"
 
 tasks:
+  vip:
+    dir: apps/networking/kube-vip
+    preconditions:
+      - sh: "which kustomize"
+        msg: "kustomize {{.PATH_ERROR}}"
+      - sh: "which kubectl"
+        msg: "kubectl {{.PATH_ERROR}}"
+    cmds:
+      - kustomize build --enable-helm | kubectl apply -f -
+    ignore_error: true
+
 
   resources:
     desc: Gather common resources in your cluster, useful when asking for support

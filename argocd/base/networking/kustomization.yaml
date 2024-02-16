@@ -5,7 +5,7 @@ resources:
   - external-dns
   - ingress-nginx
   - tailscale-operator.yaml
-  - cert-manager
+  - cert-manager.yaml
   - certificates.yaml
   - kube-vip.yaml
 # - unifi-controller.yaml

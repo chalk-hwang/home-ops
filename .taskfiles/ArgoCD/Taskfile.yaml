@@ -33,8 +33,8 @@ tasks:
       stringData:
         type: git
         url: {{.GIT_URI}}
-        password: $GITHUB_PASSWORD
-        username: $GITHUB_USERNAME
+        password: $(op read "op://Homelab/github/PASSWORD")
+        username: $(op read "op://Homelab/github/USERNAME")
       EOF
     ignore_error: true
 
@@ -56,8 +56,8 @@ tasks:
       stringData:
         type: git
         url: https://github.com/chalk-hwang/home-ops.git
-        password: $GITHUB_PASSWORD
-        username: $GITHUB_USERNAME
+        password: $(op read "op://Homelab/github/PASSWORD")
+        username: $(op read "op://Homelab/github/USERNAME")
       EOF
     - |
       kubectl apply -f - << EOF
@@ -71,8 +71,8 @@ tasks:
       stringData:
         type: git
         url: https://github.com/chalk-hwang/home-ops-private.git
-        password: $GITHUB_PASSWORD
-        username: $GITHUB_USERNAME
+        password: $(op read "op://Homelab/github/PASSWORD")
+        username: $(op read "op://Homelab/github/USERNAME")
       EOF
     ignore_error: true
 

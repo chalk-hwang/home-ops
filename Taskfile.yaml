@@ -37,6 +37,10 @@ includes:
     aliases:
       - ts
     taskfile: .taskfiles/Tailscale/Taskfile.yaml
+  onepassword:
+    aliases:
+      - op
+    taskfile: .taskfiles/OnePassword/Taskfile.yaml
 
 dotenv:
   - .env

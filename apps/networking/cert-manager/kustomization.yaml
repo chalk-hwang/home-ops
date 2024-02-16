@@ -3,6 +3,10 @@ kind: Kustomization
 metadata:
   name: cert-manager
 
+resources:
+  - clusterissuer.yaml
+  - externalsecret.yaml
+
 helmCharts:
   - name: cert-manager
     version: v1.14.1

@@ -61,7 +61,7 @@ spec:
           # kubectl create secret generic tunnel-credentials \
           # --from-file=credentials.json=/Users/yourusername/.cloudflared/<tunnel ID>.json
           # ```
-          secretName: homelab-tunnel
+          secretName: cloudflared-secret
       # Create a config.yaml file from the ConfigMap below.
       - name: config
         configMap:

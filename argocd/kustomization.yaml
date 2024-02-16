@@ -79,7 +79,7 @@ patches:
   - patch: |-
       - op: replace
         path: "/spec/template/spec/volumes/0/secret/secretName"
-        value: "homelab-tunnel"
+        value: "cloudflared-secret"
     target:
       kind: Deployment
       name: cloudflared

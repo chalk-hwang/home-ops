@@ -7,6 +7,6 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: grafana.gruber.dev.br
+  commonName: grafana.chalk-ho.me
   dnsNames:
-  - grafana.gruber.dev.br
+  - grafana.chalk-ho.me

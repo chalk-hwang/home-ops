@@ -1,7 +1,7 @@
 fullnameOverride: cert-manager
-installCRDs: false
+installCRDs: true
 startupapicheck:
-  enabled: false
+  enabled: true
 acmesolver:
   image:
     repository: quay.io/jetstack/cert-manager-acmesolver

@@ -2,15 +2,10 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: grafana-ingress-internal
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: grafana.gruber.dev.br
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
-    external-dns.alpha.kubernetes.io/ttl: "120"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
-  ingressClassName: nginx
+  ingressClassName: internal
   rules:
-  - host: grafana.gruber.dev.br
+  - host: grafana.chalk-ho.me
     http:
       paths:
       - path: /
@@ -20,7 +15,3 @@ spec:
             name: grafana-internal
             port:
               name: service
-  tls:
-  - hosts:
-    - grafana.gruber.dev.br
-    secretName: grafana-tls
