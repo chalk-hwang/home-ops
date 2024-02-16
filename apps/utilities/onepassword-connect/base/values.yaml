@@ -15,10 +15,24 @@ connect:
   serviceType: LoadBalancer
   loadBalancerIP: 10.0.7.51
   httpPort: 80
+  httpsPort: 443
 
-  tls:
+  serviceMonitor:
     enabled: true
-    secretName: onepassword-connect-tls
+
+  # tls:
+  #   enabled: true
+  #   secretName: onepassword-connect-tls
+
+  ingress:
+    enabled: true
+    ingressClassName: internal
+    hosts:
+      - host: &host op-connect.chalk-ho.me
+        paths: []
+    tls:
+      - hosts:
+          - *host
 
   # ingressClassName: internal
 
