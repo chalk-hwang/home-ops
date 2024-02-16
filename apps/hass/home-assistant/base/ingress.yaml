@@ -10,7 +10,7 @@ metadata:
       paths:
         - path: /
           service:
-            name: main
+            name: 
             port: http
   tls:
     - hosts:

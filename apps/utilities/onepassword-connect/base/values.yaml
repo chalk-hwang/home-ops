@@ -12,6 +12,13 @@ connect:
 
   # The name of 1Password Connect Host
   host: onepassword-connect
+  serviceType: LoadBalancer
+  loadBalancerIP: 10.0.7.51
+  httpPort: 80
+
+  tls:
+    enabled: true
+    secretName: onepassword-connect-tls
 
   # ingressClassName: internal
 

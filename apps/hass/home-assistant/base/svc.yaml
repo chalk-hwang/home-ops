@@ -3,10 +3,10 @@ kind: Service
 metadata:
   labels:
     app: home-assistant
-  name: home-assistant-svc
+  name: home-assistant
 spec:
   ports:
-    - name: HTTP
+    - name: http
       port: 8123
       protocol: TCP
       targetPort: 8123
@@ -17,14 +17,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: home-assistant-svc-vip
+  name: home-assistant-vip
   labels:
     app: home-assistant
   annotations:
     kube-vip.io/vipHost: home-assistant
 spec:
   ports:
-    - name: ha
+    - name: http
       port: 80
       protocol: TCP
       targetPort: 8123
@@ -37,7 +37,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: home-assistant-svc-tailscale
+  name: home-assistant-tailscale
   labels:
     app: home-assistant
   annotations:
@@ -46,7 +46,7 @@ spec:
   selector:
     app: home-assistant
   ports:
-    - name: web
+    - name: http
       port: 80
       targetPort: 8123
       protocol: TCP

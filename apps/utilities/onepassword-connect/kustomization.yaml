@@ -5,4 +5,10 @@ resources:
   - base
 
 patches:
-  - path: overlay/service.yaml
+  - patch: |-
+      - op: add
+        path: "/spec/loadBalancerClass"
+        value: "--insecure"
+    target:
+      kind: Deployment
+      name: argocd-server
