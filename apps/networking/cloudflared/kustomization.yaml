@@ -4,5 +4,6 @@ metadata:
   name: cloudflared
 
 resources:
+- cm.yaml
 - namespace.yaml
 - deployment.yaml
