@@ -1,18 +1,16 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: letsencrypt
+  name: letsencrypt-production
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
     email: admin@chalk-ho.me
     privateKeySecretRef:
-      name: chalk-ho-me-secret
+      name: letsencrypt-production
     solvers:
       - dns01:
           cloudflare:
-            email: admin@chalk-playground.space
-
             apiTokenSecretRef:
               name: cloudflare-secret
               key: API_TOKEN

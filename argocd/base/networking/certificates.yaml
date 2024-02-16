@@ -11,7 +11,7 @@ spec:
     path: apps/networking/certificates
     targetRevision: main
   destination:
-    namespace: networking
+    namespace: cluster
     name: in-cluster
   syncPolicy:
     automated:

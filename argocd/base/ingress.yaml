@@ -26,3 +26,4 @@ spec:
   tls:
   - hosts:
     - argo.chalk-ho.me
+    secretName: chalk-ho-me-cert-sercert

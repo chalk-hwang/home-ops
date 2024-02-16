@@ -3,11 +3,11 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: chalk-ho-me-cert
+  name: chalk-ho-me
 spec:
-  secretName: chalk-ho-me-cert-sercert
+  secretName: chalk-ho-me-cert
   issuerRef:
-    name: letsencrypt
+    name: letsencrypt-production
     kind: ClusterIssuer
   commonName: chalk-ho.me
   dnsNames:
