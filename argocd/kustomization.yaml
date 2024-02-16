@@ -37,13 +37,13 @@ resources:
 # - https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared
 
 # - base/cloudflared-dnsendpoint.yaml
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.6/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.5/manifests/install.yaml
 - base/styles-cm.yaml
 
 namespace: argocd
 images:
 - name: quay.io/argoproj/argocd
-  newTag: v2.9.6
+  newTag: v2.9.5
 patches:
   - patch: |-
       - op: replace
@@ -64,22 +64,6 @@ patches:
       name: argocd-server
   - patch: |-
       - op: add
-        path: "/spec/template/spec/nodeSelector"
-        value:
-          kubernetes.io/hostname: metal-a
-          kubernetes.io/arch: arm64
-    target:
-      kind: Deployment
-  - patch: |-
-      - op: add
-        path: "/spec/template/spec/nodeSelector"
-        value:
-          kubernetes.io/hostname: metal-a
-          kubernetes.io/arch: arm64
-    target:
-      kind: StatefulSet
-  - patch: |-
-      - op: add
         path: "/spec/template/spec/containers/0/args/-"
         value: "--insecure"
     target:
@@ -87,10 +71,18 @@ patches:
       name: argocd-server
   - path: overlay/argocd-svc.yaml
   - path: overlay/argocd-deployment.yaml
+  - path: overlay/argocd-repo-deployment.yaml
   - path: overlay/argocd-cm.yaml
   # - path: overlay/cloudflared-cm.yaml
   - path: overlay/argocd-rbac.yaml
   - path: overlay/argocd-cr.yaml
   - path: overlay/argocd-cmd-params-cm.yaml
+
+  - path: overlay/argocd-node-selector.jsonpatch.yaml
+    target:
+      kind: Deployment
+  - path: overlay/argocd-node-selector.jsonpatch.yaml
+    target:
+      kind: StatefulSet
 commonAnnotations:
   reloader.stakater.com/auto: "true"

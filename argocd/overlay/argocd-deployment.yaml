@@ -20,10 +20,15 @@ spec:
             runAsUser: 1000
             allowPrivilegeEscalation: false
       containers:
-        - name: argocd-server
-          volumeMounts:
-            - name: extensions
-              mountPath: /tmp/extensions/
-      volumes:
+      - name: argocd-server
+        volumeMounts:
+        - name: styles
+          mountPath: /shared/app/custom
         - name: extensions
-          emptyDir: {}
+          mountPath: /tmp/extensions/
+      volumes:
+      - configMap:
+          name: argocd-styles-cm
+        name: styles
+      - name: extensions
+        emptyDir: {}

@@ -19,7 +19,6 @@ data:
     g, ext, role:extension
     p, role:extension, applications, get, default/httpbin-app, allow
     p, role:extension, extensions, invoke, httpbin, allow
-    p, role:readonly, extensions, invoke, httpbin, allow
     p, role:action-runner, applications, action/argoproj.io/Rollout/abort, *, allow
     p, role:action-runner, applications, action/argoproj.io/Rollout/promote-full, *, allow
     p, role:action-runner, applications, action/argoproj.io/Rollout/retry, *, allow

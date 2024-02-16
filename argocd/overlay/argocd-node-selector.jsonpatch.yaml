@@ -1,0 +1,20 @@
+# ============================================================================ #
+#            A r g o C D   D e f a u l t   P r o j e c t   P a t c h
+# ============================================================================ #
+
+# Locks down the default project to only be used for ArgoCD self-management
+
+# Can't be applied via Kustomize because the default project isn't listed in remote argocd base objects
+#
+# Apply:
+#
+#   run: kubectl patch appproject default -n argocd --type json --patch "$(cat argocd-proj-default.jsonpatch.yaml)"
+
+# Prefer the adjacent strategic merge patch as it also enforces cluster and namespace resources * to be allowed for argo to manage itself properly
+
+---
+- op: add
+  path: "/spec/template/spec/nodeSelector"
+  value:
+    kubernetes.io/hostname: metal-a
+    kubernetes.io/arch: arm64

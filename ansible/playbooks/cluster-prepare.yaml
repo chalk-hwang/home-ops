@@ -42,15 +42,25 @@
 
 
     - name: Shell Configuration
-      when:
       block:
         - name: Shell Configuration | Set ZSH as default shell
           ansible.builtin.user:
             name: "{{ ansible_user }}"
             shell: /usr/bin/zsh
         - name: Shell Configuration | Run Starship install script
+          ansible.builtin.get_url:
+            url: "https://starship.rs/install.sh"
+            dest: "/tmp/starship_install.sh"
+            mode: '0755'
+          register: starship_install
+          changed_when: starship_install is changed
+          failed_when: starship_install is failed
+          ignore_errors: yes
+          until: starship_install is success
+        - name: Shell Configuration | Execute Starship install script
+          when: starship_install is changed or starship_install is success
           ansible.builtin.command:
-            cmd: "curl -sL https://starship.rs/install.sh | sh"
+            cmd: "/tmp/starship_install.sh"
             creates: "/usr/local/bin/starship"
         - name: Shell Configuration | Set Starship as default prompt
           ansible.builtin.lineinfile:
@@ -58,7 +68,6 @@
             line: eval "$(starship init zsh)"
             create: yes
             mode: '0644'
-
 
     - name: Network Configuration
       notify: Reboot
