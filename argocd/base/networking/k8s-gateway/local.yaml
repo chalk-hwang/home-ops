@@ -1,9 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: k8s-gateway
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
+  name: local-gateway
 spec:
   project: networking
   source:
@@ -11,11 +9,12 @@ spec:
     chart: k8s-gateway
     targetRevision: 2.3.0
     helm:
-      releaseName: k8s-gateway
+      releaseName: local-gateway
       values: |
-        fullnameOverride: k8s-gateway
+        fullnameOverride: local-gateway
         domain: "chalk-ho.me"
         ttl: 1
+        secondary: tailscale-gateway.networking
         service:
           type: LoadBalancer
           port: 53
