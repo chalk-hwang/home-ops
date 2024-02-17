@@ -2,6 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: argocd-repo-server
+  annotations:
+    link.argocd.argoproj.io/external-link: https://argo.gruber.dev.br
+  labels:
+    app.kubernetes.io/name: argocd-repo-server
+    app.kubernetes.io/part-of: argocd
 spec:
   template:
     spec:
