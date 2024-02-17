@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: local-gateway
+  name: k8s-gateway
 spec:
   project: networking
   source:
@@ -9,24 +9,25 @@ spec:
     chart: k8s-gateway
     targetRevision: 2.3.0
     helm:
-      releaseName: local-gateway
+      releaseName: k8s-gateway
       values: |
-        fullnameOverride: local-gateway
+        fullnameOverride: k8s-gateway
         domain: "chalk-ho.me"
         ttl: 1
-        secondary: tailscale-gateway.networking
         service:
           type: LoadBalancer
           port: 53
           loadBalancerIP: 10.10.0.254
           annotations:
             io.cilium/lb-ipam-ips: "10.10.0.254"
+            tailscale.com/expose: "true"
+            tailscale.com/hostname: "k8s-gateway"
           externalTrafficPolicy: Cluster
   destination:
     namespace: networking
     name: in-cluster
   syncPolicy:
-    automated:
+    automated:a
       prune: true
       selfHeal: true
       allowEmpty: false

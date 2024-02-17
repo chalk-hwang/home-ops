@@ -8,7 +8,7 @@ resources:
   - cert-manager.yaml
   - certificates.yaml
   - cloudflared.yaml
-  - k8s-gateway
+  - k8s-gateway.yaml
   # - kube-vip.yaml
 # - unifi-controller.yaml
 
