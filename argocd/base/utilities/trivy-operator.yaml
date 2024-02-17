@@ -30,7 +30,7 @@ spec:
       allowEmpty: false
     syncOptions:
     - Validate=false
-    - CreateNamespace=false
+    - CreateNamespace=true
     - PrunePropagationPolicy=background
     - ServerSideApply=true
     - ApplyOutOfSyncOnly=false
