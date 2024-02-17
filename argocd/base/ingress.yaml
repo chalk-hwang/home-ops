@@ -26,3 +26,4 @@ spec:
   tls:
   - hosts:
     - argo.chalk-ho.me
+    secretName: argocd-chalk-ho-me-cert # as expected by argocd-server
