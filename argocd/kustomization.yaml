@@ -1,6 +1,9 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+metadata:
+  name: argocd
+  namespace: argocd
 
 resources:
 # ArgoCD Projects
@@ -28,11 +31,9 @@ resources:
 - base/monitoring/grafana.yaml
 
 # ArgoCD
-- base/clusterexternalsercret.yaml
 - base/cmp-plugin.yaml
 - base/repo-role.yaml
 - base/repo-rb.yaml
-
 # - base/ingress.yaml
 
 # - https://github.com/chalk-hwang/home-ops/apps/networking/external-dns
@@ -41,6 +42,7 @@ resources:
 # - base/cloudflared-dnsendpoint.yaml
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.6/manifests/install.yaml
 - base/styles-cm.yaml
+- base/vault-configuration-extenalsecret.yaml
 
 namespace: argocd
 images:
