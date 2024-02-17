@@ -169,7 +169,7 @@ tasks:
     - sh: 'which argocd'
       msg: 'argocd {{.PATH_ERROR}}'
     cmds:
-    - argocd login localhost:59479 --username $(op read "op://Homelab/argocd/username") --password $(op read "op://Homelab/argocd/password")
+    - argocd login argo.chalk-ho.me --username $(op read "op://Homelab/argocd/username") --password $(op read "op://Homelab/argocd/password")
 
   refresh:
     preconditions:

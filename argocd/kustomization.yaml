@@ -34,7 +34,7 @@ resources:
 - base/cmp-plugin.yaml
 - base/repo-role.yaml
 - base/repo-rb.yaml
-# - base/ingress.yaml
+- base/ingress.yaml
 
 # - https://github.com/chalk-hwang/home-ops/apps/networking/external-dns
 - https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared

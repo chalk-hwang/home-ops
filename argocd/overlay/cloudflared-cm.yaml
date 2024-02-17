@@ -21,8 +21,6 @@ data:
         originRequest:
           http2Origin: true
           originServerName: external.chalk-ho.me
-      - hostname: argo.chalk-ho.me
-        service: http://argocd-server:80
       - hostname: "*.chalk-ho.me"
         service: https://nginx-external-controller.networking.svc.cluster.local:443
         originRequest:
