@@ -17,6 +17,8 @@ tasks:
           1password-credentials.json: $(op read op://5wwyx337a44qrlam7szf3h22bm/op-connect_homelab/1password-credentials.json | base64)
           token: $(op read op://5wwyx337a44qrlam7szf3h22bm/op-connect_homelab/ACCESS_TOKEN)
         EOF
+      - |
+
 
   connect:
     dir: apps/utilities/onepassword-connect

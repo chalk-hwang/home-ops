@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: botkube
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: botkube
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: botkube
+    repoURL: https://charts.botkube.io/
+    targetRevision: v1.8.0
+    helm:
+      releaseName: botkube
+      parameters:
+        - name: config.provider.endpoint
+          value: <path:kv/Homelab/botkube#endpoints>
+        - name: config.provider.identifier
+          value: <path:kv/Homelab/botkube#identifier>
+        - name: config.provider.apiKey
+          value: <path:kv/Homelab/botkube#apiKey>
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

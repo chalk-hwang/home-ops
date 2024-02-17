@@ -10,6 +10,10 @@
         seconds: 5
     - name: Populate service facts
       ansible.builtin.service_facts:
+
+    - name: Set facts
+      ansible.builtin.set_fact:
+        os_release: "{{ ansible_distribution_release | lower }}"
   tasks:
     - name: Locale
       block:
@@ -18,28 +22,69 @@
             name: "Asia/Seoul"
     - name: Packages
       block:
-        - name: Packages | Debian
-          when: ansible_distribution == "Debian"
-          block:
-            - name: Packages | Debian | Add repo
-              ansible.builtin.apt_repository:
-                repo: "deb http://deb.debian.org/debian {{ ansible_distribution_release | lower }}-backports main"
-                state: present
-                update_cache: true
-                filename: "backports.list"
-            - name: Packages | Debian | Install
-              ansible.builtin.apt:
-                name: "cockpit"
-                default_release: "{{ ansible_distribution_release | lower }}-backports"
-                install_recommends: false
-        - name: Packages | Install
+        - name: Packages | Add backports repo
+          ansible.builtin.apt_repository:
+            repo: "deb http://deb.debian.org/debian {{ os_release }}-backports main"
+            state: present
+            update_cache: true
+            filename: "backports.list"
+
+        - name: Packages | Get trivy repo key
+          ansible.builtin.shell:
+            cmd: set -o pipefail | curl https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg -o /usr/share/keyrings/trivy.pgp --dearmor
+            creates: "/usr/share/keyrings/trivy.pgp"
+
+        - name: Packages | Add trivy repo
+          ansible.builtin.apt_repository:
+            repo: "deb [signed-by=/usr/share/keyrings/trivy.pgp] https://aquasecurity.github.io/trivy-repo/deb {{ os_release }} main"
+            state: present
+            update_cache: true
+            filename: "trivy.list"
+
+        - name: Packages | Install Cockpit
           ansible.builtin.apt:
-            name: apt-transport-https,ca-certificates,conntrack,curl,dirmngr,gdisk,gnupg,hdparm,htop,
-              iptables,iputils-ping,ipvsadm,libseccomp2,lm-sensors,neofetch,net-tools,nfs-common,
-              nvme-cli,open-iscsi,parted,psmisc,python3,python3-apt,python3-kubernetes,python3-yaml,
-              smartmontools,socat,software-properties-common,unzip,util-linux,zsh
+            name: "cockpit"
+            default_release: "{{ os_release }}-backports"
             install_recommends: false
 
+        - name: Packages | Install
+          ansible.builtin.apt:
+            name:
+              -  apt-transport-https
+              -  ca-certificates
+              -  conntrack
+              -  curl
+              -  dirmngr
+              -  gdisk
+              -  gnupg
+              -  hdparm
+              -  htop
+              -  iptables
+              -  iputils-ping
+              -  ipvsadm
+              -  libseccomp2
+              -  lm-sensors
+              -  lsb-release
+              -  neofetch
+              -  net-tools
+              -  nfs-common
+              -  nvme-cli
+              -  open-iscsi
+              -  parted
+              -  psmisc
+              -  python3
+              -  python3-apt
+              -  python3-kubernetes
+              -  python3-yaml
+              -  smartmontools
+              -  socat
+              -  software-properties-common
+              -  trivy
+              -  unzip
+              -  util-linux
+              -  wget
+              -  zsh
+            install_recommends: false
 
     - name: Shell Configuration
       block:
@@ -64,7 +109,7 @@
             creates: "/usr/local/bin/starship"
         - name: Shell Configuration | Set Starship as default prompt
           ansible.builtin.lineinfile:
-            path: "/etc/zsh/zshrc"
+            path: "~/.zshrc"
             line: eval "$(starship init zsh)"
             create: yes
             mode: '0644'

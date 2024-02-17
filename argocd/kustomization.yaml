@@ -28,6 +28,8 @@ resources:
 - base/monitoring/grafana.yaml
 
 # ArgoCD
+- base/clusterexternalsercret.yaml
+- base/cmp-plugin.yaml
 - base/repo-role.yaml
 - base/repo-rb.yaml
 
@@ -37,13 +39,13 @@ resources:
 - https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared
 
 # - base/cloudflared-dnsendpoint.yaml
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.5/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.6/manifests/install.yaml
 - base/styles-cm.yaml
 
 namespace: argocd
 images:
 - name: quay.io/argoproj/argocd
-  newTag: v2.9.5
+  newTag: v2.9.6
 patches:
   - patch: |-
       - op: replace
