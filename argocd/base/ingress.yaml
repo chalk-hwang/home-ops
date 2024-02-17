@@ -20,7 +20,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: argocd-server
+            name: argocd-server-cilium
             port:
               name: https
   tls:

@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kube-vip
+  name: cilium
 spec:
   project: networking
   source:
     repoURL: 'https://github.com/chalk-hwang/home-ops.git'
-    path: apps/networking/kube-vip
+    path: apps/networking/cilium
     targetRevision: main
   destination:
     namespace: kube-system
@@ -15,7 +15,7 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
+      allowEmpty: false
     syncOptions:
     - Validate=false
     - CreateNamespace=false

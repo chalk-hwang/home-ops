@@ -96,7 +96,10 @@ patches:
     target:
       kind: Deployment
       name: argocd-server
-  - path: overlay/argocd-svc.yaml
+  - path: overlay/argocd-server-svc.yaml
+    target:
+      kind: Service
+      name: argocd-server
   - path: overlay/argocd-deployment.yaml
   - path: overlay/argocd-repo-deployment.yaml
   - path: overlay/argocd-cm.yaml

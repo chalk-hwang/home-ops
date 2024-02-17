@@ -10,7 +10,6 @@ controller:
     externalTrafficPolicy: Cluster
     type: LoadBalancer
     loadBalancerIP: "10.10.0.201"
-
     internal:
       enabled: true
       type: LoadBalancer
