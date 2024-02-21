@@ -5,7 +5,7 @@ metadata:
 spec:
   secretName: grafana-tls
   issuerRef:
-    name: letsencrypt-production
+    name: cloudflare
     kind: ClusterIssuer
   commonName: grafana.chalk-ho.me
   dnsNames:

@@ -27,3 +27,4 @@ wiki
 .env
 *-credentials.json
 charts/
+generated-*.yaml
