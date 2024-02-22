@@ -11,7 +11,7 @@ connect:
   applicationName: onepassword-connect
 
   # The name of 1Password Connect Host
-  host: onepassword-connect
+  host: connect
   serviceType: LoadBalancer
   serviceAnnotations:
     io.cilium/lb-ipam-ips: "10.10.0.10"

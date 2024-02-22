@@ -14,8 +14,7 @@ tasks:
           namespace: onepassword
         type: Opaque
         stringData:
-          1password-credentials.json: $(op read op://Homelab/onepassword-connect/1password-credentials.json | base64)
-          token: $(op read op://Homelab/onepassword-connect/ACCESS_TOKEN)
+          1password-credentials.json: $(op read "op://Private-Homelab/Production_CredentialsFile/1password-credentials.json" | base64)
         EOF
       - |
 

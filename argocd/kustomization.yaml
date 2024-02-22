@@ -31,8 +31,8 @@ resources:
 - base/monitoring/grafana.yaml
 
 # ArgoCD
-- base/cmp-plugin.yaml
-- base/repo-role.yaml
+# - base/cmp-plugin.yaml
+# - base/repo-role.yaml
 - base/repo-rb.yaml
 - base/ingress.yaml
 
@@ -42,7 +42,6 @@ resources:
 # - base/cloudflared-dnsendpoint.yaml
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.6/manifests/install.yaml
 - base/styles-cm.yaml
-- base/vault-configuration-extenalsecret.yaml
 
 namespace: argocd
 images:
@@ -96,7 +95,7 @@ patches:
     target:
       kind: Deployment
       name: argocd-server
-  - path: overlay/argocd-server-svc.yaml
+  - path: overlay/argocd-svc.yaml
     target:
       kind: Service
       name: argocd-server

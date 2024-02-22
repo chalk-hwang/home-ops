@@ -27,15 +27,13 @@ tasks:
       apiVersion: v1
       kind: Secret
       metadata:
-        name: private-repo-creds
+        name: argocd-vault-plugin-credentials
         namespace: argocd
-        labels:
-          argocd.argoproj.io/secret-type: repo-creds
       stringData:
-        type: git
-        url: {{.GIT_URI}}
-        password: "$(op read "op://Homelab/github/PW")"
-        username: $(op read "op://Homelab/github/ID")
+        AVP_TYPE: "$ARGOCD_AVP_TYPE"
+        OP_CONNECT_TOKEN: "$(op read op://Private-Homelab/Production_AccessToken_ArgoVaultPlugin/credential)"
+        OP_CONNECT_HOST: "$ARGOCD_OP_CONNECT_HOST"
+      type: Opaque
       EOF
     ignore_error: true
 
@@ -76,6 +74,8 @@ tasks:
         username: "$(op read "op://Homelab/github/ID")"
       EOF
     ignore_error: true
+
+
 
   install:
     desc: Installs ArgoCD resources manually on the local cluster

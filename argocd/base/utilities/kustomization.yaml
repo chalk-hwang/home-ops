@@ -5,7 +5,7 @@ resources:
 - reflector.yaml
 - reloader.yaml
 - onepassword-connect.yaml
-- external-secrets.yaml
+# - external-secrets.yaml
 - descheduler.yaml
 - kured.yaml
 - botkube.yaml
