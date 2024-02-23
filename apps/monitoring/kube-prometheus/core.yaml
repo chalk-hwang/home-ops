@@ -39,7 +39,7 @@ spec:
               domain: grafana.chalk-ho.me
               root_url: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
               serve_from_sub_path: true
-          adminPassword: <path:kv/data/kube-prometheus#grafana-admin-password>
+          adminPassword: <path:vaults/Production-Homelab/items/grafana#password>
           dashboardProviders:
             dashboardproviders.yaml:
               apiVersion: 1
@@ -342,47 +342,3 @@ spec:
             enabled: false
         thanosRuler:
           enabled: false
-  destination:
-    namespace: monitoring
-    name: in-cluster
-  info:
-    - name: "Github Repository:"
-      value: >-
-        https://github.com/prometheus-operator/kube-prometheus
-    - name: "Chart location:"
-      value: >-
-        https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
-    - name: "Official Website:"
-      value: >-
-        https://prometheus-operator.dev/
-    - name: "Documentation:"
-      value: >-
-        https://prometheus-operator.dev/docs/prologue/introduction/
-    - name: "k3s useful documentation:"
-      value: >-
-        https://picluster.ricsanfre.com/docs/prometheus/#k3s-components-monitoring
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - Prune=true
-      - ServerSideApply=true
-    retry:
-      limit: 10
-      backoff:
-        duration: 20s
-        factor: 2
-        maxDuration: 15m
-  # See: https://github.com/prometheus-community/helm-charts/issues/1041
-  ignoreDifferences:
-    - group: admissionregistration.k8s.io
-      kind: MutatingWebhookConfiguration
-      name: kube-prometheus-kube-prome-admission
-      jsonPointers:
-        - /webhooks/0/failurePolicy
-    - group: admissionregistration.k8s.io
-      kind: ValidatingWebhookConfiguration
-      name: kube-prometheus-kube-prome-admission
-      jsonPointers:
-        - /webhooks/0/failurePolicy
