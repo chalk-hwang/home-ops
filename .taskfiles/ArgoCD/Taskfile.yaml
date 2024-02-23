@@ -12,7 +12,7 @@ vars:
   CLEAR: tput reset
   INT_REGISTRY: registry.localhost
   PATH_ERROR: is not installed or correctly configured in PATH.
-  ARGOCD_VERSION: 2.8.3
+  ARGOCD_VERSION: 2.9.6
 
 silent: true
 
@@ -27,7 +27,7 @@ tasks:
       apiVersion: v1
       kind: Secret
       metadata:
-        name: argocd-vault-plugin-credentials
+        name: vault-configuration
         namespace: argocd
       stringData:
         AVP_TYPE: "$ARGOCD_AVP_TYPE"
@@ -106,10 +106,10 @@ tasks:
     dir: argocd
     cmds:
     - |
-      docker build -t docker.io/grubertech/sargocd-sidecar:latest \
-                   -t docker.io/grubertech/argocd-sidecar:v{{.ARGOCD_VERSION}} \
-                   -t docker.io/grubertech/argocd:v{{.ARGOCD_VERSION}} \
-                   -t docker.io/grubertech/argocd:latest .
+      docker build -t docker.io/chalkhwang/argocd-sidecar:latest \
+                   -t docker.io/chalkhwang/argocd-sidecar:v{{.ARGOCD_VERSION}} \
+                   -t docker.io/chalkhwang/argocd:v{{.ARGOCD_VERSION}} \
+                   -t docker.io/chalkhwang/argocd:latest .
     ignore_error: true
 
   push:sidecar:
@@ -118,10 +118,10 @@ tasks:
     - sh: 'which docker'
       msg: 'docker {{.PATH_ERROR}}'
     cmds:
-    - docker push docker.io/grubertech/argocd-sidecar:latest
-    - docker push docker.io/grubertech/argocd-sidecar:v{{.ARGOCD_VERSION}}
-    - docker push docker.io/grubertech/argocd:latest
-    - docker push docker.io/grubertech/argocd:v{{.ARGOCD_VERSION}}
+    - docker push docker.io/chalkhwang/argocd-sidecar:latest
+    - docker push docker.io/chalkhwang/argocd-sidecar:v{{.ARGOCD_VERSION}}
+    - docker push docker.io/chalkhwang/argocd:latest
+    - docker push docker.io/chalkhwang/argocd:v{{.ARGOCD_VERSION}}
     ignore_error: true
 
   rm:
@@ -169,7 +169,7 @@ tasks:
     - sh: 'which argocd'
       msg: 'argocd {{.PATH_ERROR}}'
     cmds:
-    - argocd login argo.chalk-ho.me --username $(op read "op://Homelab/argocd/username") --password $(op read "op://Homelab/argocd/password")
+    - argocd login argo.chalk-ho.me --username $(op read "op://Private-Homelab/ArgoCD/username") --password $(op read "op://Private-Homelab/ArgoCD/password")
 
   refresh:
     preconditions:
