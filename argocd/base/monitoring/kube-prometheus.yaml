@@ -9,52 +9,22 @@ spec:
     path: apps/monitoring/kube-prometheus
     targetRevision: main
   destination:
-    namespace: monitoring
+    namespace: argocd
     name: in-cluster
-  info:
-  - name: "Github Repository:"
-    value: >-
-      https://github.com/prometheus-operator/kube-prometheus
-  - name: "Chart location:"
-    value: >-
-      https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
-  - name: "Official Website:"
-    value: >-
-      https://prometheus-operator.dev/
-  - name: "Documentation:"
-    value: >-
-      https://prometheus-operator.dev/docs/prologue/introduction/
-  - name: "k3s useful documentation:"
-    value: >-
-      https://picluster.ricsanfre.com/docs/prometheus/#k3s-components-monitoring
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
+      allowEmpty: false
     syncOptions:
     - Validate=false
     - CreateNamespace=false
-    - ServerSideApply=true
     - PrunePropagationPolicy=foreground
-    - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:
-      limit: 15
+      limit: 5
       backoff:
-        duration: 15s
+        duration: 20s
         factor: 2
-        maxDuration: 20m
-  # See: https://github.com/prometheus-community/helm-charts/issues/1041
-  ignoreDifferences:
-  - group: admissionregistration.k8s.io
-    kind: MutatingWebhookConfiguration
-    name: kube-prometheus-kube-prome-admission
-    jsonPointers:
-    - /webhooks/0/failurePolicy
-  - group: admissionregistration.k8s.io
-    kind: ValidatingWebhookConfiguration
-    name: kube-prometheus-kube-prome-admission
-    jsonPointers:
-    - /webhooks/0/failurePolicy
+        maxDuration: 15m

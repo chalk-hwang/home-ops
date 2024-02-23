@@ -1,0 +1,388 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-core
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: monitoring
+  source:
+    repoURL: "https://github.com/prometheus-community/helm-charts.git"
+    targetRevision: kube-prometheus-stack-56.6.2
+    path: charts/kube-prometheus-stack
+    helm:
+      releaseName: kube-prometheus
+      values: |
+        crds:
+          enabled: false
+        defaultRules:
+          create: true
+          rules:
+            alertmanager: true
+            etcd: false
+            k8s: false
+            kubeApiserverAvailability: false
+            kubeApiserverBurnrate: false
+            kubeApiserverHistogram: false
+            kubeApiserverSlos: false
+            kubeControllerManager: false
+            kubelet: false
+            kubeProxy: false
+            kubernetesApps: false
+            kubernetesResources: false
+            kubernetesStorage: false
+            kubernetesSystem: false
+            kubeScheduler: false
+        grafana:
+          grafana.ini:
+            server:
+              domain: grafana.chalk-ho.me
+              root_url: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
+              serve_from_sub_path: true
+          adminPassword: <path:kv/data/kube-prometheus#grafana-admin-password>
+          dashboardProviders:
+            dashboardproviders.yaml:
+              apiVersion: 1
+              providers:
+                - disableDeletion: true
+                  editable: true
+                  folder: unifi
+                  name: unifi
+                  options:
+                    path: /var/lib/grafana/dashboards/unifi
+                  orgId: 1
+                  type: file
+                - disableDeletion: true
+                  editable: true
+                  folder: services
+                  name: services
+                  options:
+                    path: /var/lib/grafana/dashboards/services
+                  orgId: 1
+                  type: file
+                - disableDeletion: true
+                  editable: true
+                  folder: kubernetes
+                  name: kubernetes
+                  options:
+                    path: /var/lib/grafana/dashboards/kubernetes
+                  orgId: 1
+                  type: file
+                - disableDeletion: true
+                  editable: true
+                  folder: data
+                  name: data
+                  options:
+                    path: /var/lib/grafana/dashboards/data
+                  orgId: 1
+                  type: file
+                - disableDeletion: true
+                  editable: true
+                  folder: networking
+                  name: networking
+                  options:
+                    path: /var/lib/grafana/dashboards/networking
+                  orgId: 1
+                  type: file
+          dashboards:
+            kubernetes:
+              apiServer:
+                datasource: Prometheus
+                gnetId: 15761
+                revision: 16
+              coreDns:
+                datasource: Prometheus
+                gnetId: 15762
+                revision: 17
+              globalView:
+                datasource: Prometheus
+                gnetId: 15757
+                revision: 37
+              namespaces:
+                datasource: Prometheus
+                gnetId: 15758
+                revision: 34
+              nodes:
+                datasource: Prometheus
+                gnetId: 15759
+                revision: 29
+              pods:
+                datasource: Prometheus
+                gnetId: 15760
+                revision: 26
+              pvcs:
+                datasource: Prometheus
+                gnetId: 13646
+                revision: 2
+            services:
+              argocdMonitoring:
+                datasource: Prometheus
+                gnetId: 14584
+                revision: 1
+              grafanaImageRenderer:
+                datasource: Prometheus
+                gnetId: 12203
+                revision: 2
+              nvidiaMonitoring:
+                datasource: Prometheus
+                gnetId: 14574
+                revision: 9
+              vaultMonitoring:
+                datasource: Prometheus
+                gnetId: 15124
+                revision: 2
+              Sonarr:
+                datasource: Prometheus
+                gnetId: 12530
+                revision: 2
+              Uptimekuma:
+                datasource: Prometheus
+                gnetId: 18278
+                revision: 1
+            networking:
+              calicoMonitoring:
+                datasource: Prometheus
+                gnetId: 12175
+                revision: 5
+              certExporter:
+                datasource: Prometheus
+                gnetId: 12170
+                revision: 1
+              certExpiration:
+                datasource: Prometheus
+                gnetId: 13922
+                revision: 3
+              nginxIngress:
+                datasource: Prometheus
+                gnetId: 14314
+                revision: 2
+              externalDNS:
+                datasource: Prometheus
+                gnetId: 15038
+                revision: 1
+            data:
+              postgresMonitoring:
+                datasource: Prometheus
+                gnetId: 12485
+                revision: 1
+            unifi:
+              unifiPollerClientDPI:
+                datasource: Prometheus
+                gnetId: 11310
+                revision: 5
+              unifiPollerClientInsights:
+                datasource: Prometheus
+                gnetId: 11315
+                revision: 9
+              unifiPollerNetworkSites:
+                datasource: Prometheus
+                gnetId: 11311
+                revision: 5
+              unifiPollerUAPInsights:
+                datasource: Prometheus
+                gnetId: 11314
+                revision: 10
+              unifiPollerUSGInsights:
+                datasource: Prometheus
+                gnetId: 11313
+                revision: 9
+              unifiPollerUSWInsights:
+                datasource: Prometheus
+                gnetId: 11312
+                revision: 9
+          defaultDashboardsEnabled: true
+          defaultDashboardsTimezone: America/Sao_Paulo
+          enabled: true
+          env:
+            GF_RENDERING_CALLBACK_URL: http://kube-prometheus-grafana.monitoring.svc.cluster.local
+            GF_RENDERING_SERVER_URL: http://grafana-image-renderer.monitoring.svc.cluster.local/render
+          forceDeployDashboards: false
+          forceDeployDatasources: false
+          ingress:
+            enabled: false
+          namespaceOverride: monitoring
+          plugins:
+            - grafana-image-renderer
+            - grafana-piechart-panel
+            - grafana-clock-panel
+          rbac:
+            pspEnabled: false
+          service:
+            enabled: true
+            portName: service
+            type: ClusterIP
+          # https://github.com/k3s-io/k3s/issues/3619#issuecomment-1425852034
+          serviceMonitor:
+            enabled: true
+            path: /metrics
+            scheme: http
+            labels:
+              release: kube-prometheus
+            relabelings:
+              - sourceLabels:
+                - __address__
+                action: replace
+                targetLabel: job
+                replacement: grafana
+          sidecar:
+            datasources:
+              enabled: true
+              defaultDatasourceEnabled: true
+              uid: prometheus
+              annotations: {}
+              createPrometheusReplicasDatasources: false
+              label: grafana_datasource
+              labelValue: "1"
+              exemplarTraceIdDestinations: {}
+            dashboards:
+              enabled: true
+              label: grafana_dashboard
+              labelValue: "1"
+              multicluster:
+                etcd:
+                  enabled: false
+                global:
+                  enabled: false
+              provider:
+                allowUiUpdates: false
+        kubernetesServiceMonitors:
+          enabled: true
+        kubelet:
+          enabled: false
+        kubeApiServer:
+          enabled: false
+        kubeControllerManager:
+          enabled: false
+        kubeScheduler:
+          enabled: false
+        kubeProxy:
+          enabled: false
+        kubeEtcd:
+          enabled: false
+        prometheusOperator:
+          tlsProxy:
+            enabled: false
+          tls:
+            enabled: false
+          admissionWebhooks:
+            enabled: false
+          containerSecurityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+          enabled: true
+          hostNetwork: false
+          serviceMonitor:
+            relabelings:
+            - sourceLabels:
+              - __address__
+              action: replace
+              targetLabel: job
+              replacement: prometheus-operator
+          kubeletService:
+            enabled: false
+        prometheus:
+          nodeSelector:
+            kubernetes.io/arch: amd64
+          replicas: 1
+          prometheusSpec:
+            resources:
+              limits:
+                cpu: 600m
+                memory: 4Gi
+              requests:
+                cpu: 200m
+                memory: 512Mi
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: mayastor-single-replica
+                  accessModes: ["ReadWriteOnce"]
+                  resources:
+                    requests:
+                      storage: 100Gi
+            retention: 60d
+            ruleSelectorNilUsesHelmValues: false
+            serviceMonitorSelectorNilUsesHelmValues: false
+            podMonitorSelectorNilUsesHelmValues: false
+            probeSelectorNilUsesHelmValues: false
+          serviceMonitor:
+            relabelings:
+              - sourceLabels:
+                - __address__
+                action: replace
+                targetLabel: job
+                replacement: prometheus
+            serviceMonitorNamespaceSelector:
+              matchLabels:
+                prometheus: enabled
+          serviceAccount:
+            create: true
+          alertmanager:
+            alertmanagerSpec:
+              storage:
+                volumeClaimTemplate:
+                  spec:
+                    storageClassName: mayastor-single-replica
+                    accessModes: ["ReadWriteOnce"]
+                    resources:
+                      requests:
+                        storage: 20Gi
+            serviceMonitor:
+              relabelings:
+                - sourceLabels:
+                  - __address__
+                  action: replace
+                  targetLabel: job
+                  replacement: alertmanager
+          thanosIngress:
+            enabled: false
+          thanosService:
+            enabled: false
+          thanosServiceExternal:
+            enabled: false
+        thanosRuler:
+          enabled: false
+  destination:
+    namespace: monitoring
+    name: in-cluster
+  info:
+    - name: "Github Repository:"
+      value: >-
+        https://github.com/prometheus-operator/kube-prometheus
+    - name: "Chart location:"
+      value: >-
+        https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+    - name: "Official Website:"
+      value: >-
+        https://prometheus-operator.dev/
+    - name: "Documentation:"
+      value: >-
+        https://prometheus-operator.dev/docs/prologue/introduction/
+    - name: "k3s useful documentation:"
+      value: >-
+        https://picluster.ricsanfre.com/docs/prometheus/#k3s-components-monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - Prune=true
+      - ServerSideApply=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
+  # See: https://github.com/prometheus-community/helm-charts/issues/1041
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration
+      name: kube-prometheus-kube-prome-admission
+      jsonPointers:
+        - /webhooks/0/failurePolicy
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      name: kube-prometheus-kube-prome-admission
+      jsonPointers:
+        - /webhooks/0/failurePolicy

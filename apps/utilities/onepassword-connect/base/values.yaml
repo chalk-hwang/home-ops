@@ -8,7 +8,7 @@ connect:
   replicas: 1
 
   # The name of 1Password Connect Application
-  applicationName: onepassword-connect
+  applicationName: connect
 
   # The name of 1Password Connect Host
   host: connect
