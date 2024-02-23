@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: exporter
-          image: chalkhwang/grafana-image-renderer:3.9.1
+          image: chalkhwang/grafana-image-renderer:3.10.0
           env:
             - name: ENABLE_METRICS
               value: "true"

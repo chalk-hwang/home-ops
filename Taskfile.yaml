@@ -45,6 +45,8 @@ includes:
     aliases:
       - op
     taskfile: .taskfiles/OnePassword/Taskfile.yaml
+  grafana:
+    taskfile: .taskfiles/Grafana/Taskfile.yaml
 
 dotenv:
   - .env

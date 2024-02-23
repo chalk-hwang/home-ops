@@ -1,0 +1,48 @@
+version: '3'
+vars:
+  CYAN: tput setaf 6
+  RED: tput setaf 1
+  YELLOW: tput setaf 3
+  GREEN: tput setaf 2
+  BLUE: tput setaf 1
+  PURPLE: tput setaf 5
+  BG_B: tput setab 0
+  BOLD: tput bold
+  RESET: tput sgr0
+  CLEAR: tput reset
+  INT_REGISTRY: registry.localhost
+  PATH_ERROR: is not installed or correctly configured in PATH.
+  IMAGE_RENDERER_VERSION: 2.8.3
+
+env:
+  IMAGE_RENDERER_SOURCE_VERSION: 3.10.0
+
+silent: true
+
+tasks:
+
+  build:
+    cmds:
+    - task: build:image-renderer
+    - task: push:image-renderer
+
+  build:image-renderer:
+    # preconditions:
+    # - sh: 'which docker'
+    #   msg: 'docker {{.PATH_ERROR}}'
+    dir: apps/monitoring/grafana
+    cmds:
+    - |
+      docker build -t docker.io/chalkhwang/grafana-image-renderer:latest \
+                   -t docker.io/chalkhwang/grafana-image-renderer:{{.IMAGE_RENDERER_SOURCE_VERSION}} .
+    ignore_error: true
+
+  push:image-renderer:
+    dir: apps/monitoring/grafana
+    # preconditions:
+    # - sh: 'which docker'
+    #   msg: 'docker {{.PATH_ERROR}}'
+    cmds:
+    - docker push docker.io/chalkhwang/grafana-image-renderer:latest
+    - docker push docker.io/chalkhwang/grafana-image-renderer:{{.IMAGE_RENDERER_SOURCE_VERSION}}
+    ignore_error: true

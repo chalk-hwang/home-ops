@@ -106,7 +106,7 @@ tasks:
     dir: argocd
     cmds:
     - |
-      docker build -t docker.io/grubertech/argocd-sidecar:latest \
+      docker build -t docker.io/grubertech/sargocd-sidecar:latest \
                    -t docker.io/grubertech/argocd-sidecar:v{{.ARGOCD_VERSION}} \
                    -t docker.io/grubertech/argocd:v{{.ARGOCD_VERSION}} \
                    -t docker.io/grubertech/argocd:latest .
