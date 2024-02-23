@@ -10,7 +10,7 @@ spec:
   project: core
   source:
     repoURL: 'https://github.com/chalk-hwang/home-ops.git'
-    path: apps/argocd
+    path: argocd
     targetRevision: main
   destination:
     namespace: argocd
