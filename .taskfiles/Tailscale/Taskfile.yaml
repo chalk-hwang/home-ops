@@ -42,8 +42,8 @@ tasks:
             reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
             reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: ""
         stringData:
-          client_id: $(op read op://Homelab/tailscale_operator-oauth/CLIENT_ID)
-          client_secret: $(op read op://Homelab/tailscale_operator-oauth/CLIENT_SECRET)
+          client_id: $(op read op://Production-Homelab/tailscale_operator-oauth/CLIENT_ID)
+          client_secret: $(op read op://Production-Homelab/tailscale_operator-oauth/CLIENT_SECRET)
         EOF
     ignore_error: true
 

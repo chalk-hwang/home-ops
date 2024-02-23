@@ -1,6 +1,6 @@
 ---
 - name: Tailscale | Get Secret
-  ansible.builtin.shell: op read "op://Homelab/tailscale_metal-oauth/CLIENT_SECRET"
+  ansible.builtin.shell: op read "op://Production-Homelab/tailscale_metal-oauth/CLIENT_SECRET"
   register: tailscale_oauth_secret
   delegate_to: localhost
   become: false

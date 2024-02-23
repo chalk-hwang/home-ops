@@ -1,7 +1,7 @@
 
 ARG HELM_VERSION=3.14.1
-ARG ALPINE_VERSION=3.18.3
-ARG ARGOCD_VERSION=2.9.6
+ARG ALPINE_VERSION=3.19.1
+ARG ARGOCD_VERSION=v2.9.6
 ARG VAULT_PLUGIN_VERSION=1.17.0
 
 FROM alpine/helm:${HELM_VERSION} as helm
@@ -13,7 +13,7 @@ RUN curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/
 RUN curl -L https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v${VAULT_PLUGIN_VERSION}/argocd-vault-plugin_${VAULT_PLUGIN_VERSION}_linux_arm64 -o /tmp/argocd-vault-plugin \
     && chmod +x /tmp/argocd-vault-plugin
 
-FROM quay.io/argoproj/argocd:v${ARGOCD_VERSION}
+FROM quay.io/argoproj/argocd:${ARGOCD_VERSION}
 
 USER root
 

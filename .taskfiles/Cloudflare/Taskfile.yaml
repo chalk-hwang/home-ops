@@ -1,7 +1,7 @@
 version: "3"
 vars:
   PATH_ERROR: is not installed or correctly configured in PATH.
-  CREDENTIALS_FILE: op read "op://Homelab/cloudflared_homelab-tunnel/cloudflared-credentials.json"
+  CREDENTIALS_FILE: op read "op://Production-Homelab/cloudflared_homelab-tunnel/cloudflared-credentials.json"
   TUNNEL_ID:
     sh: |
       {{ .CREDENTIALS_FILE }} | jq -r .TunnelID
@@ -29,7 +29,7 @@ tasks:
             reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
             reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: ""
         stringData:
-          API_TOKEN: $(op read "op://Homelab/cloudflare_chalk-ho.me/API_TOKEN")
+          API_TOKEN: $(op read "op://Production-Homelab/cloudflare_chalk-ho.me/API_TOKEN")
         EOF
     ignore_error: true
 

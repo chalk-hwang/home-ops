@@ -47,6 +47,8 @@ includes:
     taskfile: .taskfiles/OnePassword/Taskfile.yaml
   grafana:
     taskfile: .taskfiles/Grafana/Taskfile.yaml
+  docker:
+    taskfile: .taskfiles/Docker/Taskfile.yaml
 
 dotenv:
   - .env
@@ -126,13 +128,13 @@ tasks:
 
   up:
     cmds:
-      - task: tailscale:metal
-      - task ansible:run playbook=cluster-installation -y
+      # - task: tailscale:metal
+      # - task ansible:run playbook=cluster-installation -y
       - task: cilium
       - task: tailscale:operator
       - task: cloudflare
       - task: onepassword
-      - task: secrets:external
+      # - task: secrets:external
       - task: argocd
 
 

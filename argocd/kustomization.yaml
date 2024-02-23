@@ -32,10 +32,11 @@ resources:
 - base/monitoring/botkube.yaml
 
 # ArgoCD
-# - base/cmp-plugin.yaml
-# - base/repo-role.yaml
+- base/cmp-plugin.yaml
+- base/repo-role.yaml
 - base/repo-rb.yaml
-- base/ingress.yaml
+- github.com/argoproj-labs/argocd-extension-metrics/manifests?ref=v1.0.1
+
 
 # - https://github.com/chalk-hwang/home-ops/apps/networking/external-dns
 - https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared
@@ -43,6 +44,9 @@ resources:
 # - base/cloudflared-dnsendpoint.yaml
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.6/manifests/install.yaml
 - base/styles-cm.yaml
+- base/ingress.yaml
+- base/metrics.yaml
+
 
 namespace: argocd
 images:
@@ -66,22 +70,22 @@ patches:
     target:
       kind: Deployment
       name: argocd-server
-  # - patch: |-
-  #     - op: add
-  #       path: "/spec/template/spec/nodeSelector"
-  #       value:
-  #         kubernetes.io/hostname: metal-a
-  #         kubernetes.io/arch: arm64
-  #   target:
-  #     kind: Deployment
-  # - patch: |-
-  #     - op: add
-  #       path: "/spec/template/spec/nodeSelector"
-  #       value:
-  #         kubernetes.io/hostname: metal-a
-  #         kubernetes.io/arch: arm64
-  #   target:
-  #     kind: StatefulSet
+  - patch: |-
+      - op: add
+        path: "/spec/template/spec/nodeSelector"
+        value:
+          kubernetes.io/hostname: metal-a
+          kubernetes.io/arch: arm64
+    target:
+      kind: Deployment
+  - patch: |-
+      - op: add
+        path: "/spec/template/spec/nodeSelector"
+        value:
+          kubernetes.io/hostname: metal-a
+          kubernetes.io/arch: arm64
+    target:
+      kind: StatefulSet
   - patch: |-
       - op: replace
         path: "/spec/template/spec/volumes/0/secret/secretName"
@@ -97,20 +101,11 @@ patches:
       kind: Deployment
       name: argocd-server
   - path: overlay/argocd-svc.yaml
-    target:
-      kind: Service
-      name: argocd-server
   - path: overlay/argocd-deployment.yaml
   - path: overlay/argocd-repo-deployment.yaml
   - path: overlay/argocd-cm.yaml
-  - path: overlay/cloudflared-cm.yaml
   - path: overlay/argocd-cmd-params-cm.yaml
-  - path: overlay/argocd-node-selector.jsonpatch.yaml
-    target:
-      kind: Deployment
-  - path: overlay/argocd-node-selector.jsonpatch.yaml
-    target:
-      kind: StatefulSet
+  - path: overlay/cloudflared-cm.yaml
   - path: overlay/argocd-rbac.yaml
   - path: overlay/argocd-cr.yaml
 commonAnnotations:

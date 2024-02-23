@@ -99,30 +99,7 @@ tasks:
     - task: build:sidecar
     - task: push:sidecar
 
-  build:sidecar:
-    preconditions:
-    - sh: 'which docker'
-      msg: 'docker {{.PATH_ERROR}}'
-    dir: argocd
-    cmds:
-    - |
-      docker build -t docker.io/chalkhwang/argocd-sidecar:latest \
-                   -t docker.io/chalkhwang/argocd-sidecar:v{{.ARGOCD_VERSION}} \
-                   -t docker.io/chalkhwang/argocd:v{{.ARGOCD_VERSION}} \
-                   -t docker.io/chalkhwang/argocd:latest .
-    ignore_error: true
-
-  push:sidecar:
-    dir: argocd
-    preconditions:
-    - sh: 'which docker'
-      msg: 'docker {{.PATH_ERROR}}'
-    cmds:
-    - docker push docker.io/chalkhwang/argocd-sidecar:latest
-    - docker push docker.io/chalkhwang/argocd-sidecar:v{{.ARGOCD_VERSION}}
-    - docker push docker.io/chalkhwang/argocd:latest
-    - docker push docker.io/chalkhwang/argocd:v{{.ARGOCD_VERSION}}
-    ignore_error: true
+  
 
   rm:
     dir: argocd

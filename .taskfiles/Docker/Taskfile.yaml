@@ -1,0 +1,71 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: '3'
+
+env:
+  REGISTRY_URL: docker.io
+  REGISTRY_USERNAME: chalkhwang
+
+vars:
+  REGISTRY_PATH: ${REGISTRY_URL}/${REGISTRY_USERNAME}
+  PATH_ERROR: ""
+  DOCKERFILES: "dockerfiles"
+
+tasks:
+  .build:
+    vars:
+      imageDir: '{{joinPath .DOCKERFILES .name}}'
+    dir: '{{.imageDir}}'
+    internal: true
+    preconditions:
+    - sh: 'which docker'
+      msg: 'docker {{.PATH_ERROR}}'
+    cmds:
+    - |
+      docker build -t {{ .REGISTRY_PATH }}/{{.name}}:latest \
+                   -t {{ .REGISTRY_PATH }}/{{.name}}:{{.tag}} .
+    requires:
+      vars: ['name', 'tag']
+
+  .push:
+    internal: true
+    preconditions:
+    - sh: 'which docker'
+      msg: 'docker {{.PATH_ERROR}}'
+    cmds:
+    - docker push {{ .REGISTRY_PATH }}/{{.name}}:latest
+    - docker push {{ .REGISTRY_PATH }}/{{.name}}:{{.tag}}
+    requires:
+      vars: ['name', 'tag']
+
+
+  deploy:
+    cmds:
+    - task: .build
+      vars:
+        name: "{{.name}}"
+        tag: "{{.tag}}"
+    - task: .push
+      vars:
+        name: "{{.name}}"
+        tag: "{{.tag}}"
+    requires:
+      vars: ['name', 'tag']
+
+  default:
+    cmds:
+    - task: .deploy
+      vars:
+        name: "argocd"
+        tag: "v2.9.6"
+    - task: .deploy
+      vars:
+        name: "argocd-extension-installer"
+        tag: "v0.0.1"
+    - task: .deploy
+      vars:
+        name: "grafana-image-renderer"
+        tag: "3.10.1"
+
+
+
