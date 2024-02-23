@@ -9,7 +9,7 @@ env:
 vars:
   REGISTRY_PATH: ${REGISTRY_URL}/${REGISTRY_USERNAME}
   PATH_ERROR: ""
-  DOCKERFILES: "dockerfiles"
+  DOCKERFILES: "pkgs"
 
 tasks:
   .build:
@@ -54,18 +54,22 @@ tasks:
 
   default:
     cmds:
-    - task: .deploy
+    - task: deploy
       vars:
         name: "argocd"
         tag: "v2.9.6"
-    - task: .deploy
+    - task: deploy
       vars:
         name: "argocd-extension-installer"
         tag: "v0.0.1"
-    - task: .deploy
+    - task: deploy
+      vars:
+        name: "argocd-extension-metrics"
+        tag: "v1.0.1"
+    - task: deploy
       vars:
         name: "grafana-image-renderer"
-        tag: "3.10.1"
+        tag: "3.10.0"
 
 
 

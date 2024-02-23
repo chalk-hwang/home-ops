@@ -47,8 +47,8 @@ includes:
     taskfile: .taskfiles/OnePassword/Taskfile.yaml
   grafana:
     taskfile: .taskfiles/Grafana/Taskfile.yaml
-  package:
-    taskfile: .taskfiles/Package/Taskfile.yaml
+  packages:
+    taskfile: .taskfiles/Packages/Taskfile.yaml
 
 dotenv:
   - .env
