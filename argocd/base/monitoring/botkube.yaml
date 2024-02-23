@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: botkube
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: monitoring
+  source:
+    chart: botkube
+    repoURL: https://charts.botkube.io/
+    targetRevision: v1.8.0
+    helm:
+      releaseName: botkube
+      parameters:
+        - name: config.provider.endpoint
+          value: <path:vaults/Production-Homelab/items/botkube#endpoint>
+        - name: config.provider.identifier
+          value: <path:vaults/Production-Homelab/items/botkube#identifier>
+        - name: config.provider.apiKey
+          value: <path:vaults/Production-Homelab/items/botkube#apiKey>
+  destination:
+    namespace: monitoring
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=false
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m

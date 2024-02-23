@@ -8,7 +8,7 @@ resources:
 # - external-secrets.yaml
 - descheduler.yaml
 - kured.yaml
-- botkube.yaml
+# - botkube.yaml
 - trivy-operator.yaml
 
 namespace: argocd

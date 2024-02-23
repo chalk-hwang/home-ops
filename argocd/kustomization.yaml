@@ -29,6 +29,7 @@ resources:
 - base/monitoring/metrics-server.yaml
 - base/monitoring/kube-prometheus.yaml
 - base/monitoring/grafana.yaml
+- base/monitoring/botkube.yaml
 
 # ArgoCD
 # - base/cmp-plugin.yaml
