@@ -30,9 +30,12 @@ tasks:
         name: vault-configuration
         namespace: argocd
       stringData:
-        AVP_TYPE: "$ARGOCD_AVP_TYPE"
+        ARGOCD_ENV_AVP_TYPE: "1passwordconnect"
+        ARGOCD_ENV_OP_CONNECT_TOKEN: "$(op read op://Private-Homelab/Production_AccessToken_ArgoVaultPlugin/credential)"
+        ARGOCD_ENV_OP_CONNECT_HOST: "http://onepassword-connect.onepassword.svc.cluster.local"
+        AVP_TYPE: "1passwordconnect"
         OP_CONNECT_TOKEN: "$(op read op://Private-Homelab/Production_AccessToken_ArgoVaultPlugin/credential)"
-        OP_CONNECT_HOST: "$ARGOCD_OP_CONNECT_HOST"
+        OP_CONNECT_HOST: "http://onepassword-connect.onepassword.svc.cluster.local"
       type: Opaque
       EOF
     ignore_error: true
@@ -99,7 +102,7 @@ tasks:
     - task: build:sidecar
     - task: push:sidecar
 
-  
+
 
   rm:
     dir: argocd
