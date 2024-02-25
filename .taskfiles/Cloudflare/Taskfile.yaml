@@ -54,6 +54,7 @@ tasks:
 
   tunnel:endpoint:
     cmds:
+    - kubectl apply -f 
     - |
         kubectl apply -n argocd -f - << EOF
         ---
@@ -77,3 +78,4 @@ tasks:
       - task: dns:secret
       - task: tunnel:secret
       - task: tunnel:endpoint
+

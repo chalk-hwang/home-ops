@@ -8,8 +8,10 @@ k3s_registries:
 # renovate: datasource=github-releases depName=k3s-io/k3s
 k3s_release_version: v1.29.1+k3s1
 k3s_server_manifests_urls:
-  - url: https://raw.githubusercontent.com/kubernetes-sigs/external-dns/master/docs/contributing/crd-source/crd-manifest.yaml
-    filename: dnsendpoint-crd.yaml
+  - url: https://github.com/cert-manager/cert-manager/releases/download/v1.14.1/cert-manager.crds.yaml
+    filename: cert-manager-crds.yaml
+  - url: https://raw.githubusercontent.com/kubernetes-sigs/external-dns/external-dns-helm-chart-1.14.3/docs/contributing/crd-source/crd-manifest.yaml
+    filename: external-dns-crds.yaml
 k3s_server_manifests_templates:
   - namespaces.yaml
   # - custom-cilium-helmchart.yaml

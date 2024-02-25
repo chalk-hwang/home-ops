@@ -37,16 +37,11 @@ resources:
 - base/repo-rb.yaml
 - github.com/argoproj-labs/argocd-extension-metrics/manifests?ref=v1.0.1
 
-
-# - https://github.com/chalk-hwang/home-ops/apps/networking/external-dns
-- https://github.com/chalk-hwang/home-ops/apps/networking/cloudflared
-
 # - base/cloudflared-dnsendpoint.yaml
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.6/manifests/install.yaml
 - base/styles-cm.yaml
 - base/ingress.yaml
 - base/metrics.yaml
-
 
 namespace: argocd
 images:

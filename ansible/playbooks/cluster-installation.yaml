@@ -8,6 +8,9 @@
     - name: Pausing for 5 seconds...
       ansible.builtin.pause:
         seconds: 5
+    - name: Set default vars
+      ansible.builtin.set_fact:
+        deb_architecture: "{{ 'amd64' if ansible_architecture == 'x86_64' else 'arm64' if ansible_architecture == 'aarch64' else ansible_architecture }}"
   tasks:
     - name: Check if cluster is installed
       check_mode: false
@@ -23,7 +26,6 @@
 
 
     - name: Prevent downgrades
-      when: k3s_installed.stat.exists
       ansible.builtin.include_tasks: tasks/registries.yaml
 
     - name: Prevent downgrades
@@ -40,27 +42,27 @@
     - name: Kubeconfig
       ansible.builtin.include_tasks: tasks/kubeconfig.yaml
 
-    - name: Cilium
-      when: k3s_primary_control_node
-      block:
-        - name: Cilium | already installed
-          ansible.builtin.command: cilium version
-          register: cilium_installed
-          changed_when: false
-          failed_when: false
-        - name: Cilium | Install CLI
-          vars:
-            CILIUM_CLI_VERSION:
-              sh: curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt
-            CILILUN_CLI_PKG_URL: https://github.com/cilium/cilium-cli/releases/download/{{ CILIUM_CLI_VERSION }}/cilium-linux-{{ ansible_architecture }}.tar.gz
-          when: cilium_installed.rc != 0
-          become: true
-          ansible.builtin.get_url:
-            url: "{{ CILILUN_CLI_PKG_URL }}"
-            dest: "/usr/local/bin/cilium"
-            checksum: "sha256={{ CILILUN_CLI_PKG_URL }}.sha256sum"
-            decompress: true
-            mode: 0755
+    # - name: Cilium
+    #   when: k3s_primary_control_node
+    #   block:
+    #     - name: Cilium | already installed
+    #       ansible.builtin.get_url:
+    #         url: "https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt"
+    #         dest: ""
+    #         checksum: "sha256:{{ CILILUN_CLI_PKG_URL }}.sha256sum"
+    #         decompress: true
+    #         mode: 0755
+    #     - name: Cilium | Install CLI
+    #       vars:
+    #         CILILUN_CLI_PKG_URL: https://github.com/cilium/cilium-cli/releases/download/{{ CILIUM_CLI_VERSION }}/cilium-linux-{{ deb_architecture }}.tar.gz
+    #       when: cilium_installed.rc != 0
+    #       become: true
+    #       ansible.builtin.get_url:
+    #         url: "{{ CILILUN_CLI_PKG_URL }}"
+    #         dest: "/usr/local/bin/cilium"
+    #         checksum: "sha256:{{ CILILUN_CLI_PKG_URL }}.sha256sum"
+    #         decompress: true
+    #         mode: 0755
           # ansible.builtin.shell:
           #   cmd: |-
           #     CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
@@ -92,6 +94,6 @@
       # when: k3s_primary_control_node
       # ansible.builtin.include_tasks: tasks/cilium.yaml
 
-    - name: Cruft
-      when: k3s_primary_control_node
-      ansible.builtin.include_tasks: tasks/cruft.yaml
+    # - name: Cruft
+    #   when: k3s_primary_control_node
+    #   ansible.builtin.include_tasks: tasks/cruft.yaml

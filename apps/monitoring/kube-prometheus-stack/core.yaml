@@ -7,9 +7,9 @@ metadata:
 spec:
   project: monitoring
   source:
-    repoURL: "https://github.com/prometheus-community/helm-charts.git"
-    targetRevision: kube-prometheus-stack-56.6.2
-    path: charts/kube-prometheus-stack
+    repoURL: 'https://prometheus-community.github.io/helm-charts'
+    chart: kube-prometheus-stack
+    targetRevision: 56.6.2
     helm:
       releaseName: kube-prometheus
       values: |

@@ -91,7 +91,7 @@ If you are marching forward, now is a good time to choose whether you will deplo
     ```sh
     su -
     apt update
-    apt install -y sudo
+    apt itnstall -y sudo
     usermod -aG sudo ${username}
     echo "${username} ALL=(ALL) NOPASSWD:ALL" | tee /etc/sudoers.d/${username}
     exit

@@ -28,7 +28,7 @@ helmCharts:
       deviceClass:
         enabled: true
         name: local-device
-        fsType: xfs
+        fsType: 
         isDefault: false
       hostpathClass:
         enabled: true
