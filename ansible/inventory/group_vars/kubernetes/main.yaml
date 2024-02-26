@@ -14,7 +14,9 @@ k3s_server_manifests_urls:
     filename: external-dns-crds.yaml
 k3s_server_manifests_templates:
   - namespaces.yaml
-  # - custom-cilium-helmchart.yaml
+  - custom-prometheus-operator-crds-helmchart.yaml
+  - custom-cilium-helmchart.yaml
+  - custom-cilium-bgp.yaml
   # - kube-vip-ds.yaml
   # - kube-vip-rbac.yaml
 k3s_use_unsupported_config: true

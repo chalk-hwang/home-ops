@@ -54,7 +54,6 @@ tasks:
 
   tunnel:endpoint:
     cmds:
-    - kubectl apply -f 
     - |
         kubectl apply -n argocd -f - << EOF
         ---
@@ -69,8 +68,20 @@ tasks:
               targets: ["{{ .TUNNEL_ID }}.cfargotunnel.com"]
         EOF
 
-  # tunnel:config:
-  #   cmds:
+  install:
+    desc: Installs cloudflared resources manually on the local cluster
+    dir: apps/networking/cloudflared
+    preconditions:
+    - sh: 'which kustomize'
+      msg: 'kustomize {{.PATH_ERROR}}'
+    - sh: 'which kubectl'
+      msg: 'kubectl {{.PATH_ERROR}}'
+    cmds:
+    - kubectl create namespace argocd
+    - kustomize build | kubectl apply -n argocd -f -
+    - sleep 10
+    - kustomize build | kubectl apply -n argocd -f -
+    ignore_error: true
 
 
   default:
@@ -78,4 +89,4 @@ tasks:
       - task: dns:secret
       - task: tunnel:secret
       - task: tunnel:endpoint
-
+      - task: install

@@ -130,7 +130,7 @@ tasks:
     cmds:
       # - task: tailscale:metal
       # - task ansible:run playbook=cluster-installation -y
-      - task: cilium
+      # - task: cilium
       - task: cloudflare
       - task: onepassword
       # - task: secrets:external

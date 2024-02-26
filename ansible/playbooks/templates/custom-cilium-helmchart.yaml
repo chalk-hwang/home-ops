@@ -8,50 +8,129 @@ spec:
   repo: https://helm.cilium.io/
   chart: cilium
   # renovate: datasource=helm depName=cilium repository=https://helm.cilium.io
-  version: 1.15.0
+  version: 1.15.1
   targetNamespace: kube-system
   bootstrap: true
   valuesContent: |-
-    autoDirectNodeRoutes: true
-    bpf:
-      masquerade: true
     cluster:
       name: homelab
       id: 1
-    containerRuntime:
-      integration: containerd
-      socketPath: /var/run/k3s/containerd/containerd.sock
-    endpointRoutes:
+
+    bpf:
+      masquerade: true
+
+    bgpControlPlane:
       enabled: true
-    hubble:
-      enabled: false
-    ipam:
-      mode: kubernetes
-    ipv4:
-      enabled: true
-    ipv6:
-      enabled: true
-    ipv4NativeRoutingCIDR: "10.11.0.0/16"
-    k8sServiceHost: 127.0.0.1
-    k8sServicePort: 6444
-    kubeProxyReplacement: true
-    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
-    localRedirectPolicy: true
-    operator:
-      replicas: 1
-      rollOutPods: true
-    hubble:
-      tls:
-        auto:
-          enabled: true
-      ui:
-        enabled: true
-      relay:
-        enabled: true
-    rollOutCiliumPods: true
-    routingMode: native
-    securityContext:
-      privileged: true
+
     bandwidthManager:
       enabled: true
       bbr: true
+
+    containerRuntime:
+      integration: containerd
+      socketPath: /var/run/k3s/containerd/containerd.sock
+
+    endpointRoutes:
+      enabled: true
+
+    hubble:
+      enabled: true
+      metrics:
+        enabled:
+          - dns:query
+          - drop
+          - tcp
+          - flow
+          - port-distribution
+          - icmp
+          - http
+        serviceMonitor:
+          enabled: true
+        dashboards:
+          enabled: true
+          annotations:
+            grafana_folder: Cilium
+      relay:
+        enabled: true
+        rollOutPods: true
+        prometheus:
+          serviceMonitor:
+            enabled: true
+      ui:
+        enabled: true
+        rollOutPods: true
+        ingress:
+          enabled: true
+          className: internal
+          hosts:
+            - "hubble.chalk-ho.me"
+          tls:
+            - hosts:
+                - "hubble.chalk-ho.me"
+
+    enableRuntimeDeviceDetection: true
+    devices: "eth0.7"
+
+    ipam:
+      mode: kubernetes
+
+    routingMode: native
+    ipv4NativeRoutingCIDR: "10.11.0.0/16"
+
+    k8sServiceHost: 127.0.0.1
+    k8sServicePort: 6443
+
+    kubeProxyReplacement: true
+    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+
+    loadBalancer:
+      algorithm: maglev
+      mode: dsr
+
+    localRedirectPolicy: true
+
+    operator:
+      replicas: 1
+      rollOutPods: true
+      prometheus:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      dashboards:
+        enabled: true
+        annotations:
+          grafana_folder: Cilium
+
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        trustCRDsExist: true
+    dashboards:
+      enabled: true
+      annotations:
+        grafana_folder: Cilium
+
+    rollOutCiliumPods: true
+    securityContext:
+      privileged: true
+      capabilities:
+        ciliumAgent:
+          - PERFMON
+          - BPF
+          - CHOWN
+          - KILL
+          - NET_ADMIN
+          - NET_RAW
+          - IPC_LOCK
+          - SYS_ADMIN
+          - SYS_RESOURCE
+          - DAC_OVERRIDE
+          - FOWNER
+          - SETGID
+          - SETUI
+        cleanCiliumState:
+          - NET_ADMIN
+          - SYS_ADMIN
+          - SYS_RESOURCE
+    tunnel: disabled

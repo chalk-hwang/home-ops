@@ -18,11 +18,11 @@
         path: /etc/rancher/k3s/config.yaml
       register: k3s_installed
 
-    - name: Ignore manifests templates and urls if the cluster is already installed
-      when: k3s_installed.stat.exists
-      ansible.builtin.set_fact:
-        k3s_server_manifests_templates: []
-        k3s_server_manifests_urls: []
+    # - name: Ignore manifests templates and urls if the cluster is already installed
+    #   when: k3s_installed.stat.exists
+    #   ansible.builtin.set_fact:
+    #     k3s_server_manifests_templates: []
+    #     k3s_server_manifests_urls: []
 
 
     - name: Prevent downgrades
@@ -75,25 +75,29 @@
           #   creates: /usr/local/bin/cilium
 
 
-    # - name: Wait for custom manifests to rollout
-    #   when:
-    #   - k3s_primary_control_node
-    #   - (k3s_server_manifests_templates | length > 0 or k3s_server_manifests_urls | length > 0)
-    #   kubernetes.core.k8s_info:
-    #     kubeconfig: /etc/rancher/k3s/k3s.yaml
-    #     kind: "{{ item.kind }}"
-    #     name: "{{ item.name }}"
-    #     namespace: "{{ item.namespace | default('') }}"
-    #     wait: true
-    #     wait_sleep: 10
-    #     wait_timeout: 360
-    #   loop:
-    #   - { name: cilium, kind: HelmChart, namespace: kube-system }
+    - name: Wait for custom manifests to rollout
+      when:
+      - k3s_primary_control_node
+      - (k3s_server_manifests_templates | length > 0 or k3s_server_manifests_urls | length > 0)
+      kubernetes.core.k8s_info:
+        kubeconfig: /etc/rancher/k3s/k3s.yaml
+        kind: "{{ item.kind }}"
+        name: "{{ item.name }}"
+        namespace: "{{ item.namespace | default('') }}"
+        wait: true
+        wait_sleep: 10
+        wait_timeout: 360
+      loop:
+      - { name: cilium, kind: HelmChart, namespace: kube-system }
+      - { name: prometheus-operator-crds, kind: HelmChart, namespace: kube-system }
 
-    # - name: Cilium
-      # when: k3s_primary_control_node
-      # ansible.builtin.include_tasks: tasks/cilium.yaml
+    - name: Cilium
+      when: k3s_primary_control_node
+      ansible.builtin.include_tasks: tasks/cilium.yaml
 
-    # - name: Cruft
-    #   when: k3s_primary_control_node
-    #   ansible.builtin.include_tasks: tasks/cruft.yaml
+    - name: Prometheus Operator CRDs
+      ansible.builtin.include_tasks: tasks/prometheus-operator-crds.yaml
+
+    - name: Cruft
+      when: k3s_primary_control_node
+      ansible.builtin.include_tasks: tasks/cruft.yaml

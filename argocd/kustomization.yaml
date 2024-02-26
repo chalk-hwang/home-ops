@@ -81,13 +81,13 @@ patches:
           kubernetes.io/arch: arm64
     target:
       kind: StatefulSet
-  - patch: |-
-      - op: replace
-        path: "/spec/template/spec/volumes/0/secret/secretName"
-        value: "cloudflared-secret"
-    target:
-      kind: Deployment
-      name: cloudflared
+  # - patch: |-
+  #     - op: replace
+  #       path: "/spec/template/spec/volumes/0/secret/secretName"
+  #       value: "cloudflared-secret"
+  #   target:
+  #     kind: Deployment
+  #     name: cloudflared
   - patch: |-
       - op: add
         path: "/spec/template/spec/containers/0/args/-"
@@ -100,7 +100,7 @@ patches:
   - path: overlay/argocd-repo-deployment.yaml
   - path: overlay/argocd-cm.yaml
   - path: overlay/argocd-cmd-params-cm.yaml
-  - path: overlay/cloudflared-cm.yaml
+  # - path: overlay/cloudflared-cm.yaml
   - path: overlay/argocd-rbac.yaml
   - path: overlay/argocd-cr.yaml
   - patch: |-
