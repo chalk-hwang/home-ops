@@ -1,6 +1,6 @@
-[submodule "pkgs/argocd-extension-metrics"]
-	path = pkgs/argocd-extension-metrics
+[submodule "containers/argocd-extension-metrics"]
+	path = containers/argocd-extension-metrics
 	url = https://github.com/argoproj-labs/argocd-extension-metrics.git
-[submodule "pkgs/argocd-extension-installer"]
-	path = pkgs/argocd-extension-installer
+[submodule "containers/argocd-extension-installer"]
+	path = containers/argocd-extension-installer
 	url = https://github.com/argoproj-labs/argocd-extension-installer.git
