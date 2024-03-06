@@ -1,23 +1,26 @@
+---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
   name: cert-manager
 
+namespace: cert-manager
+
 resources:
-  - clusterissuer.yaml
-  # - externalsecret.yaml
+- clusterissuers.yaml
+# - externalsecret.yaml
 
 helmCharts:
-  - name: cert-manager
-    version: v1.14.1
-    repo: https://charts.jetstack.io
-    namespace: cert-manager
-    releaseName: cert-manager
-    valuesFile: values.yaml
-    includeCRDs: true
+- name: cert-manager
+  version: v1.14.1
+  repo: https://charts.jetstack.io
+  namespace: cert-manager
+  releaseName: cert-manager
+  valuesFile: values.yaml
+  includeCRDs: true
 
 patches:
-  - path: ./remove-instance-label.jsonpatch.yaml
-    target:
-      kind: CustomResourceDefinition
-      labelSelector: app.kubernetes.io/instance=cert-manager
+- path: ./remove-instance-label.jsonpatch.yaml
+  target:
+    kind: CustomResourceDefinition
+    labelSelector: app.kubernetes.io/instance=cert-manager

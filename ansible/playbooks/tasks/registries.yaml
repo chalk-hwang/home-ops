@@ -1,26 +1,35 @@
-- name: Registries | Get Secret
-  ansible.builtin.shell: op read "op://Private-Homelab/DockerHub/password"
-  register: docker_password
-  delegate_to: localhost
-  become: false
-- name: Registries | Set Config
-  ansible.builtin.copy:
-    content: |
-      mirrors:
-        docker.io:
-        gcr.io:
-        ghcr.io:
-        k8s.gcr.io:
-        lscr.io:
-        mcr.microsoft.com:
-        public.ecr.aws:
-        quay.io:
-        registry.k8s.io:
-      config:
-        docker.io:
-          auth:
-            username: chalkhwang
-            password: "{{ docker_password.stdout }}"
-            email:
-    dest: /etc/rancher/k3s/registries.yaml
-    mode: preserve
+---
+- name: Registries
+  block:
+  - name: Registries | Get Private Registry Password
+    ansible.builtin.command: op read "op://Private-Homelab/DockerHub/password"
+    register: pricate_registry_key
+    delegate_to: localhost
+    become: false
+  - name: Registries | Generate registries.yaml
+    ansible.builtin.copy:
+      content: |
+        mirrors:
+          docker.io:
+          gcr.io:
+          ghcr.io:
+          k8s.gcr.io:
+          lscr.io:
+          mcr.microsoft.com:
+          public.ecr.aws:
+          quay.io:
+          registry.k8s.io:
+        config:
+          docker.io:
+            auth:
+              username: chalkhwang
+              password: "{{ pricate_registry_key.stdout }}"
+              email:
+      dest: /etc/rancher/k3s/registries.yaml
+      mode: preserve
+  - name: Registries | Restart K3S
+    ansible.builtin.include_role:
+      name: xanmanning.k3s
+      public: true
+    vars:
+      k3s_state: restarted

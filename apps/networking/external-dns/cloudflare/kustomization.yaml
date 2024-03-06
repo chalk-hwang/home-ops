@@ -1,13 +1,14 @@
+---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
   name: external-dns-cloudflare
 # - externalsecret.yaml
 
-#- external-secrets-aws-secret-store.yaml
-#- external-secrets-gcp-secret-store.yaml
-#- secret-store.yaml
-#- external-secret.yaml
+# - external-secrets-aws-secret-store.yaml
+# - external-secrets-gcp-secret-store.yaml
+# - secret-store.yaml
+# - external-secret.yaml
 
 helmCharts:
 - name: external-dns

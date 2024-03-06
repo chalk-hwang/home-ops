@@ -6,10 +6,10 @@ spec:
   project: monitoring
   source:
     repoURL: 'https://github.com/chalk-hwang/home-ops.git'
-    path: apps/monitoring/kube-prometheus
+    path: apps/monitoring/kube-prometheus-stack
     targetRevision: main
   destination:
-    namespace: argocd
+    namespace: monitoring
     name: in-cluster
   syncPolicy:
     automated:

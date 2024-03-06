@@ -1,36 +1,3 @@
 {
-    "ansible.ansible.path": ".venv/bin/ansible",
-    "ansible.python.activationScript": ".venv/bin/activate",
-    "ansible.python.interpreterPath": ".venv/bin/python3",
-    "ansible.validation.enabled": true,
-    "ansible.validation.lint.arguments": "-c ansible/.ansible-lint",
-    "ansible.validation.lint.enabled": true,
-    "ansible.validation.lint.path": ".venv/bin/ansible-lint",
-    "files.associations": {
-        "*.json5": "jsonc",
-        "./ansible/**/*.yaml": "ansible",
-        "./ansible/**/*.sops.yaml": "yaml",
-        "./ansible/**/inventory/**/*.yaml": "yaml",
-        "./kubernetes/**/*.sops.toml": "plaintext",
-        "./**/templates/**/*.yaml": "jinja"
-    },
-    "sops.defaults.ageKeyFile": "age.key",
-    "yaml.schemas": {
-      "ansible": "./ansible/*.yaml",
-      "Kubernetes": "./kubernetes/*.yaml",
-      "https://json.schemastore.org/yamllint.json": "file:///Users/ChalkHwang/Workspaces/home-ops/argocd/base/storage/openebs.yaml",
-      "kubernetes://schema/argoproj.io/v1alpha1@appproject": "file:///Users/ChalkHwang/Workspaces/home-ops/argocd/base/projects/cluster.yaml",
-      "https://raw.githubusercontent.com/kubernetes-sigs/external-dns/external-dns-helm-chart-1.14.3/charts/external-dns/values.schema.json": "file:///Users/ChalkHwang/Workspaces/home-ops/apps/networking/external-dns/cloudflare/base/values.yaml"
-    },
-    "vs-kubernetes": {
-        "vs-kubernetes.kubeconfig": "./kubeconfig",
-        "vs-kubernetes.knownKubeconfigs": [
-          "./kubeconfig"
-      ]
-    },
-    "linter.linters": {
-      "yaml": {
-        "enabled": true
-      }
-    }
+  
 }

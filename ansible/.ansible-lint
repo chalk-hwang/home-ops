@@ -1,8 +1,10 @@
+---
 skip_list:
-  - yaml
-  - var-naming
+- yaml[commas]
+- yaml[line-length]
+- var-naming
 warn_list:
-  - command-instead-of-shell
-  - deprecated-command-syntax
-  - experimental
-  - no-changed-when
+- command-instead-of-shell
+- deprecated-command-syntax
+- experimental
+- no-changed-when

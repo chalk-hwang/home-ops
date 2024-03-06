@@ -1,5 +1,4 @@
-
-
+---
 # -- Image pull secret\ the full name of the chart.
 fullnameOverride: external-dns-cloudflare
 
@@ -20,12 +19,14 @@ rbac:
 deploymentAnnotations:
   reloader.stakater.com/auto: "true"
 
-# -- [Deployment Strategy](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy).
+# -- [Deployment Strategy]
+# (https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy).
 deploymentStrategy:
   type: Recreate
 
 
-# -- [Pod security context](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podsecuritycontext-v1-core), this supports full customisation.
+# -- [Pod security context], this supports full customisation.
+# (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podsecuritycontext-v1-core)
 # @default -- See _values.yaml_
 podSecurityContext:
   runAsUser: 568
@@ -38,13 +39,16 @@ priorityClassName:
 # -- (int) Termination grace period for the `Pod` in seconds.
 terminationGracePeriodSeconds:
 
-# -- (string) [DNS policy](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy) for the pod, if not set the default will be used.
+# -- (string) [DNS policy] for the pod, if not set the default will be used.
+# (https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy)
 dnsPolicy:
 
-# -- [Init containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/) to add to the `Pod` definition.
+# -- [Init containers] to add to the `Pod` definition.
+# (https://kubernetes.io/docs/concepts/workloads/pods/init-containers/)
 initContainers: []
 
-# -- [Security context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container) for the `external-dns` container.
+# -- [Security context]  for the `external-dns` container.
+# (https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container)
 # @default -- See _values.yaml_
 securityContext:
   allowPrivilegeEscalation: false
@@ -52,14 +56,16 @@ securityContext:
   capabilities:
     drop: ["ALL"]
 
-# -- [Environment variables](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/) for the `external-dns` container.
+# -- [Environment variables] for the `external-dns` container.
+# (https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/)
 env:
 - name: CLOUDFLARE_API_TOKEN
   valueFrom:
     secretKeyRef:
       name: cloudflare-secret
       key: API_TOKEN
-# -- [Liveness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) configuration for the `external-dns` container.
+# -- [Liveness probe] configuration for the `external-dns` container.
+# (https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
 # @default -- See _values.yaml_
 livenessProbe:
   httpGet:
@@ -71,7 +77,8 @@ livenessProbe:
   failureThreshold: 2
   successThreshold: 1
 
-# -- [Readiness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) configuration for the `external-dns` container.
+# -- [Readiness probe] configuration for the `external-dns` container.
+# (https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
 # @default -- See _values.yaml_
 readinessProbe:
   httpGet:
@@ -100,7 +107,8 @@ interval: 1m
 # -- If `true`, triggers run loop on create/update/delete events in addition of regular interval.
 triggerLoopOnEvent: false
 
-# -- if `true`, _ExternalDNS_ will run in a namespaced scope (`Role`` and `Rolebinding`` will be namespaced too).
+# -- if `true`, _ExternalDNS_ will run in a namespaced scope
+# (`Role`` and `Rolebinding`` will be namespaced too).
 namespaced: false
 
 # -- _Kubernetes_ resources to monitor for DNS entries.
@@ -108,13 +116,15 @@ sources:
 - crd
 - ingress
 
-# -- How DNS records are synchronized between sources and providers; available values are `sync` & `upsert-only`.
+# -- How DNS records are synchronized between sources and providers;
+# available values are `sync` & `upsert-only`.
 policy: sync
 
 # -- Specify the registry for storing ownership and labels.
 # Valid values are `txt`, `aws-sd`, `dynamodb` & `noop`.
 registry: txt
-# -- (string) Specify an identifier for this instance of _ExternalDNS_ wWhen using a registry other than `noop`.
+# -- (string) Specify an identifier for this instance of _ExternalDNS_ wWhen using a registry
+# other than `noop`.
 txtOwnerId: default
 # -- (string) Specify a prefix for the domain names of TXT records created for the `txt` registry.
 # Mutually exclusive with `txtSuffix`.
@@ -124,7 +134,8 @@ domainFilters:
 - chalk-ho.me
 
 provider:
-  # -- _ExternalDNS_ provider name; for the available providers and how to configure them see [README](https://github.com/kubernetes-sigs/external-dns/blob/master/charts/external-dns/README.md#providers).
+  # -- _ExternalDNS_ provider name; for the available providers and how to configure them see
+  # [README](https://github.com/kubernetes-sigs/external-dns/blob/master/charts/external-dns/README.md#providers).
   name: cloudflare
 
 # -- Extra arguments to provide to _ExternalDNS_.

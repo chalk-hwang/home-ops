@@ -1,0 +1,108 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**/*.code-search": true,
+      "**/.venv": true,
+      "**/.ansible": true,
+      "**/.terraform": true
+    },
+     "ansible.ansible.path": ".venv/bin/ansible",
+    "ansible.python.activationScript": ".venv/bin/activate",
+    "ansible.python.interpreterPath": ".venv/bin/python",
+    "ansible.validation.enabled": true,
+    "ansible.validation.lint.arguments": "-c ansible/.ansible-lint",
+    "ansible.validation.lint.enabled": true,
+    "ansible.validation.lint.path": ".venv/bin/ansible-lint",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.fontFamily": "FiraCode Nerd Font",
+    "editor.fontLigatures": true,
+    "editor.guides.bracketPairs": true,
+    "editor.guides.bracketPairsHorizontal": true,
+    "editor.guides.highlightActiveBracketPair": true,
+    "editor.hover.delay": 1500,
+    "editor.rulers": [
+      100
+    ],
+    "editor.stickyScroll.enabled": false,
+    "explorer.autoReveal": false,
+    "files.associations": {
+        "*.json5": "jsonc",
+        "./ansible/**/*.yaml": "ansible",
+        "./ansible/**/inventory/**/*.yaml": "yaml",
+        "./terraform/**/*.tf": "terraform"
+    },
+    "files.trimTrailingWhitespace": true,
+    "material-icon-theme.files.associations": {
+      // TODO: https://github.com/PKief/vscode-material-icon-theme/issues/330
+      "*.secret.sops.env": "lock",
+      "*.secret.sops.yaml": "lock",
+      "kustomization.yaml": "kubernetes"
+    },
+    "material-icon-theme.folders.theme": "classic",
+    "material-icon-theme.folders.associations": {
+        // top level
+        ".archive": "archive",
+        ".github": "github",
+        // .github
+        ".github/workflows": "robot",
+        // namespaces
+        "actions-runner-system": "github",
+        "cert-manager": "guard",
+        "default": "home",
+        "digester-system": "hook",
+        "onepassword-connect": "secure",
+        "argocd": "ci",
+        "kube-system": "kubernetes",
+        "monitoring": "event",
+        "network": "connection",
+        "networking": "connection",
+        "observability": "event",
+        "rook-ceph": "base",
+        "storage": "dump",
+        "system-upgrade": "update",
+        "utilities": "utils",
+        "volsync": "aws",
+        "apps": "app",
+        "ansible": "ansible",
+        "database": "database",
+        "hass": "home",
+        "containers": "container",
+        ".taskfiles": "tasks",
+        "base": "base",
+        "overlay": "custom",
+        "containers/argocd": "",
+        "certificates": "private"
+    },
+    "sops.defaults.ageKeyFile": "age.key",
+    "vs-kubernetes": {
+      "vs-kubernetes.kubeconfig": "./kubeconfig",
+      "vs-kubernetes.knownKubeconfigs": [
+        "./kubeconfig"
+      ]
+    },
+    "yaml.schemaStore.enable": true,
+    "yaml.schemas": {
+      "ansible": "./ansible/**/*.yaml",
+      "kubernetes": "./kubernetes/**/*.yaml",
+      "https://json.schemastore.org/kustomization": "kustomization.yaml",
+      "https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1beta1.json": "externalsecret.yaml"
+    },
+    "workbench.editor.labelFormat": "medium",
+    "ansible.ansible.reuseTerminal": true
+  }
+}

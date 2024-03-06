@@ -12,23 +12,17 @@
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
   "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
   "rebaseWhen": "conflicted",
-  "schedule": ["on saturday"],
-  "flux": {
-    "fileMatch": [
-      "(^|/)ansible/.+\\.ya?ml(\\.j2)?$",
-      "(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$"
-    ]
-  },
+  "schedule": ["on wednesday","on saturday"],
   "helm-values": {
     "fileMatch": [
       "(^|/)ansible/.+\\.ya?ml(\\.j2)?$",
-      "(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$"
+      "(^|/)apps/.+\\.ya?ml(\\.j2)?$"
     ]
   },
   "kubernetes": {
     "fileMatch": [
       "(^|/)ansible/.+\\.ya?ml(\\.j2)?$",
-      "(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$"
+      "(^|/)apps/.+\\.ya?ml(\\.j2)?$"
     ]
   },
   "kustomize": {
@@ -45,6 +39,9 @@
     "fileMatch": [
       "(^|/)(galaxy|requirements)(\\.ansible)?\\.ya?ml(\\.j2)?$"
     ]
+  },
+  "argocd": {
+    "fileMatch": ["argocd/.+\\.yaml$"]
   },
   // commit message topics
   "commitMessageTopic": "{{depName}}",

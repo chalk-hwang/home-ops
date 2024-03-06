@@ -1,3 +1,4 @@
+---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
@@ -6,14 +7,15 @@ metadata:
 namespace: kube-system
 
 resources:
-  - bgp-peering-policy.yaml
-  - lb-ip-pool.yaml
+- bgp-peering-policy.yaml
+- lb-ip-pool.yaml
 
 helmCharts:
-  - name: cilium
-    version: 1.15.1
-    repo: https://helm.cilium.io/
-    namespace: kube-system
-    releaseName: cilium
-    valuesFile: values.yaml
-    includeCRDs: true
+- name: cilium
+  # renovate: datasource=helm depName=cilium repository=https://helm.cilium.io
+  version: 1.15.1
+  repo: https://helm.cilium.io/
+  namespace: kube-system
+  releaseName: cilium
+  valuesFile: values.yaml
+  includeCRDs: true

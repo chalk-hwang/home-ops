@@ -12,16 +12,17 @@ k3s_server:
   etcd-expose-metrics: true
   flannel-backend: "none"
   kube-apiserver-arg:
-    - "anonymous-auth=true"
+  - "anonymous-auth=true"
   kube-controller-manager-arg:
-    - "bind-address=0.0.0.0"
+  - "bind-address=0.0.0.0"
   kube-scheduler-arg:
-    - "bind-address=0.0.0.0"
+  - "bind-address=0.0.0.0"
   kubelet-arg:
-    - "image-gc-high-threshold=55"
-    - "image-gc-low-threshold=50"
+  - "image-gc-high-threshold=55"
+  - "image-gc-low-threshold=50"
   node-ip: "{{ ansible_host }}"
   pause-image: registry.k8s.io/pause:3.9
   secrets-encryption: true
-  tls-san: "{{ ansible_host }}"
+  tls-san:
+  - "10.0.7.253"
   write-kubeconfig-mode: "644"

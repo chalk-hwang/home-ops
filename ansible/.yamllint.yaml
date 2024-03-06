@@ -6,12 +6,7 @@ rules:
     spaces: 2
     indent-sequences: false
     check-multi-line-strings: false
-  line-length:
-    level: warning
-    max: 100
-    allow-non-breakable-inline-mappings: true
-    allow-non-breakable-words: true
-
+  line-length: false
   braces:
     forbid: false
     min-spaces-inside: 1
