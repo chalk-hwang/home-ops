@@ -1,4 +1,5 @@
 ---
+k3s_config_file_root: /etc/rancher/k3s
 k3s_become: true
 k3s_etcd_datastore: true
 k3s_install_hard_links: true

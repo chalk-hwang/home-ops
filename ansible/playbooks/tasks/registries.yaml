@@ -3,9 +3,13 @@
   block:
   - name: Registries | Get Private Registry Password
     ansible.builtin.command: op read "op://Private-Homelab/DockerHub/password"
-    register: pricate_registry_key
+    register: private_register_password
     delegate_to: localhost
     become: false
+    changed_when: false
+  - name: Registries | Set Passowrd vars
+    ansible.builtin.set_fact:
+      private_registry_password: "{{ private_register_password.stdout }}"
   - name: Registries | Generate registries.yaml
     ansible.builtin.copy:
       content: |
@@ -23,13 +27,6 @@
           docker.io:
             auth:
               username: chalkhwang
-              password: "{{ pricate_registry_key.stdout }}"
-              email:
-      dest: /etc/rancher/k3s/registries.yaml
+              password: "{{ private_registry_password }}"
+      dest: "{{ k3s_config_file_root }}registries.yaml"
       mode: preserve
-  - name: Registries | Restart K3S
-    ansible.builtin.include_role:
-      name: xanmanning.k3s
-      public: true
-    vars:
-      k3s_state: restarted

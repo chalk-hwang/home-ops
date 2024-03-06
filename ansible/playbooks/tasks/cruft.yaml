@@ -18,13 +18,13 @@
 
   - name: Cruft | Get list of custom addons
     kubernetes.core.k8s_info:
-      kubeconfig: /etc/rancher/k3s/k3s.yaml
+      kubeconfig: "{{ k3s_config_file_root }}/k3s.yaml"
       kind: Addon
     register: addons_list
 
   - name: Cruft | Delete addons
     kubernetes.core.k8s:
-      kubeconfig: /etc/rancher/k3s/k3s.yaml
+      kubeconfig: "{{ k3s_config_file_root }}/k3s.yaml"
       name: "{{ item.metadata.name }}"
       kind: Addon
       namespace: kube-system

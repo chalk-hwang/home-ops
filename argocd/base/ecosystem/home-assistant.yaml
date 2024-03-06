@@ -1,15 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ecosystem
-  namespace: argocd
-  labels:
-    app.kubernetes.io/category: ecosystem
+  name: home-assistant
 spec:
   project: apps
   source:
     repoURL: "https://github.com/chalk-hwang/home-ops.git"
-    path: argocd/base/ecosystem
+    path: apps/ecosystem/home-assistant
     targetRevision: main
   destination:
     namespace: ecosystem
@@ -18,19 +15,16 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: false
-    managedNamespaceMetadata:
-      labels:
-        prometheus: enabled
+      allowEmpty: true
     syncOptions:
       - Validate=false
       - CreateNamespace=true
-      - ServerSideApply=true
       - PrunePropagationPolicy=foreground
-      - PruneLast=true
       - ApplyOutOfSyncOnly=false
+      - Prune=true
+      - ServerSideApply=true
     retry:
-      limit: 10
+      limit: 5
       backoff:
         duration: 20s
         factor: 2

@@ -12,10 +12,16 @@
     ansible.builtin.set_fact:
       deb_architecture: "{{ 'amd64' if ansible_architecture == 'x86_64' else 'arm64' if ansible_architecture == 'aarch64' else ansible_architecture }}"
   tasks:
+  - name: Ensures k3s config file dir exists
+    ansible.builtin.file:
+      path: "{{ k3s_config_file_root }} "
+      state: directory
+      mode: '0755'
+
   - name: Check if cluster is installed
     check_mode: false
     ansible.builtin.stat:
-      path: /etc/rancher/k3s/config.yaml
+      path: "{{ k3s_config_file_root }}config.yaml"
     register: k3s_installed
 
   # - name: Ignore manifests templates and urls if the cluster is already installed
@@ -24,7 +30,8 @@
   #     k3s_server_manifests_templates: []
   #     k3s_server_manifests_urls: []
 
-
+  - name: Registries
+    ansible.builtin.include_tasks: tasks/registries.yaml
 
   - name: Prevent downgrades
     when: k3s_installed.stat.exists
@@ -37,8 +44,6 @@
     vars:
       k3s_state: installed
 
-  - name: Registries
-    ansible.builtin.include_tasks: tasks/registries.yaml
   - name: Kubeconfig
     ansible.builtin.include_tasks: tasks/kubeconfig.yaml
 
@@ -80,7 +85,7 @@
     - k3s_primary_control_node
     - (k3s_server_manifests_templates | length > 0 or k3s_server_manifests_urls | length > 0)
     kubernetes.core.k8s_info:
-      kubeconfig: /etc/rancher/k3s/k3s.yaml
+      kubeconfig: "{{ k3s_config_file_root }}/k3s.yaml"
       kind: "{{ item.kind }}"
       name: "{{ item.name }}"
       namespace: "{{ item.namespace | default('') }}"

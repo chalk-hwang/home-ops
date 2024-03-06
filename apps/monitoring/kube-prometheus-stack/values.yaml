@@ -1,5 +1,6 @@
+---
 crds:
-  enabled: false
+  enabled: true
 cleanPrometheusOperatorObjectNames: true
 alertmanager:
   ingress:
@@ -7,10 +8,10 @@ alertmanager:
     pathType: Prefix
     ingressClassName: internal
     hosts:
-      - &host alertmanager.chalk-ho.me
+    - &host alertmanager.chalk-ho.me
     tls:
-      - hosts:
-          - *host
+    - hosts:
+      - *host
   alertmanagerSpec:
     replicas: 2
     useExistingSecret: true
@@ -26,31 +27,31 @@ kubelet:
   enabled: true
   serviceMonitor:
     metricRelabelings:
-      # Drop high cardinality labels
-      - action: labeldrop
-        regex: (uid)
-      - action: labeldrop
-        regex: (id|name)
-      - action: drop
-        sourceLabels: ["__name__"]
-        regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
+    # Drop high cardinality labels
+    - action: labeldrop
+      regex: (uid)
+    - action: labeldrop
+      regex: (id|name)
+    - action: drop
+      sourceLabels: ["__name__"]
+      regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
 kubeApiServer:
   enabled: true
   serviceMonitor:
     metricRelabelings:
-      # Drop high cardinality labels
-      - action: drop
-        sourceLabels: ["__name__"]
-        regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
-      - action: drop
-        sourceLabels: ["__name__"]
-        regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
+    # Drop high cardinality labels
+    - action: drop
+      sourceLabels: ["__name__"]
+      regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+    - action: drop
+      sourceLabels: ["__name__"]
+      regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
 kubeControllerManager:
   enabled: true
   endpoints: &cp
-    - 192.168.42.10
-    - 192.168.42.11
-    - 192.168.42.12
+  - 192.168.42.10
+  - 192.168.42.11
+  - 192.168.42.12
 kubeEtcd:
   enabled: true
   endpoints: *cp
@@ -76,6 +77,7 @@ prometheus:
   prometheusSpec:
     replicas: 2
     replicaExternalLabelName: __replica__
+    scrapeInterval: 1m # Must match interval in Grafana Helm chart
     ruleSelectorNilUsesHelmValues: false
     serviceMonitorSelectorNilUsesHelmValues: false
     podMonitorSelectorNilUsesHelmValues: false

@@ -3,7 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: home-assistant-storage
-  namespace: hass
+  namespace: ecosystem
 spec:
   accessModes:
     - ReadWriteOnce

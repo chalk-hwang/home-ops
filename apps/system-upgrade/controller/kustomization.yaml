@@ -1,0 +1,16 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: system-upgrade-controller
+
+namespace: system-upgrade
+
+resources:
+- base/rbac.yaml
+
+
+helmCharts:
+- name: app-template
+  repo: oci://ghcr.io/bjw-s/helm
+

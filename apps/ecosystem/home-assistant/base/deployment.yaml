@@ -1,0 +1,177 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-assistant
+  labels:
+    app: home-assistant
+  annotations:
+    link.argocd.argoproj.io/external-link: https://ecosystem.chalk-ho.me
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: home-assistant
+  template:
+    metadata:
+      labels:
+        app: home-assistant
+    spec:
+      initContainers:
+        - name: hacs-install
+          image: alpine:3.16.2
+          command:
+            [
+              "sh",
+              "-c",
+              "if [ ! -d /config ]; then mkdir -p /config; fi; if [ -f /config/configuration.yaml ]; then if [ ! -f /config/.hacs-installed ]; then apk add bash wget && wget -O - https://get.hacs.xyz | bash - && touch /config/.hacs-installed; fi; else echo 'No Home Assistant database found. Skipping HACS installation.'; fi",
+            ]
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 0
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - mountPath: /config
+              name: config-volume
+        - name: git-sync
+          image: k8s.gcr.io/git-sync/git-sync:v3.6.1
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsUser: 65533
+          env:
+            - name: DB_USERNAME
+              valueFrom:
+                {
+                  secretKeyRef:
+                    { name: database-home-assistant-app, key: username },
+                }
+            - name: DB_PASSWORD
+              valueFrom:
+                {
+                  secretKeyRef:
+                    { name: database-home-assistant-app, key: password },
+                }
+            - name: DB_STRING
+              value: "postgresql://${DB_USERNAME}:${DB_PASSWORD}@database-home-assistant-rw.ecosystem.svc.cluster.local:5432/home-assistant?client_encoding=utf8&sslmode=require"
+          volumeMounts:
+            - name: temp-config
+              mountPath: /tmp/git
+            - name: ssh-key
+              mountPath: /etc/git-secret/ssh
+            - name: known-hosts
+              mountPath: /etc/git-secret/known_hosts
+          envFrom:
+            - configMapRef:
+                name: home-assistant-gitsync-cm
+            - secretRef:
+                name: home-assistant-gitsync-secrets
+                optional: true
+      containers:
+        - env:
+            - name: TZ
+              value: Asia/Seoul
+            - name: PYTHONWARNINGS
+              value: ignore:Unverified HTTPS request
+          image: homeassistant/home-assistant:2022.9
+          imagePullPolicy: IfNotPresent
+          name: home-assistant
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  ["/bin/sh", "-c", "cp -rf /src/homeassistant/* /config"]
+          ports:
+            - containerPort: 8123
+              name: api
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 750m
+              memory: 2Gi
+            requests:
+              cpu: 350m
+              memory: 1Gi
+          livenessProbe:
+            httpGet:
+              path: /
+              port: api
+              scheme: HTTP
+            initialDelaySeconds: 10
+            failureThreshold: 5
+            timeoutSeconds: 2
+          readinessProbe:
+            httpGet:
+              path: /
+              port: api
+              scheme: HTTP
+            initialDelaySeconds: 10
+            failureThreshold: 5
+            timeoutSeconds: 2
+          startupProbe:
+            httpGet:
+              path: /
+              port: api
+              scheme: HTTP
+            initialDelaySeconds: 25
+            failureThreshold: 5
+            timeoutSeconds: 2
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: home-assistant-secrets
+              mountPath: /config/secrets.yaml
+              subPath: secrets.yaml
+            - name: config-volume
+              mountPath: /config
+            - name: temp-config
+              mountPath: /src
+            - name: dev-usb-00
+              mountPath: /dev/ttyUSB0
+            - name: dev-usb-01
+              mountPath: /dev/ttyUSB1
+            # - name: zigbee-00
+            #   mountPath: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if00-port0
+            # - name: zigbee-01
+            #   mountPath: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if01-port0
+            - name: dbus
+              mountPath: /var/run/dbus
+      dnsPolicy: ClusterFirstWithHostNet
+      hostNetwork: true
+      volumes:
+        - name: ssh-key
+          secret:
+            secretName: home-assistant-gitsync-secrets
+            key: ssh_key
+            defaultMode: 256
+        - name: known-hosts
+          secret:
+            secretName: known-hosts
+            defaultMode: 256
+        - name: home-assistant-secrets
+          secret:
+            secretName: home-assistant-secrets
+        - name: config-volume
+          persistentVolumeClaim:
+            claimName: home-assistant-storage
+        # - name: zigbee-00
+        #   hostPath:
+        #     path: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if00-port0
+        # - name: zigbee-01
+        #   hostPath:
+        #     path: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if01-port0
+        - name: dbus
+          hostPath:
+            path: /var/run/dbus
+        - name: dev-usb-00
+          hostPath:
+            path: /dev/ttyUSB0
+        - name: dev-usb-01
+          hostPath:
+            path: /dev/ttyUSB1
+        - name: temp-config
+          emptyDir: {}

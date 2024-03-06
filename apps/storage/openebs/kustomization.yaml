@@ -1,3 +1,4 @@
+---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
@@ -6,34 +7,18 @@ metadata:
 helmCharts:
 - name: openebs
   releaseName: openebs
-  namespace: openebs
+  namespace: storage
   version: 3.10.0
   repo: https://openebs.github.io/charts
   valuesInline:
-    ndmOperator:
-      enabled: true
-      replicas: 1
-      image:
-        repository: openebs/node-disk-manager
-    ndm:
-      image: openebs/node-disk-manager
-      replica: 1
-      filters:
-        includePaths: all
-        excludePaths: "loop,fd0,sr0,/dev/ram,/dev/dm-,/dev/md"
-    helper:
-      image: openebs/linux-utils
     localprovisioner:
-      image: openebs/provisioner-localpv
       deviceClass:
         enabled: true
-        name: local-device
-        fsType: 
+        name: openebs-device
+        fsType: brfs
         isDefault: false
       hostpathClass:
         enabled: true
-        name: local-hostpath
+        name: openebs-hostpath
         path: /var/openebs/local
         isDefault: false
-commonAnnotations:
-  reloader.stakater.com/auto: "true"

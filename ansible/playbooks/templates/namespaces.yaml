@@ -16,11 +16,6 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: external-secrets
----
-apiVersion: v1
-kind: Namespace
-metadata:
   name: onepassword
 ---
 apiVersion: v1
@@ -36,9 +31,14 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: hass
+  name: ecosystem
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: tailscale
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: system-upgrade
